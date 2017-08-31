@@ -59,12 +59,12 @@ namespace DataAccess.Context
                 .WithRequired(r => r.Group)
                 .HasForeignKey(f => f.IdGroup);
 
-            modelBuilder.Entity<Messages>()
+            modelBuilder.Entity<Message>()
                 .HasMany(m => m.Files)
                 .WithRequired(r => r.Message)
                 .HasForeignKey(f => f.IdMessage);
 
-            modelBuilder.Entity<Files>()
+            modelBuilder.Entity<File>()
                 .HasMany(m => m.MessageFiles)
                 .WithRequired(r => r.File)
                 .HasForeignKey(f => f.IdFile);
@@ -72,12 +72,13 @@ namespace DataAccess.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Files> Files { get; set; }
-        public DbSet<Friends> Friends { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<Friend> Friends { get; set; }
         public DbSet<Group> Groups { get; set; }
-        public DbSet<MessageFiles> MessageFiles { get; set; }
-        public DbSet<Messages> Messages { get; set; }
+        public DbSet<MessageFile> MessageFiles { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public DbSet<UserInfo> UsersInfo { get; set; }
         public DbSet<UsersGroup> UsersGroups { get; set; }
+        public DbSet<User> Users{ get; set; }
     }
 }

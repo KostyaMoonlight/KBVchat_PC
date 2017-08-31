@@ -21,7 +21,7 @@ namespace Domain.Entities
         public int IdAdmin { get; set; }
 
 
-        public ICollection<Messages> Messages { get; set; }
+        public ICollection<Message> Messages { get; set; }
 
         public User Admin { get; set; }
 

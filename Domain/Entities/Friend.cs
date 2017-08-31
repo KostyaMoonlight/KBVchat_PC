@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Domain.Entities
 {
     [Table("friends")]
-    public class Friends
+    public class Friend
     {
         [Key, Column("idfirst", Order = 1)]
         public int IdFirst { get; set; }

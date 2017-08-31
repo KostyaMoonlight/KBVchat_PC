@@ -32,11 +32,11 @@ namespace Domain.Entities
         [Key, Column("isonline")]
         public int IsOnline { get; set; }
 
-        public ICollection<Friends> FirstFriend { get; set; }
+        public ICollection<Friend> FirstFriend { get; set; }
 
-        public ICollection<Friends> SecondFriend { get; set; }
+        public ICollection<Friend> SecondFriend { get; set; }
 
-        public ICollection<Messages> Messages { get; set; }
+        public ICollection<Message> Messages { get; set; }
 
         public ICollection<Group> GroupAdmins { get; set; }
 

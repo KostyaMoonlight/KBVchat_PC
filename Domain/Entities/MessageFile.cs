@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Domain.Entities
 {
     [Table("messagefiles")]
-    public class MessageFiles
+    public class MessageFile
     {
         [Key, Column("id")]
         public int Id { get; set; } 
@@ -21,9 +21,9 @@ namespace Domain.Entities
         public int IdFile { get; set; }
 
 
-        public Files File { get; set; }
+        public File File { get; set; }
 
-        public Messages Message { get; set; }
+        public Message Message { get; set; }
 
     }
 }
