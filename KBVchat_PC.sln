@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KBVchat_PC", "KBVchat_PC\KBVchat_PC.csproj", "{537B0CE5-6574-42A5-920C-3567544DC563}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{C88BA215-EF5F-4D41-BB0A-015D07651AAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{537B0CE5-6574-42A5-920C-3567544DC563}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{537B0CE5-6574-42A5-920C-3567544DC563}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{537B0CE5-6574-42A5-920C-3567544DC563}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C88BA215-EF5F-4D41-BB0A-015D07651AAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C88BA215-EF5F-4D41-BB0A-015D07651AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C88BA215-EF5F-4D41-BB0A-015D07651AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C88BA215-EF5F-4D41-BB0A-015D07651AAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
