@@ -19,5 +19,11 @@ namespace Domain.Entities
 
         [Column("idfile")]
         public int IdFile { get; set; }
+
+
+        public Files File { get; set; }
+
+        public Messages Message { get; set; }
+
     }
 }

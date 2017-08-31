@@ -16,5 +16,8 @@ namespace Domain.Entities
 
         [Column("file")]
         public byte[]  File{ get; set; }
+
+
+        public ICollection<MessageFiles> MessageFiles { get; set; }
     }
 }

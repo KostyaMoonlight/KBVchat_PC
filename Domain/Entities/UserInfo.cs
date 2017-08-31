@@ -29,5 +29,7 @@ namespace Domain.Entities
         [Column("birthdate")]
         public DateTime Birthdate { get; set; }
 
+
+        public User User { get; set; }
     }
 }

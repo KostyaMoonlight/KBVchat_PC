@@ -18,6 +18,14 @@ namespace Domain.Entities
         public string Name { get; set; }
 
         [Column("admin")]
-        public int Admin { get; set; }
+        public int IdAdmin { get; set; }
+
+
+        public ICollection<Messages> Messages { get; set; }
+
+        public User Admin { get; set; }
+
+        public ICollection<UsersGroup> UsersGroups { get; set; }
+
     }
 }

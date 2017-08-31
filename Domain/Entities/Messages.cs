@@ -31,5 +31,12 @@ namespace Domain.Entities
 
         [Column("idgroup")]
         public int IdGroup { get; set; }
+
+
+        public ICollection<MessageFiles> Files { get; set; }
+
+        public Group Group { get; set; }
+
+        public User User { get; set; }
     }
 }

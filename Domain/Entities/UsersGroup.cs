@@ -16,5 +16,10 @@ namespace Domain.Entities
 
         [Key, Column("idgroup", Order = 2)]
         public int IdGroup { get; set; }
+
+
+        public Group Group { get; set; }
+
+        public User User { get; set; }
     }
 }
