@@ -19,6 +19,7 @@ namespace DataAccess.Repositories.Base
         IEnumerable<User> GetUsersFullInfo(Expression<Func<User, bool>> func);
         IEnumerable<User> GetUsersFriends(int id);
         IEnumerable<Group> GetUsersGroups(int id);
+        IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func);
         IEnumerable<Message> GetUsersMessages(int id);
     }
 }

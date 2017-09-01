@@ -2,15 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Repositories.Base
+namespace BusinessLogic.Service.Base
 {
-    public interface IMessageRepository
+    public interface IMessageService
     {
         IEnumerable<Message> GetMessages(int idSender, int idResiver);
-        IEnumerable<Message> GetMessages(int idSender, int idResiver, Expression<Func<Message, bool>> func);
+        IEnumerable<Message> GetMessages(int idSender, int idResiver, string text);
     }
 }

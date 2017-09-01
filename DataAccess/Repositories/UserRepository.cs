@@ -49,19 +49,21 @@ namespace DataAccess.Repositories
 
         public IEnumerable<User> GetUsersFriends(int id)
         {
-            var users = _context.Friends   
+            var users = _context.Friends 
+                .Include(x=>x.SecondUser)
                 .Where(x => x.IdFirst == id)
-                .Select(x=>x.IdSecond)
+                .Select(x=>x.SecondUser)
                 .ToList();
 
             users.AddRange(
                 _context.Friends
+                .Include(x=>x.FirstUser)
                 .Where(x => x.IdSecond == id)
-                .Select(x => x.IdFirst)
+                .Select(x => x.FirstUser)
                 .ToList()
                 );
 
-            return GetUsers(users);
+            return users;
 
         }
 
@@ -82,6 +84,11 @@ namespace DataAccess.Repositories
                 .Select(x => x.IdGroup)
                 .ToList();
             return _context.Groups.Where(x => groups.Contains(x.Id)).ToArray();
+        }
+
+        public IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func)
+        {
+            return _context.Groups.Where(func).ToArray();
         }
 
         public IEnumerable<Message> GetUsersMessages(int id)
