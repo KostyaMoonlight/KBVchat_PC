@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using DataAccess.Repositories.Base;
 using DataAccess.Context;
+using System.Data.Entity;
 
 namespace DataAccess.Repositories
 {
@@ -34,6 +35,17 @@ namespace DataAccess.Repositories
         {
             return _context.Groups.Where(func).ToArray();
 
+        }
+
+        public IEnumerable<UsersGroup> GetUsersGroupsIncludeUsers(Expression<Func<UsersGroup, bool>> func)
+        {
+            return _context.UsersGroups.Include(x=>x.User).Where(func).ToArray();
+
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
         }
     }
 }

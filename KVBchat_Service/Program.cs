@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DataAccess.Initializers;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
@@ -14,6 +16,8 @@ namespace KVBchat_Service
         /// </summary>
         static void Main()
         {
+            Database.SetInitializer(new KVBchatDbInitializer());
+
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {

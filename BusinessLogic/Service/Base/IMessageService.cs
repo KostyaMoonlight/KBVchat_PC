@@ -9,6 +9,8 @@ namespace BusinessLogic.Service.Base
 {
     public interface IMessageService
     {
+        IEnumerable<Message> GetMessages();
+        IEnumerable<Message> GetUnreadMessages();
         IEnumerable<Message> GetMessages(int idSender, int idResiver);
         IEnumerable<Message> GetMessages(int idSender, int idResiver, string text);
     }

@@ -20,6 +20,9 @@ namespace Domain.Entities
         [Column("isread")]
         public string IsRead { get; set; }
 
+        [Column("isdelivered")]
+        public bool IsDelivered { get; set; }
+
         [Column("text")]
         public string Text { get; set; }
 

@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogicDependencyModule.cs" />
+    <Compile Include="DTO\User\UserUnreadMessage.cs" />
     <Compile Include="Mapping\UserMapping.cs" />
     <Compile Include="Service\Base\IGroupService.cs" />
     <Compile Include="Service\Base\IMessageService.cs" />
@@ -69,8 +70,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DTO\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

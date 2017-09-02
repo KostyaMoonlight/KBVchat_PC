@@ -29,5 +29,21 @@ namespace DataAccess.Repositories
         {
             return _context.Messages.Where(x => x.IdSender == idSender || x.IdGroup == idResiver).Where(func).ToArray();
         }
+
+        public IEnumerable<Message> GetMessages()
+        {
+            return _context.Messages.ToArray();
+        }
+
+        public IEnumerable<Message> GetMessages(Expression<Func<Message, bool>> func)
+        {
+            return _context.Messages.Where(func).ToArray();
+
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }

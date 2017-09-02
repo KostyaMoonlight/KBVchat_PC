@@ -28,5 +28,15 @@ namespace BusinessLogic.Service
         {
             return _repository.GetMessages(idSender, idResiver, x=>x.Text.Contains(text));
         }
+
+        public IEnumerable<Message> GetMessages()
+        {
+            return _repository.GetMessages();
+        }
+
+        public IEnumerable<Message> GetUnreadMessages()
+        {
+            return _repository.GetMessages(x => x.IsDelivered == false);
+        }
     }
 }

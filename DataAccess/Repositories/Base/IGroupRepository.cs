@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.Base
 {
-    public interface IGroupRepository
+    public interface IGroupRepository : ISaveChanges
     {
         Group GetGroup(int id);
         IEnumerable<Group> GetGroups();
         IEnumerable<Group> GetGroups(Expression<Func<Group, bool>> func);
+        IEnumerable<UsersGroup> GetUsersGroupsIncludeUsers(Expression<Func<UsersGroup, bool>> func);
     }
 }

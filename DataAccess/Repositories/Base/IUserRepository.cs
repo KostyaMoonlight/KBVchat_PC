@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.Base
 {
-    public interface IUserRepository
+    public interface IUserRepository: ISaveChanges
     {
         User GetUser(int id);
         IEnumerable<User> GetUsers();
@@ -21,5 +21,7 @@ namespace DataAccess.Repositories.Base
         IEnumerable<Group> GetUsersGroups(int id);
         IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func);
         IEnumerable<Message> GetUsersMessages(int id);
+        IEnumerable<User> GetUsersFromGroup(int id);
+
     }
 }

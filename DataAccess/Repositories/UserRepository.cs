@@ -100,5 +100,15 @@ namespace DataAccess.Repositories
                 );
             return messages;
         }
+
+        public IEnumerable<User> GetUsersFromGroup(int id)
+        {
+            return _context.UsersGroups.Include(x => x.User).Where(x => x.IdGroup == id).Select(x => x.User).ToArray();
+        }
+
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }

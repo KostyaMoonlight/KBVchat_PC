@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
 using DataAccess.Repositories.Base;
+using BusinessLogic.DTO.User;
 
 namespace BusinessLogic.Service
 {
@@ -28,5 +29,6 @@ namespace BusinessLogic.Service
         {
             return _repository.GetGroups(x => x.Name.Contains(name));
         }
+
     }
 }

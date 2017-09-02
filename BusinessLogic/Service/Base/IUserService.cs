@@ -15,5 +15,7 @@ namespace BusinessLogic.Service.Base
         IEnumerable<User> GetUsersFriends(int id);
         IEnumerable<Group> GetUsersGroups(int id);
         IEnumerable<Message> GetUsersMessages(int id);
+        void UserNotification(IEnumerable<Message> messages);
+
     }
 }

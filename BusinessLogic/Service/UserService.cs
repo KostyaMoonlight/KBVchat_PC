@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
 using DataAccess.Repositories.Base;
+using BusinessLogic.DTO.User;
 
 namespace BusinessLogic.Service
 {
@@ -47,6 +48,21 @@ namespace BusinessLogic.Service
         public IEnumerable<Message> GetUsersMessages(int id)
         {
             return _repository.GetUsersMessages(id);
+        }
+
+        public void UserNotification(IEnumerable<Message> messages)
+        {
+            var groupsIds = messages.Select(x => x.IdGroup);
+            var userUnreadMessages = new List<UserUnreadMessage>();
+            foreach (var groupId in groupsIds)
+            {
+                var users = _repository.GetUsersFromGroup(groupId);
+                foreach (var user in users)
+                {
+                    user.UnreadMessages++;
+                }
+            }
+            _repository.SaveChanges();
         }
     }
 }
