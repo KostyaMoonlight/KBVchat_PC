@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,8 @@ namespace KBVchat_PC.Infrastructure.IoC
     {
         protected override void Load(ContainerBuilder builder)
         {
-            base.Load(builder);
+            builder.Register(cnt => AutoMapperConfig.GetConfiguration()).SingleInstance();
+            builder.Register(cnt => cnt.Resolve<MapperConfiguration>().CreateMapper()).SingleInstance();
         }
     }
 }

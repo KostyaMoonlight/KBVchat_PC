@@ -12,7 +12,7 @@ namespace KBVchat_PC.Infrastructure
 {
     public static class DependencyConfig
     {
-        public static IContainer Register()
+        public static IContainer GetContainer()
         {
             var builder = new ContainerBuilder();
 
