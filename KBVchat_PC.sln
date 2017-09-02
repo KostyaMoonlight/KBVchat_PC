@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KBVchat_PC", "KBVchat_PC\KBVchat_PC.csproj", "{537B0CE5-6574-42A5-920C-3567544DC563}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C88BA215-EF5F-4D41-BB0A-015D07651AAB} = {C88BA215-EF5F-4D41-BB0A-015D07651AAB}
+		{99AC112C-B4BF-4DC1-BC05-4120F66287EF} = {99AC112C-B4BF-4DC1-BC05-4120F66287EF}
+		{3444A42E-B46E-479D-A30A-E235B5EB5191} = {3444A42E-B46E-479D-A30A-E235B5EB5191}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{C88BA215-EF5F-4D41-BB0A-015D07651AAB}"
 EndProject
@@ -43,5 +48,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E035EC96-8D38-4722-8A53-ADF3908025A3}
 	EndGlobalSection
 EndGlobal
