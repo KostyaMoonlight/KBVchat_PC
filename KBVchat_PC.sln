@@ -24,6 +24,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLo
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVBchat_Service", "KVBchat_Service\KVBchat_Service.csproj", "{D36503A0-31F0-4119-B247-083913DDB5B2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C88BA215-EF5F-4D41-BB0A-015D07651AAB} = {C88BA215-EF5F-4D41-BB0A-015D07651AAB}
+		{99AC112C-B4BF-4DC1-BC05-4120F66287EF} = {99AC112C-B4BF-4DC1-BC05-4120F66287EF}
+		{3444A42E-B46E-479D-A30A-E235B5EB5191} = {3444A42E-B46E-479D-A30A-E235B5EB5191}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
