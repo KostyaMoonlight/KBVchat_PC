@@ -21,7 +21,6 @@ namespace KVBchat_Service
         IContainer container = null;
         IUserService userService = null;
         IMessageService messageService = null;
-        IGroupService groupService = null;
 
         public KVBchatService()
         {
@@ -31,7 +30,6 @@ namespace KVBchat_Service
             var scope = container.BeginLifetimeScope();
             userService = scope.Resolve<IUserService>();
             messageService = scope.Resolve<IMessageService>();
-            groupService = scope.Resolve<IGroupService>();
             cancelTokenSource = new CancellationTokenSource();
             cancellationToken = cancelTokenSource.Token;
 
