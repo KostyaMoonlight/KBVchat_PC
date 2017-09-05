@@ -26,15 +26,20 @@ namespace DataAccess
                    (pi, c) => (KVBchatDbContext)c.ResolveNamed<DbContext>("DataContext"))
                 .InstancePerRequest();
 
-                builder.RegisterType(typeof(MessageRepository)).As(typeof(IMessageRepository))
-                .WithParameter((pi, c) => pi.Name == "context",
-                   (pi, c) => (KVBchatDbContext)c.ResolveNamed<DbContext>("DataContext"))
-                .InstancePerRequest();
+            builder.RegisterType(typeof(MessageRepository)).As(typeof(IMessageRepository))
+            .WithParameter((pi, c) => pi.Name == "context",
+               (pi, c) => (KVBchatDbContext)c.ResolveNamed<DbContext>("DataContext"))
+            .InstancePerRequest();
 
             builder.RegisterType(typeof(UserRepository)).As(typeof(IUserRepository))
                 .WithParameter((pi, c) => pi.Name == "context",
                    (pi, c) => (KVBchatDbContext)c.ResolveNamed<DbContext>("DataContext"))
                 .InstancePerRequest();
+
+            builder.RegisterType(typeof(AuthenticationRepository)).As(typeof(IAuthenticationRepository))
+    .WithParameter((pi, c) => pi.Name == "context",
+       (pi, c) => (KVBchatDbContext)c.ResolveNamed<DbContext>("DataContext"))
+    .InstancePerRequest();
 
         }
     }

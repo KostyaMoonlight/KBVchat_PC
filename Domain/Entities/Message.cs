@@ -12,13 +12,14 @@ namespace Domain.Entities
     public class Message
     {
         [Key, Column("Id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Column("idsender")]
         public int IdSender { get; set; }
 
         [Column("isread")]
-        public string IsRead { get; set; }
+        public bool IsRead { get; set; }
 
         [Column("isdelivered")]
         public bool IsDelivered { get; set; }
@@ -27,7 +28,7 @@ namespace Domain.Entities
         public string Text { get; set; }
 
         [Column("idfiles")]
-        public int IdFiles { get; set; }
+        public int? IdFiles { get; set; }
 
         [Column("time")]
         public DateTime Time { get; set; }
@@ -36,7 +37,7 @@ namespace Domain.Entities
         public int IdGroup { get; set; }
 
 
-        public ICollection<MessageFile> Files { get; set; }
+        public virtual ICollection<MessageFile> Files { get; set; }
 
         public Group Group { get; set; }
 

@@ -25,11 +25,6 @@ namespace KVBchat_Service
         public KVBchatService()
         {
             InitializeComponent();
-
-            container = DependencyConfig.GetContainer();
-            var scope = container.BeginLifetimeScope();
-            userService = scope.Resolve<IUserService>();
-            messageService = scope.Resolve<IMessageService>();
             cancelTokenSource = new CancellationTokenSource();
             cancellationToken = cancelTokenSource.Token;
 
@@ -38,6 +33,10 @@ namespace KVBchat_Service
         protected override void OnStart(string[] args)
         {
             AddLog("Start");
+            container = DependencyConfig.GetContainer();
+            var scope = container.BeginLifetimeScope();
+            userService = scope.Resolve<IUserService>();
+            messageService = scope.Resolve<IMessageService>();
 
             Task task = new Task(() =>
             {

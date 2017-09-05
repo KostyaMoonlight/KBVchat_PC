@@ -10,8 +10,7 @@ namespace BusinessLogic.Service.Base
     public interface IUserService
     {
         User GetUser(int id);
-        User GetUserFullInfo(int id);
-        IEnumerable<User> GetUsersFullInfo(string name);
+        IEnumerable<User> GetUsers();
         IEnumerable<User> GetUsersFriends(int id);
         IEnumerable<Group> GetUsersGroups(int id);
         IEnumerable<Message> GetUsersMessages(int id);

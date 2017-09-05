@@ -26,15 +26,10 @@ namespace DataAccess.Repositories
             return _context.Users.FirstOrDefault(x => x.Id == id);
         }
 
-        public User GetUserFullInfo(int id)
-        {
-            return _context.Users.Include(x=>x.UserInfo).FirstOrDefault(x => x.Id == id);
-
-        }
 
         public IEnumerable<User> GetUsers()
         {
-            return _context.Users.ToArray();
+            return _context.Users.ToList();
         }
 
         public IEnumerable<User> GetUsers(IEnumerable<int> users)
@@ -67,15 +62,6 @@ namespace DataAccess.Repositories
 
         }
 
-        public IEnumerable<User> GetUsersFullInfo()
-        {
-            return _context.Users.Include(x=>x.UserInfo).ToArray();
-        }
-
-        public IEnumerable<User> GetUsersFullInfo(Expression<Func<User, bool>> func)
-        {
-            return _context.Users.Include(x=>x.UserInfo).Where(func).ToArray();
-        }
 
         public IEnumerable<Group> GetUsersGroups(int id)
         {

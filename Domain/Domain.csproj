@@ -53,7 +53,6 @@
     <Compile Include="Entities\MessageFile.cs" />
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\User.cs" />
-    <Compile Include="Entities\UserInfo.cs" />
     <Compile Include="Entities\UsersGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -12,20 +12,21 @@ namespace Domain.Entities
     public class Group
     {
         [Key,Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Column("name")]
         public string Name { get; set; }
 
         [Column("admin")]
-        public int IdAdmin { get; set; }
+        public int? IdAdmin { get; set; }
 
 
-        public ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
 
         public User Admin { get; set; }
 
-        public ICollection<UsersGroup> UsersGroups { get; set; }
+        public virtual ICollection<UsersGroup> UsersGroups { get; set; }
 
     }
 }

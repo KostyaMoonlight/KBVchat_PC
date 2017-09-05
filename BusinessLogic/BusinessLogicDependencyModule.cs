@@ -25,6 +25,10 @@ namespace BusinessLogic
             builder.RegisterType(typeof(UserService))
                 .As(typeof(IUserService))
                 .InstancePerRequest();
+
+            builder.RegisterType(typeof(AuthenticationService))
+                .As(typeof(IAuthenticationService))
+                .InstancePerRequest();
         }
     }
 }

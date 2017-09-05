@@ -19,15 +19,10 @@ namespace DataAccess.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserInfo>()
-                .HasRequired(r => r.User)
-                .WithRequiredPrincipal(p => p.UserInfo);
 
 
-            modelBuilder.Entity<User>()
-                .HasMany(m => m.FirstFriend)
-                .WithRequired(r => r.FirstUser)
-                .HasForeignKey(f => f.IdFirst);
+
+            modelBuilder.Configurations.Add(new UserEntityTypeConfiguration());
 
             modelBuilder.Entity<User>()
                 .HasMany(m => m.SecondFriend)
@@ -41,8 +36,9 @@ namespace DataAccess.Context
 
             modelBuilder.Entity<User>()
                 .HasMany(m => m.GroupAdmins)
-                .WithRequired(r => r.Admin)
-                .HasForeignKey(f => f.IdAdmin);
+                .WithOptional(r => r.Admin)
+                .HasForeignKey(f => f.IdAdmin)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
                 .HasMany(m => m.Messages)
@@ -72,13 +68,12 @@ namespace DataAccess.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<File> Files { get; set; }
-        public DbSet<Friend> Friends { get; set; }
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<MessageFile> MessageFiles { get; set; }
-        public DbSet<Message> Messages { get; set; }
-        public DbSet<UserInfo> UsersInfo { get; set; }
-        public DbSet<UsersGroup> UsersGroups { get; set; }
-        public DbSet<User> Users{ get; set; }
+        public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<Friend> Friends { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<MessageFile> MessageFiles { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<UsersGroup> UsersGroups { get; set; }
+        public virtual DbSet<User> Users{ get; set; }
     }
 }

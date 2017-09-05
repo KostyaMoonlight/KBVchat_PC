@@ -25,19 +25,14 @@ namespace BusinessLogic.Service
             return _repository.GetUser(id);
         }
 
-        public User GetUserFullInfo(int id)
+        public IEnumerable<User> GetUsers()
         {
-            return _repository.GetUserFullInfo(id);
+            return _repository.GetUsers();
         }
 
         public IEnumerable<User> GetUsersFriends(int id)
         {
             return _repository.GetUsersFriends(id);
-        }
-
-        public IEnumerable<User> GetUsersFullInfo(string name)
-        {
-            return _repository.GetUsersFullInfo(x => x.UserInfo.FirstName.Contains(name));
         }
 
         public IEnumerable<Group> GetUsersGroups(int id)

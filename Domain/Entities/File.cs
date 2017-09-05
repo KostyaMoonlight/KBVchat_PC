@@ -12,12 +12,13 @@ namespace Domain.Entities
     public class File
     {
         [Key, Column("id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Column("file")]
         public byte[]  FileName{ get; set; }
 
 
-        public ICollection<MessageFile> MessageFiles { get; set; }
+        public virtual ICollection<MessageFile> MessageFiles { get; set; }
     }
 }

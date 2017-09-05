@@ -54,11 +54,13 @@
     <Compile Include="DataAccessDependencyModule.cs" />
     <Compile Include="Initializers\KVBchatDbInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Base\IAuthenticationRepository.cs" />
     <Compile Include="Repositories\Base\ISaveChanges.cs" />
     <Compile Include="Repositories\GroupRepository.cs" />
     <Compile Include="Repositories\Base\IGroupRepository.cs" />
     <Compile Include="Repositories\Base\IMessageRepository.cs" />
     <Compile Include="Repositories\Base\IUserRepository.cs" />
+    <Compile Include="Repositories\AuthenticationRepository.cs" />
     <Compile Include="Repositories\MessageRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>

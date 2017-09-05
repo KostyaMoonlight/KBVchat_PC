@@ -14,9 +14,6 @@ namespace DataAccess.Repositories.Base
         IEnumerable<User> GetUsers();
         IEnumerable<User> GetUsers(IEnumerable<int> users);
         IEnumerable<User> GetUsers(Expression<Func<User, bool>> func);
-        User GetUserFullInfo(int id);
-        IEnumerable<User> GetUsersFullInfo();
-        IEnumerable<User> GetUsersFullInfo(Expression<Func<User, bool>> func);
         IEnumerable<User> GetUsersFriends(int id);
         IEnumerable<Group> GetUsersGroups(int id);
         IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func);
