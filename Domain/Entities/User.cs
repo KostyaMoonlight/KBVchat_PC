@@ -16,9 +16,6 @@ namespace Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Column("login")]
-        public string Login { get; set; }
-
         [Column("email")]
         public string Email { get; set; }
 
@@ -76,7 +73,6 @@ namespace Domain.Entities
                 m.Properties(x => new
                 {
                     x.Id,
-                    x.Login,
                     x.Email,
                     x.IsOnline,
                     x.LastTimeAccess,

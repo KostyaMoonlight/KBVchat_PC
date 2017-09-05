@@ -1,8 +1,10 @@
 ﻿using BusinessLogic.DTO.User;
 using BusinessLogic.Service.Base;
+using KVBchat_ASP.Models.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -40,6 +42,16 @@ namespace KVBchat_ASP.Controllers
             }
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult UserLogin()
+        {
+            if (Thread.CurrentPrincipal.Identity.IsAuthenticated)
+            {
+                return PartialView("_UserLogin", new UserViewModel { Nickname = Thread.CurrentPrincipal.Identity.Name, IsAuthenticated = true });
+            }
+            return PartialView("_UserLogin");
         }
     }
 }

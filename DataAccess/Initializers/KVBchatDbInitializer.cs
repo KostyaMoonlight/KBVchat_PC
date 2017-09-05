@@ -20,7 +20,6 @@ namespace DataAccess.Initializers
                     {
                         Email ="Email1",
                         IsOnline = 1,
-                        Login = "login1",
                         Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("pass1")),
                         Phone = "Phone1",
                         UnreadMessages = 0,
@@ -35,7 +34,6 @@ namespace DataAccess.Initializers
                     {
                         Email ="Email2",
                         IsOnline = 2,
-                        Login = "login2",
                         Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("pass2")),
                         Phone = "Phone2",
                         UnreadMessages = 1,

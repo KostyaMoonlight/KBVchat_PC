@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
 
         public User GetUser(string login)
         {
-            return _context.Users.FirstOrDefault(x => x.Login == login);
+            return _context.Users.FirstOrDefault(x => x.Email == login || x.Phone == login);
         }
     }
 }
