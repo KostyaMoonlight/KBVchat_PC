@@ -1,7 +1,7 @@
 ﻿@model BusinessLogic.DTO.User.UserLoginViewModel
 @{
     ViewBag.Title = "Login";
-    Layout = null;
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
 <h2>Login</h2>
@@ -17,5 +17,6 @@
         @Html.PasswordFor(x => x.Password)
     </div>
     <button class="btn btn-primary" type="submit">Login</button>
-
 }
+
+@Html.ActionLink("Register", "Register", "Register");

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -37,7 +38,6 @@ namespace KVBchat_ASP.Controllers
             if (_authenticationService.Authenticate(viewModel))
             {
                 FormsAuthentication.SetAuthCookie(viewModel.Login, true);
-
                 return Redirect(FormsAuthentication.DefaultUrl);
             }
 
@@ -45,11 +45,22 @@ namespace KVBchat_ASP.Controllers
         }
 
         [HttpGet]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return Redirect(FormsAuthentication.LoginUrl);
+        }
+
+        [HttpGet]
         public ActionResult UserLogin()
         {
             if (Thread.CurrentPrincipal.Identity.IsAuthenticated)
             {
-                return PartialView("_UserLogin", new UserViewModel { Nickname = Thread.CurrentPrincipal.Identity.Name, IsAuthenticated = true });
+                return PartialView("_UserLogin", new UserViewModel
+                {
+                    Nickname = Thread.CurrentPrincipal.Identity.Name,
+                    IsAuthenticated = true
+                });
             }
             return PartialView("_UserLogin");
         }

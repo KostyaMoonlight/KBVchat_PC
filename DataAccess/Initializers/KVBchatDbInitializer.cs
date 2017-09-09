@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utility;
 
 namespace DataAccess.Initializers
 {
@@ -20,7 +21,7 @@ namespace DataAccess.Initializers
                     {
                         Email ="Email1",
                         IsOnline = 1,
-                        Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("pass1")),
+                        Password = "pass1".EncryptPassword(),
                         Phone = "Phone1",
                         UnreadMessages = 0,
                         LastTimeAccess = DateTime.Now,
@@ -34,7 +35,7 @@ namespace DataAccess.Initializers
                     {
                         Email ="Email2",
                         IsOnline = 2,
-                        Password = Convert.ToBase64String(Encoding.UTF8.GetBytes("pass2")),
+                        Password = "pass2".EncryptPassword(),
                         Phone = "Phone2",
                         UnreadMessages = 1,
                         LastTimeAccess = DateTime.Now,

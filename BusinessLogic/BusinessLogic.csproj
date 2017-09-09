@@ -47,7 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogicDependencyModule.cs" />
+    <Compile Include="DTO\User\UserEditViewModel.cs" />
+    <Compile Include="DTO\User\UserInfoViewModel.cs" />
     <Compile Include="DTO\User\UserLoginViewModel.cs" />
+    <Compile Include="DTO\User\UserRegistrationViewModel.cs" />
     <Compile Include="DTO\User\UserUnreadMessage.cs" />
     <Compile Include="Mapping\UserMapping.cs" />
     <Compile Include="Service\AuthenticationService.cs" />
@@ -68,6 +71,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{c88ba215-ef5f-4d41-bb0a-015d07651aab}</Project>
       <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\Utility.csproj">
+      <Project>{822e7921-1cbd-4d01-94fc-f30fbfc704b7}</Project>
+      <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

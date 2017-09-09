@@ -11,6 +11,7 @@ namespace DataAccess.Repositories.Base
     public interface IUserRepository: ISaveChanges
     {
         User GetUser(int id);
+        User GetUser(Expression<Func<User, bool>> func);
         IEnumerable<User> GetUsers();
         IEnumerable<User> GetUsers(IEnumerable<int> users);
         IEnumerable<User> GetUsers(Expression<Func<User, bool>> func);
@@ -19,6 +20,7 @@ namespace DataAccess.Repositories.Base
         IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func);
         IEnumerable<Message> GetUsersMessages(int id);
         IEnumerable<User> GetUsersFromGroup(int id);
+        void AddUser(User user);
 
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BusinessLogic.DTO.User;
 using DataAccess.Repositories.Base;
+using Utility;
 
 namespace BusinessLogic.Service
 {
@@ -21,7 +22,7 @@ namespace BusinessLogic.Service
 
         public bool Authenticate(UserLoginViewModel userViewModel)
         {
-            var passwordBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(userViewModel.Password));
+            var passwordBase64 = userViewModel.Password.EncryptPassword();
 
             var user = _repository.GetUser(userViewModel.Login);
 

@@ -1,4 +1,50 @@
-﻿@{
+﻿@model BusinessLogic.DTO.User.UserInfoViewModel
+@{
     ViewBag.Title = "Home Page";
 }
 
+<div>
+    <div>
+        @Html.LabelFor(x => x.Nickname): 
+        @Html.DisplayTextFor(x => x.Nickname)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.FirstName): 
+        @Html.DisplayTextFor(x => x.FirstName)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.MiddleName): 
+        @Html.DisplayTextFor(x => x.MiddleName)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.ThirdName): 
+        @Html.DisplayTextFor(x => x.ThirdName)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Email): 
+        @Html.DisplayTextFor(x => x.Email)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Phone): 
+        @Html.DisplayTextFor(x => x.Phone)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.IsOnline): 
+        @Html.DisplayTextFor(x => x.IsOnline)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Birthdate): 
+        @Html.DisplayTextFor(x => x.Birthdate)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.LastTimeAccess): 
+        @Html.DisplayTextFor(x => x.LastTimeAccess)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.UnreadMessages): 
+        @Html.DisplayTextFor(x => x.UnreadMessages)
+    </div>
+    <div>@Html.ActionLink("Edit", "Edit", "Home")</div>
+
+
+</div>

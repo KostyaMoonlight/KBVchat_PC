@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using BusinessLogic.DTO.User;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,9 @@ namespace BusinessLogic.Service.Base
     public interface IUserService
     {
         User GetUser(int id);
+        UserInfoViewModel GetUserByLogin(string login);
+        void EditUser(UserEditViewModel user);
+        bool RegisterUser(UserRegistrationViewModel user);
         IEnumerable<User> GetUsers();
         IEnumerable<User> GetUsersFriends(int id);
         IEnumerable<Group> GetUsersGroups(int id);

@@ -1,7 +1,11 @@
-﻿using BusinessLogic.Service.Base;
+﻿using AutoMapper;
+using BusinessLogic.DTO.User;
+using BusinessLogic.Service.Base;
+using KVBchat_ASP.Models.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,35 +17,46 @@ namespace KVBchat_ASP.Controllers
         IUserService _userService = null;
         IGroupService _groupService = null;
         IMessageService _messageService = null;
+        IMapper _mapper;
 
-        public HomeController(IUserService userService, IGroupService groupService, IMessageService messageService)
+        public HomeController(
+            IUserService userService, 
+            IGroupService groupService, 
+            IMessageService messageService,
+            IMapper mapper
+            )
         {
             _userService = userService;
             _groupService = groupService;
             _messageService = messageService;
+            _mapper = mapper;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
-            var users = _userService.GetUsers();
-            var groups = _groupService.GetGroup(1);
-            var messages = _messageService.GetMessages();
+            var user = _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name);
 
-            return View();
+            return View(user);
         }
 
-        public ActionResult About()
+        [HttpGet]
+        public ActionResult Edit()
         {
-            ViewBag.Message = "Your application description page.";
+            var user = _mapper.Map<UserEditViewModel>(
+                _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name)
+                );
 
-            return View();
+            return View(user);
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Edit(UserEditViewModel userEditView)
         {
-            ViewBag.Message = "Your contact page.";
+            _userService.EditUser(userEditView);
 
-            return View();
+            return Redirect("Index");
         }
+
     }
 }

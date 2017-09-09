@@ -26,7 +26,6 @@ namespace DataAccess.Repositories
             return _context.Users.FirstOrDefault(x => x.Id == id);
         }
 
-
         public IEnumerable<User> GetUsers()
         {
             return _context.Users.ToList();
@@ -62,7 +61,6 @@ namespace DataAccess.Repositories
 
         }
 
-
         public IEnumerable<Group> GetUsersGroups(int id)
         {
             var groups = _context.UsersGroups
@@ -95,6 +93,17 @@ namespace DataAccess.Repositories
         public void SaveChanges()
         {
             _context.SaveChanges();
+        }
+
+        public User GetUser(Expression<Func<User, bool>> func)
+        {
+            return _context.Users.FirstOrDefault(func);
+        }
+
+        public void AddUser(User user)
+        {
+            _context.Users.Add(user);
+            SaveChanges();
         }
     }
 }
