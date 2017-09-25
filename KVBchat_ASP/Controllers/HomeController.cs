@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using BusinessLogic.DTO.User;
 using BusinessLogic.Service.Base;
-using KVBchat_ASP.Models.Login;
+using Domain.Entities;
+using KVBchat_ASP.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +21,8 @@ namespace KVBchat_ASP.Controllers
         IMapper _mapper;
 
         public HomeController(
-            IUserService userService, 
-            IGroupService groupService, 
+            IUserService userService,
+            IGroupService groupService,
             IMessageService messageService,
             IMapper mapper
             )
@@ -33,9 +34,20 @@ namespace KVBchat_ASP.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(int id = -1)
         {
-            var user = _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name);
+            UserInfoViewModel user;
+            
+            if (id == -1)
+            {
+                user = _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name);
+                ViewBag.User = true;
+            }
+            else
+            {
+                user = _mapper.Map<UserInfoViewModel>(_userService.GetUser(id));
+                ViewBag.User = false;
+            }
 
             return View(user);
         }
@@ -53,7 +65,7 @@ namespace KVBchat_ASP.Controllers
         [HttpPost]
         public ActionResult Edit(UserEditViewModel userEditView)
         {
-            _userService.EditUser(userEditView);
+            _userService.EditUser(_mapper.Map<User>(userEditView));
 
             return Redirect("Index");
         }

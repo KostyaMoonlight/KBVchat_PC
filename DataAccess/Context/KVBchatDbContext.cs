@@ -14,7 +14,6 @@ namespace DataAccess.Context
         public KVBchatDbContext()
             :base("KVBchatDbContext")
         {
-
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

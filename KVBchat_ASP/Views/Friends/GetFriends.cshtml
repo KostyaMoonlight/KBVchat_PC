@@ -1,0 +1,15 @@
+﻿@model IEnumerable<BusinessLogic.DTO.User.FriendShortInfoViewModel>
+@{
+    ViewBag.Title = "GetFriends";
+}
+
+<h2>GetFriends</h2>
+
+@foreach(var friend in @Model)
+{
+    <div>
+        @Html.ActionLink(friend.Nickname, "Index", "Home", new { id = friend.Id}, null)
+        @friend.IsOnline
+        @friend.LastTimeAccess
+    </div>
+}

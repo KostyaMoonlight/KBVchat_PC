@@ -1,6 +1,7 @@
-﻿@model BusinessLogic.DTO.User.UserRegistrationViewModel
+﻿@model KVBchat_ASP.Models.User.UserRegistrationViewModel
 @{
     ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
 
 <h2>Registration</h2>
@@ -14,6 +15,7 @@
     <div class="form-group">
         @Html.LabelFor(x => x.Email)
         @Html.TextBoxFor(x => x.Email)
+        @Html.ValidationMessageFor(x=>x.Email)
     </div>
     <div class="form-group">
         @Html.LabelFor(x => x.Phone)

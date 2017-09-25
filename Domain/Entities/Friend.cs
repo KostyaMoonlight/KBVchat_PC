@@ -20,7 +20,6 @@ namespace Domain.Entities
         [Column("isconfirmed")]
         public bool IsConfirmed { get; set; }
 
-
         public User FirstUser { get; set; }
 
         public User SecondUser { get; set; }

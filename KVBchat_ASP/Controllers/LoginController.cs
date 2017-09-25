@@ -1,6 +1,6 @@
 ﻿using BusinessLogic.DTO.User;
 using BusinessLogic.Service.Base;
-using KVBchat_ASP.Models.Login;
+using KVBchat_ASP.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +35,7 @@ namespace KVBchat_ASP.Controllers
                 return View(viewModel);
             }
 
-            if (_authenticationService.Authenticate(viewModel))
+            if (_authenticationService.Authenticate(viewModel.Login, viewModel.Password))
             {
                 FormsAuthentication.SetAuthCookie(viewModel.Login, true);
                 return Redirect(FormsAuthentication.DefaultUrl);

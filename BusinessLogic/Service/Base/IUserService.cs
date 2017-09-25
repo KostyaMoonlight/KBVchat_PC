@@ -1,4 +1,5 @@
-﻿using BusinessLogic.DTO.User;
+﻿using BusinessLogic.DTO.Group;
+using BusinessLogic.DTO.User;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,12 @@ namespace BusinessLogic.Service.Base
     {
         User GetUser(int id);
         UserInfoViewModel GetUserByLogin(string login);
-        void EditUser(UserEditViewModel user);
-        bool RegisterUser(UserRegistrationViewModel user);
+        void EditUser(User user);
+        bool RegisterUser(User user);
         IEnumerable<User> GetUsers();
-        IEnumerable<User> GetUsersFriends(int id);
-        IEnumerable<Group> GetUsersGroups(int id);
+        IEnumerable<FriendViewModel> GetUsersFriends(int id);
+        IEnumerable<FriendShortInfoViewModel> GetUsersFriendsShortInfo(int id);
+        IEnumerable<GroupViewModel> GetUsersGroups(int id);
         IEnumerable<Message> GetUsersMessages(int id);
         void UserNotification(IEnumerable<Message> messages);
 

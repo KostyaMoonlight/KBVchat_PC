@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using System.Linq.Expressions;
 using DataAccess.Context;
+using System.Data.Entity;
 
 namespace DataAccess.Repositories
 {
@@ -41,9 +42,20 @@ namespace DataAccess.Repositories
 
         }
 
+        public IEnumerable<Message> GetMessagesIncludeUsers(Expression<Func<Message, bool>> func)
+        {
+            return _context.Messages.Include(x=>x.User).Where(func).ToArray();
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();
+        }
+
+        public void SendMessage(Message message)
+        {
+            _context.Messages.Add(message);
+            SaveChanges();
         }
     }
 }

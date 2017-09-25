@@ -1,5 +1,8 @@
-﻿using BusinessLogic.DTO.User;
+﻿using AutoMapper;
+using BusinessLogic.DTO.User;
 using BusinessLogic.Service.Base;
+using Domain.Entities;
+using KVBchat_ASP.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +16,12 @@ namespace KVBchat_ASP.Controllers
         : Controller
     {
         IUserService _userService = null;
+        IMapper _mapper = null;
 
-        public RegisterController(IUserService userService)
+        public RegisterController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -32,7 +37,7 @@ namespace KVBchat_ASP.Controllers
             {
                 return View(user);
             }
-            if (_userService.RegisterUser(user))
+            if (_userService.RegisterUser(_mapper.Map<User>(user)))
             {
                 return Redirect(FormsAuthentication.LoginUrl);
             }

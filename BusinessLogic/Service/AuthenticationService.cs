@@ -20,11 +20,11 @@ namespace BusinessLogic.Service
             _repository = repository;
         }
 
-        public bool Authenticate(UserLoginViewModel userViewModel)
+        public bool Authenticate(string login, string password)
         {
-            var passwordBase64 = userViewModel.Password.EncryptPassword();
+            var passwordBase64 = password.EncryptPassword();
 
-            var user = _repository.GetUser(userViewModel.Login);
+            var user = _repository.GetUser(login);
 
             if (user == null)
             {

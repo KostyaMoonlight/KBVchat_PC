@@ -9,6 +9,6 @@ namespace BusinessLogic.Service.Base
 {
     public interface IAuthenticationService
     {
-        bool Authenticate(UserLoginViewModel userViewModel);
+        bool Authenticate(string login, string password);
     }
 }

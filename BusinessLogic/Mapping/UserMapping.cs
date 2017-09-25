@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using BusinessLogic.DTO.Group;
+using BusinessLogic.DTO.Message;
 using BusinessLogic.DTO.User;
 using Domain.Entities;
 using System;
@@ -10,18 +12,15 @@ using System.Threading.Tasks;
 namespace BusinessLogic.Mapping
 {
     public class UserMapping
-        :Profile
+        : Profile
     {
 
         public UserMapping()
         {
-            CreateMap<User, UserInfoViewModel>(); 
-            CreateMap<User, UserEditViewModel>(); 
+            CreateMap<User, UserInfoViewModel>();
             CreateMap<UserInfoViewModel, User>();
-            CreateMap<UserInfoViewModel, UserEditViewModel>();
-            CreateMap<UserRegistrationViewModel, User>()
-                .ForMember(dest => dest.LastTimeAccess, opt => opt.MapFrom(src => DateTime.Now));
-
-        }
+            CreateMap<User, FriendViewModel>();
+            CreateMap<User, FriendShortInfoViewModel>();
+            }
     }
 }

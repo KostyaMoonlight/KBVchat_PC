@@ -9,6 +9,7 @@ using DataAccess.Repositories.Base;
 using BusinessLogic.DTO.User;
 using AutoMapper;
 using Utility;
+using BusinessLogic.DTO.Group;
 
 namespace BusinessLogic.Service
 {
@@ -24,7 +25,7 @@ namespace BusinessLogic.Service
             _mapper = mapper;
         }
 
-        public void EditUser(UserEditViewModel user)
+        public void EditUser(User user)
         {
             var oldUser = _repository.GetUser(user.Id);
             if (oldUser == null)
@@ -58,14 +59,23 @@ namespace BusinessLogic.Service
             return _repository.GetUsers();
         }
 
-        public IEnumerable<User> GetUsersFriends(int id)
+        public IEnumerable<FriendViewModel> GetUsersFriends(int id)
         {
-            return _repository.GetUsersFriends(id);
+            return _repository.GetUsersFriends(id).Select(x => _mapper.Map<FriendViewModel>(x));
         }
 
-        public IEnumerable<Group> GetUsersGroups(int id)
+        public IEnumerable<FriendShortInfoViewModel> GetUsersFriendsShortInfo(int id)
         {
-            return _repository.GetUsersGroups(id);
+            return _repository.GetUsersFriends(id).Select(x=>_mapper.Map<FriendShortInfoViewModel>(x));
+        }
+
+        public IEnumerable<GroupViewModel> GetUsersGroups(int id)
+        {
+            var groups = _repository
+                .GetUsersGroups(id)
+                .Select(x=> _mapper.Map<GroupViewModel>(x))
+                .ToList();
+            return groups;
         }
 
         public IEnumerable<Message> GetUsersMessages(int id)
@@ -73,17 +83,16 @@ namespace BusinessLogic.Service
             return _repository.GetUsersMessages(id);
         }
 
-        public bool RegisterUser(UserRegistrationViewModel user)
+        public bool RegisterUser(User user)
         {
-            var newUser = _mapper.Map<User>(user);
             var oldUser = _repository.GetUser(x => x.Email == user.Email || x.Phone == user.Phone);
             if (oldUser != null)
             {
                 return false;
             }
-            var newPassword = newUser.Password.EncryptPassword();
-            newUser.Password = newPassword;
-            _repository.AddUser(newUser);
+            var newPassword = user.Password.EncryptPassword();
+            user.Password = newPassword;
+            _repository.AddUser(user);
             return true;
         }
 

@@ -47,11 +47,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogicDependencyModule.cs" />
-    <Compile Include="DTO\User\UserEditViewModel.cs" />
+    <Compile Include="DTO\Group\GroupViewModel.cs" />
+    <Compile Include="DTO\Message\MessageViewModel.cs" />
+    <Compile Include="DTO\Message\SendMessageViewModel.cs" />
+    <Compile Include="DTO\User\FriendShortInfoViewModel.cs" />
+    <Compile Include="DTO\User\FriendViewModel.cs" />
     <Compile Include="DTO\User\UserInfoViewModel.cs" />
-    <Compile Include="DTO\User\UserLoginViewModel.cs" />
-    <Compile Include="DTO\User\UserRegistrationViewModel.cs" />
     <Compile Include="DTO\User\UserUnreadMessage.cs" />
+    <Compile Include="Mapping\GroupMapping.cs" />
+    <Compile Include="Mapping\MessageMapping.cs" />
     <Compile Include="Mapping\UserMapping.cs" />
     <Compile Include="Service\AuthenticationService.cs" />
     <Compile Include="Service\Base\IAuthenticationService.cs" />

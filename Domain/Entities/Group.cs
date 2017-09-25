@@ -21,7 +21,6 @@ namespace Domain.Entities
         [Column("admin")]
         public int? IdAdmin { get; set; }
 
-
         public virtual ICollection<Message> Messages { get; set; }
 
         public User Admin { get; set; }

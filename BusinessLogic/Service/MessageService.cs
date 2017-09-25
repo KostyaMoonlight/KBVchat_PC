@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain.Entities;
 using DataAccess.Repositories.Base;
+using BusinessLogic.DTO.Message;
+using AutoMapper;
 
 namespace BusinessLogic.Service
 {
@@ -13,9 +15,11 @@ namespace BusinessLogic.Service
         : IMessageService
     {
         IMessageRepository _repository = null;
+        IMapper _mapper = null;
 
-        public MessageService(IMessageRepository repository)
+        public MessageService(IMessageRepository repository, IMapper mapper)
         {
+            _mapper = mapper;
             _repository = repository;
         }
 
@@ -34,9 +38,26 @@ namespace BusinessLogic.Service
             return _repository.GetMessages();
         }
 
+        public IEnumerable<MessageViewModel> GetMessagesFromGroup(int groupId)
+        {
+            return _repository
+                .GetMessagesIncludeUsers(x => x.IdGroup == groupId)
+                .Select(x=>_mapper.Map<MessageViewModel>(x));
+        }
+
         public IEnumerable<Message> GetUnreadMessages()
         {
             return _repository.GetMessages(x => x.IsDelivered == false);
+        }
+
+        public MessageViewModel SendMessage(MessageViewModel message)
+        {
+            var group = message.IdGroup;
+            var mess = _mapper.Map<Message>(message);
+
+            _repository.SendMessage(mess);
+
+            return _mapper.Map<MessageViewModel>(mess);
         }
     }
 }

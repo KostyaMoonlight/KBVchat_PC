@@ -1,0 +1,20 @@
+﻿@model IEnumerable<BusinessLogic.DTO.Group.GroupViewModel>
+
+
+
+    <div class="navbar navbar-left col-sm-3 col-lg-2">
+        @foreach (var group in @Model)
+        {
+            <div>
+                @Ajax.ActionLink(
+               group.Name, "GroupMessages", "Message", new { id = group.Id },
+               new AjaxOptions
+               {
+                   HttpMethod = "GET",
+                   InsertionMode = InsertionMode.Replace,
+                   UpdateTargetId = "MessageId"
+               })
+            </div>
+        }
+    </div>
+

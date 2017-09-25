@@ -26,10 +26,10 @@ namespace DataAccess.Initializers
                         UnreadMessages = 0,
                         LastTimeAccess = DateTime.Now,
                         Birthdate = DateTime.Now.AddYears(-10),
-                        FirstName = "Fn1",
-                        MiddleName = "Mn1",
-                        ThirdName = "Tn1",
-                        Nickname = "Nn1"
+                        FirstName = "Kostya",
+                        MiddleName = "Zdor",
+                        ThirdName = "Andr",
+                        Nickname = "Moonlight"
                     },
                     new User
                     {
@@ -40,25 +40,71 @@ namespace DataAccess.Initializers
                         UnreadMessages = 1,
                         LastTimeAccess = DateTime.Now,
                         Birthdate = DateTime.Now.AddYears(-20),
-                        FirstName = "Fn2",
-                        MiddleName = "Mn2",
-                        ThirdName = "Tn2",
-                        Nickname = "Nn2"
+                        FirstName = "Vlad",
+                        MiddleName = "Betin",
+                        ThirdName = "But`kovich",
+                        Nickname = "Mandarin"
+                    },
+                    new User
+                    {
+                        Email ="Email3",
+                        IsOnline = 2,
+                        Password = "pass3".EncryptPassword(),
+                        Phone = "Phone3",
+                        UnreadMessages = 1,
+                        LastTimeAccess = DateTime.Now,
+                        Birthdate = DateTime.Now.AddYears(-20),
+                        FirstName = "Bodya",
+                        MiddleName = "Shuker",
+                        ThirdName = "But`kovich",
+                        Nickname = "Melkiy"
+                    },
+                    new User
+                    {
+                        Email ="Email4",
+                        IsOnline = 2,
+                        Password = "pass4".EncryptPassword(),
+                        Phone = "Phone4",
+                        UnreadMessages = 1,
+                        LastTimeAccess = DateTime.Now,
+                        Birthdate = DateTime.Now.AddYears(-20),
+                        FirstName = "Vlad",
+                        MiddleName = "Gromadskiy",
+                        ThirdName = "But`kovich",
+                        Nickname = "Grom"
                     }
                 });
 
             context.SaveChanges();
 
-            context.Friends.Add(
-                new Friend { IdFirst = 1, IdSecond = 2, IsConfirmed = true }
+            context.Friends.AddRange(new List<Friend> {
+                new Friend { IdFirst = 1, IdSecond = 2, IsConfirmed = true },
+                new Friend { IdFirst = 1, IdSecond = 3, IsConfirmed = true },
+                new Friend { IdFirst = 1, IdSecond = 4, IsConfirmed = true },
+                new Friend { IdFirst = 2, IdSecond = 3, IsConfirmed = true },
+                new Friend { IdFirst = 3, IdSecond = 4, IsConfirmed = true }
+                }
                 );
 
             context.SaveChanges();
 
+
+
             context.Groups.AddRange(new List<Group>
             {
-                new Group{ Name = "Group1", IdAdmin = 1},
-                new Group{ Name = "Group2" }
+                new Group{ Name = "GroupTV51", IdAdmin = 1},
+                new Group{ Name = "Group324" }
+            });
+
+            context.SaveChanges();
+
+            context.UsersGroups.AddRange(new List<UsersGroup>
+            {
+                new UsersGroup{ IdUser = 1, IdGroup = 1},
+                new UsersGroup{ IdUser = 2, IdGroup = 1},
+                new UsersGroup{ IdUser = 3, IdGroup = 1},
+                new UsersGroup{ IdUser = 1, IdGroup = 2},
+                new UsersGroup{ IdUser = 2, IdGroup = 2}
             });
 
             context.SaveChanges();
@@ -67,11 +113,11 @@ namespace DataAccess.Initializers
             {
                 new Message
                 {
-                    IdGroup =2,
+                    IdGroup =1,
                     IdSender = 1,
                     IsDelivered = false,
                     IsRead = false,
-                    Text = "Text1",
+                    Text = "Text asd asd asd fa f",
                     Time = DateTime.Now,
                 },
                 new Message
@@ -80,14 +126,68 @@ namespace DataAccess.Initializers
                     IdSender = 2,
                     IsDelivered = false,
                     IsRead = false,
-                    Text = "Text2",
+                    Text = "Tdfasd f afg adcxas as",
+                    Time = DateTime.Now,
+                },
+                new Message
+                {
+                    IdGroup =1,
+                    IdSender = 1,
+                    IsDelivered = false,
+                    IsRead = false,
+                    Text = "Tesdsdkgj sjfj asbkj ",
+                    Time = DateTime.Now,
+                },
+                new Message
+                {
+                    IdGroup =1,
+                    IdSender = 2,
+                    IsDelivered = false,
+                    IsRead = false,
+                    Text = "f kjsd  aS DaS Das asd D",
+                    Time = DateTime.Now,
+                },
+                new Message
+                {
+                    IdGroup =1,
+                    IdSender = 1,
+                    IsDelivered = false,
+                    IsRead = false,
+                    Text = "Text asd asd asd fa f",
+                    Time = DateTime.Now,
+                },
+                new Message
+                {
+                    IdGroup =1,
+                    IdSender = 2,
+                    IsDelivered = false,
+                    IsRead = false,
+                    Text = "Tdfzha  dfvc ws sc f f wef q",
+                    Time = DateTime.Now,
+                },
+                new Message
+                {
+                    IdGroup =2,
+                    IdSender = 1,
+                    IsDelivered = false,
+                    IsRead = false,
+                    Text = "Text asd asd asd fa f",
+                    Time = DateTime.Now,
+                },
+                new Message
+                {
+                    IdGroup =1,
+                    IdSender = 2,
+                    IsDelivered = false,
+                    IsRead = false,
+                    Text = "Tdfzha  dfvc ws sc f f wef q",
                     Time = DateTime.Now,
                 }
             });
 
             context.SaveChanges();
 
-            
+
         }
     }
 }

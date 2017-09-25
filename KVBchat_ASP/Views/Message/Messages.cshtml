@@ -1,0 +1,42 @@
+﻿@model BusinessLogic.DTO.Message.SendMessageViewModel
+@{
+    ViewBag.Title = "GroupMessages";
+}
+
+<h2>GroupMessages</h2>
+<div>
+    <div >
+        @Html.Action("Groups", "Group")
+    </div>
+    <div  class="col-sm-9 col-lg-10">
+    <div id="MessageId">
+
+    </div>
+        <div>
+            @using (@Ajax.BeginForm("SendMessage", "Message", new AjaxOptions
+            {
+                UpdateTargetId = "MessageId",
+                HttpMethod = "POST",
+                InsertionMode = InsertionMode.InsertAfter,
+                OnSuccess = "onSuccess"
+                
+            }))
+            {
+                @Html.TextBoxFor(x => x.Text, new { id = "textBoxId"})
+                <input type="submit" value="Process" class="btn btn-primary" />
+            }
+            
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function onSuccess(){
+            document.getElementById("textBoxId").value = "";
+        }
+    </script>
+}
+
+

@@ -44,7 +44,11 @@
         @Html.LabelFor(x => x.UnreadMessages): 
         @Html.DisplayTextFor(x => x.UnreadMessages)
     </div>
-    <div>@Html.ActionLink("Edit", "Edit", "Home")</div>
-
+    @if (ViewBag.User == true)
+    {
+        <div>@Html.ActionLink("Edit", "Edit", "Home")</div>
+    }
+    
+    
 
 </div>

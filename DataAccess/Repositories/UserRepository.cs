@@ -64,10 +64,11 @@ namespace DataAccess.Repositories
         public IEnumerable<Group> GetUsersGroups(int id)
         {
             var groups = _context.UsersGroups
+                .Include(x=>x.Group)
                 .Where(x => x.IdUser == id)
-                .Select(x => x.IdGroup)
+                .Select(x => x.Group)
                 .ToList();
-            return _context.Groups.Where(x => groups.Contains(x.Id)).ToArray();
+            return groups;
         }
 
         public IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func)

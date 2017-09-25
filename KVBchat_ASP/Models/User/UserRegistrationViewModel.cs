@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace BusinessLogic.DTO.User
+namespace KVBchat_ASP.Models.User
 {
     public class UserRegistrationViewModel
     {
+        [Required]
+        [RegularExpression(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$", ErrorMessage ="Enter email")]
         public string Email { get; set; }
 
         public string Phone { get; set; }

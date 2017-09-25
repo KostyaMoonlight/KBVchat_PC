@@ -1,0 +1,17 @@
+﻿@model IEnumerable<BusinessLogic.DTO.Message.MessageViewModel>
+
+<div>
+    @foreach (var message in @Model)
+    {
+        <div>
+            <div>
+                @Html.ValueFor(x => message.Sender):
+                @Html.ValueFor(x => message.Text)
+            </div>
+            <div>
+                @Html.ValueFor(x => message.IsRead)
+                @Html.ValueFor(x => message.Time)
+            </div>
+        </div>
+    }
+</div>
