@@ -30,7 +30,7 @@ namespace BusinessLogic.Service
 
         public IEnumerable<Message> GetMessages(int idSender, int idResiver, string text)
         {
-            return _repository.GetMessages(idSender, idResiver, x=>x.Text.Contains(text));
+            return _repository.GetMessages(idSender, idResiver, x => x.Text.Contains(text));
         }
 
         public IEnumerable<Message> GetMessages()
@@ -42,12 +42,17 @@ namespace BusinessLogic.Service
         {
             return _repository
                 .GetMessagesIncludeUsers(x => x.IdGroup == groupId)
-                .Select(x=>_mapper.Map<MessageViewModel>(x));
+                .Select(x => _mapper.Map<MessageViewModel>(x));
         }
 
         public IEnumerable<Message> GetUnreadMessages()
         {
             return _repository.GetMessages(x => x.IsDelivered == false);
+        }
+
+        public IEnumerable<Message> GetUsersMessages(int id)
+        {
+            return _repository.GetUsersMessages(id);
         }
 
         public MessageViewModel SendMessage(MessageViewModel message)

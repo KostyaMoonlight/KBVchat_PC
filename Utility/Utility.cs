@@ -12,5 +12,10 @@ namespace Utility
         {
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(password));
         }
+
+        public static int Years(this DateTime date)
+        {
+            return DateTime.Now.Year - date.Year;
+        }
     }
 }

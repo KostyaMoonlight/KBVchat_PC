@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using BusinessLogic.DTO.Group;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace BusinessLogic.Service.Base
     {
         Group GetGroup(int id);
         IEnumerable<Group> GetGroups(string name);
+        IEnumerable<GroupViewModel> GetUsersGroups(int id);
+
     }
 }

@@ -14,5 +14,7 @@ namespace DataAccess.Repositories.Base
         IEnumerable<Group> GetGroups();
         IEnumerable<Group> GetGroups(Expression<Func<Group, bool>> func);
         IEnumerable<UsersGroup> GetUsersGroupsIncludeUsers(Expression<Func<UsersGroup, bool>> func);
+        IEnumerable<Group> GetUsersGroups(int id);
+        IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Threading;
+using System.Web;
 using System.Web.Optimization;
 
 namespace KVBchat_ASP
@@ -11,8 +12,22 @@ namespace KVBchat_ASP
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            //bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+            //            "~/Scripts/jquery.validate*"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                "~/Scripts/jquery.validate.js",
+                "~/Scripts/jquery.validate.min.js",
+                "~/Scripts/jquery.validate.unobtrusive.js",
+                "~/Scripts/jquery.validate.unobtrusive.min.js"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/global").Include(
+            "~/Scripts/globalize/globalize.js",
+           "~/Scripts/globalize/cultures/globalize.culture."+ Thread.CurrentThread.CurrentCulture.ToString() +".js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/globalLastFile").Include(
+            "~/Scripts/jquery.validate.globalize*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.

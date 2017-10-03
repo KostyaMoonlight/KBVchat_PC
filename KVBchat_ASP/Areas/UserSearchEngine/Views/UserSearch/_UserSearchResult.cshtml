@@ -1,0 +1,13 @@
+﻿@model IEnumerable<BusinessLogic.DTO.User.UserShortInfoViewModel>
+
+<div>
+    @foreach(var user in Model)
+    {
+        <div>
+            <span>@Html.ActionLink(user.Nickname, "Index", "Home", new {area = "",  id = user.Id }, null)</span>
+            <span>@user.FirstName @user.MiddleName @user.ThirdName</span>
+            <span>Age: @user.Age</span>
+
+        </div>
+    }
+</div>

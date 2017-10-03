@@ -1,0 +1,19 @@
+﻿@model KVBchat_ASP.Areas.Authentication.Models.UserLoginViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Login",new { area = "Authentication" }, FormMethod.Post,null))
+{
+    <div class="form-group">
+        @Html.LabelFor(x => x.Login)
+        @Html.TextBoxFor(x => x.Login)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => x.Password)
+        @Html.PasswordFor(x => x.Password)
+    </div>
+    <button class="btn btn-primary" type="submit">Login</button>
+}

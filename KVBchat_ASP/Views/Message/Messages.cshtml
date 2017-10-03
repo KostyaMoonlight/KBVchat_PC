@@ -6,26 +6,25 @@
 <h2>GroupMessages</h2>
 <div>
     <div >
-        @Html.Action("Groups", "Group")
+        @Html.Action("Groups", "Group", new { area = "" })
     </div>
     <div  class="col-sm-9 col-lg-10">
     <div id="MessageId">
 
     </div>
         <div>
-            @using (@Ajax.BeginForm("SendMessage", "Message", new AjaxOptions
+            @using (@Ajax.BeginForm("SendMessage", "Message", new { area = "" }, new AjaxOptions
             {
                 UpdateTargetId = "MessageId",
                 HttpMethod = "POST",
                 InsertionMode = InsertionMode.InsertAfter,
                 OnSuccess = "onSuccess"
-                
-            }))
+
+            },null))
             {
-                @Html.TextBoxFor(x => x.Text, new { id = "textBoxId"})
+                @Html.EditorFor(x => x.Text, new { id = "textBoxId" });
                 <input type="submit" value="Process" class="btn btn-primary" />
-            }
-            
+            }            
         </div>
     </div>
 </div>
@@ -37,6 +36,8 @@
             document.getElementById("textBoxId").value = "";
         }
     </script>
+
+
 }
 
 

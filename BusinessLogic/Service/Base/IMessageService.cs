@@ -12,7 +12,8 @@ namespace BusinessLogic.Service.Base
     {
         MessageViewModel SendMessage(MessageViewModel message);
         IEnumerable<Message> GetMessages();
-        IEnumerable<Message> GetUnreadMessages();        
+        IEnumerable<Message> GetUnreadMessages();
+        IEnumerable<Message> GetUsersMessages(int id);
         IEnumerable<Message> GetMessages(int idSender, int idResiver);
         IEnumerable<Message> GetMessages(int idSender, int idResiver, string text);
         IEnumerable<MessageViewModel> GetMessagesFromGroup(int groupId);

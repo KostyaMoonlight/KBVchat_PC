@@ -69,20 +69,6 @@ namespace BusinessLogic.Service
             return _repository.GetUsersFriends(id).Select(x=>_mapper.Map<FriendShortInfoViewModel>(x));
         }
 
-        public IEnumerable<GroupViewModel> GetUsersGroups(int id)
-        {
-            var groups = _repository
-                .GetUsersGroups(id)
-                .Select(x=> _mapper.Map<GroupViewModel>(x))
-                .ToList();
-            return groups;
-        }
-
-        public IEnumerable<Message> GetUsersMessages(int id)
-        {
-            return _repository.GetUsersMessages(id);
-        }
-
         public bool RegisterUser(User user)
         {
             var oldUser = _repository.GetUser(x => x.Email == user.Email || x.Phone == user.Phone);
@@ -94,6 +80,20 @@ namespace BusinessLogic.Service
             user.Password = newPassword;
             _repository.AddUser(user);
             return true;
+        }
+
+        public IEnumerable<UserShortInfoViewModel> SearchUsers(string fullName, int age)
+        {
+            return _repository.GetUsers
+                (
+                    x => (age == 0 || (DateTime.Now.Year - x.Birthdate.Year) == age) &&
+                    (
+                        x.Nickname.Contains(fullName) ||
+                        x.FirstName.Contains(fullName) ||
+                        x.MiddleName.Contains(fullName) ||
+                        x.ThirdName.Contains(fullName)
+                    )
+                ).Select(x => _mapper.Map<UserShortInfoViewModel>(x));
         }
 
         public void UserNotification(IEnumerable<Message> messages)

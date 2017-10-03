@@ -1,0 +1,29 @@
+﻿@model KVBchat_ASP.Areas.UserSearchEngine.Models.User.UserSearchViewModel
+@{
+    ViewBag.Title = "UserSearch";
+}
+
+<h2>UserSearch</h2>
+
+@using (Ajax.BeginForm("UserSearch", "UserSearch",new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "userSearchResult"
+}))
+{
+    <div>
+        @Html.LabelFor(x=>x.FullName)
+        @Html.TextBoxFor(x=>x.FullName)
+    </div>
+    <div>
+        @Html.LabelFor(x=>x.Age)
+        @Html.TextBoxFor(x=>x.Age)
+    </div>
+    <input type="submit" value="Search" class="btn btn-primary" />
+}
+
+<div id="userSearchResult">
+
+</div>
+

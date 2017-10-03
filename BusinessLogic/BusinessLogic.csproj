@@ -53,6 +53,7 @@
     <Compile Include="DTO\User\FriendShortInfoViewModel.cs" />
     <Compile Include="DTO\User\FriendViewModel.cs" />
     <Compile Include="DTO\User\UserInfoViewModel.cs" />
+    <Compile Include="DTO\User\UserShortInfoViewModel.cs" />
     <Compile Include="DTO\User\UserUnreadMessage.cs" />
     <Compile Include="Mapping\GroupMapping.cs" />
     <Compile Include="Mapping\MessageMapping.cs" />

@@ -44,7 +44,21 @@ namespace DataAccess.Repositories
 
         public IEnumerable<Message> GetMessagesIncludeUsers(Expression<Func<Message, bool>> func)
         {
-            return _context.Messages.Include(x=>x.User).Where(func).ToArray();
+            return _context.Messages.Include(x => x.User).Where(func).ToArray();
+        }
+
+        public IEnumerable<Message> GetUsersMessages(int id)
+        {
+            var groups = _context.UsersGroups
+                .Include(x => x.Group)
+                .Where(x => x.IdUser == id)
+                .Select(x => x.Group.Id)
+                .ToList();
+            var messages = _context.Messages.Where(x => x.IdSender == id).ToList();
+            messages.AddRange(
+                _context.Messages.Where(x => groups.Contains(x.IdGroup)).ToList()
+                );
+            return messages;
         }
 
         public void SaveChanges()

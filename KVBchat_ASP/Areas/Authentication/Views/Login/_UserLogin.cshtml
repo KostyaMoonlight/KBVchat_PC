@@ -1,0 +1,19 @@
+﻿@model KVBchat_ASP.Models.User.UserViewModel
+
+@if (Model != null && Model.IsAuthenticated)
+{
+    <div>
+        <span>
+            @Model.Nickname
+        </span>
+        <span>
+            @Html.ActionLink("Logout", "Logout", "Login", new { area = "Authentication" }, null)
+        </span>
+    </div>
+}
+else
+{
+    <div>
+        @Html.ActionLink("Login", "Login", "Login", new { area = "Authentication" }, null)
+    </div>
+}

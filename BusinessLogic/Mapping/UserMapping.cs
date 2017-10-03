@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utility;
 
 namespace BusinessLogic.Mapping
 {
@@ -21,6 +22,8 @@ namespace BusinessLogic.Mapping
             CreateMap<UserInfoViewModel, User>();
             CreateMap<User, FriendViewModel>();
             CreateMap<User, FriendShortInfoViewModel>();
-            }
+            CreateMap<User, UserShortInfoViewModel>()
+                .ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.Birthdate.Years()));
+        }
     }
 }

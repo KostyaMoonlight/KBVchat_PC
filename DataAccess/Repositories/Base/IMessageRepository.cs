@@ -11,6 +11,7 @@ namespace DataAccess.Repositories.Base
     public interface IMessageRepository: ISaveChanges
     {
         IEnumerable<Message> GetMessages();
+        IEnumerable<Message> GetUsersMessages(int id);
         IEnumerable<Message> GetMessagesIncludeUsers(Expression<Func<Message, bool>> func);
         IEnumerable<Message> GetMessages(Expression<Func<Message, bool>> func);
         IEnumerable<Message> GetMessages(int idSender, int idResiver);

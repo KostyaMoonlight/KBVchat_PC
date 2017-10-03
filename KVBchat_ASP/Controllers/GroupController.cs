@@ -26,7 +26,7 @@ namespace KVBchat_ASP.Controllers
         {
             var user = _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name);
 
-            var groups = _userService.GetUsersGroups(user.Id);
+            var groups = _groupService.GetUsersGroups(user.Id);
 
             return PartialView("_Groups", groups);
         }

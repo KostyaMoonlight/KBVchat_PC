@@ -47,5 +47,19 @@ namespace DataAccess.Repositories
         {
             _context.SaveChanges();
         }
+
+        public IEnumerable<Group> GetUsersGroups(int id)
+        {
+            return _context.UsersGroups
+                .Include(x => x.Group)
+                .Where(x => x.IdUser == id)
+                .Select(x => x.Group)
+                .ToList();
+        }
+
+        public IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func)
+        {
+            return _context.Groups.Where(func).ToArray();
+        }
     }
 }

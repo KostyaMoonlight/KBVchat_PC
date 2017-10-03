@@ -159,12 +159,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Authentication\AuthenticationAreaRegistration.cs" />
+    <Compile Include="Areas\Authentication\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Authentication\Controllers\RegisterController.cs" />
+    <Compile Include="Areas\UserSearchEngine\Controllers\UserSearchController.cs" />
+    <Compile Include="Areas\UserSearchEngine\Models\User\UserSearchViewModel.cs" />
+    <Compile Include="Areas\UserSearchEngine\UserSearchEngineAreaRegistration.cs" />
     <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
-    <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -174,8 +178,8 @@
     <Compile Include="Infrastructure\Mapping\UserMapping.cs" />
     <Compile Include="Infrastructure\Mapping\WebUserMapping.cs" />
     <Compile Include="Models\User\UserEditViewModel.cs" />
-    <Compile Include="Models\User\UserLoginViewModel.cs" />
-    <Compile Include="Models\User\UserRegistrationViewModel.cs" />
+    <Compile Include="Areas\Authentication\Models\UserLoginViewModel.cs" />
+    <Compile Include="Areas\Authentication\Models\UserRegistrationViewModel.cs" />
     <Compile Include="Models\User\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -199,16 +203,42 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Areas\UserSearchEngine\Views\web.config" />
+    <Content Include="Areas\UserSearchEngine\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\UserSearchEngine\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\UserSearchEngine\Views\UserSearch\UserSearch.cshtml" />
+    <Content Include="Areas\UserSearchEngine\Views\UserSearch\_UserSearchResult.cshtml" />
+    <Content Include="Areas\Authentication\Views\web.config" />
+    <Content Include="Areas\Authentication\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Authentication\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Authentication\Views\Login\Login.cshtml" />
+    <Content Include="Areas\Authentication\Views\Login\_UserLogin.cshtml" />
+    <Content Include="Areas\Authentication\Views\Register\Register.cshtml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-3.1.1.js" />
-    <Content Include="Scripts\jquery-3.1.1.min.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.js" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Scripts\cldr.js" />
+    <Content Include="Scripts\cldr\event.js" />
+    <Content Include="Scripts\cldr\supplemental.js" />
+    <Content Include="Scripts\cldr\unresolved.js" />
+    <Content Include="Scripts\globalize.js" />
+    <Content Include="Scripts\globalize\currency.js" />
+    <Content Include="Scripts\globalize\date.js" />
+    <Content Include="Scripts\globalize\message.js" />
+    <Content Include="Scripts\globalize\number.js" />
+    <Content Include="Scripts\globalize\plural.js" />
+    <Content Include="Scripts\globalize\relative-time.js" />
+    <Content Include="Scripts\jquery-3.2.1.js" />
+    <Content Include="Scripts\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.2.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.globalize.js" />
+    <Content Include="Scripts\jquery.validate.globalize.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.js" />
@@ -233,12 +263,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Login\_UserLogin.cshtml" />
-    <Content Include="Views\Shared\_LoginLayout.cshtml" />
-    <Content Include="Views\Home\Edit.cshtml" />
-    <Content Include="Views\Register\Register.cshtml" />
+    <Content Include="Views\User\User.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\Friends\GetFriends.cshtml" />
     <Content Include="Views\Group\_Groups.cshtml" />
     <Content Include="Views\Message\Messages.cshtml" />
@@ -250,8 +276,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">

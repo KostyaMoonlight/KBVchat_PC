@@ -8,6 +8,7 @@ using Domain.Entities;
 using System.Linq.Expressions;
 using DataAccess.Context;
 using System.Data.Entity;
+using Utility;
 
 namespace DataAccess.Repositories
 {
@@ -33,7 +34,7 @@ namespace DataAccess.Repositories
 
         public IEnumerable<User> GetUsers(IEnumerable<int> users)
         {
-            return _context.Users.Where(x=>users.Contains(x.Id)).ToArray();
+            return _context.Users.Where(x => users.Contains(x.Id)).ToArray();
         }
 
         public IEnumerable<User> GetUsers(Expression<Func<User, bool>> func)
@@ -43,15 +44,15 @@ namespace DataAccess.Repositories
 
         public IEnumerable<User> GetUsersFriends(int id)
         {
-            var users = _context.Friends 
-                .Include(x=>x.SecondUser)
+            var users = _context.Friends
+                .Include(x => x.SecondUser)
                 .Where(x => x.IdFirst == id)
-                .Select(x=>x.SecondUser)
+                .Select(x => x.SecondUser)
                 .ToList();
 
             users.AddRange(
                 _context.Friends
-                .Include(x=>x.FirstUser)
+                .Include(x => x.FirstUser)
                 .Where(x => x.IdSecond == id)
                 .Select(x => x.FirstUser)
                 .ToList()
@@ -61,30 +62,7 @@ namespace DataAccess.Repositories
 
         }
 
-        public IEnumerable<Group> GetUsersGroups(int id)
-        {
-            var groups = _context.UsersGroups
-                .Include(x=>x.Group)
-                .Where(x => x.IdUser == id)
-                .Select(x => x.Group)
-                .ToList();
-            return groups;
-        }
 
-        public IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func)
-        {
-            return _context.Groups.Where(func).ToArray();
-        }
-
-        public IEnumerable<Message> GetUsersMessages(int id)
-        {
-            var groups = GetUsersGroups(id).Select(x=>x.Id).ToList();
-            var messages = _context.Messages.Where(x => x.IdSender == id).ToList();
-            messages.AddRange(
-                _context.Messages.Where(x=> groups.Contains(x.IdGroup)).ToList()
-                );
-            return messages;
-        }
 
         public IEnumerable<User> GetUsersFromGroup(int id)
         {
@@ -106,5 +84,8 @@ namespace DataAccess.Repositories
             _context.Users.Add(user);
             SaveChanges();
         }
+
+ 
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogic.DTO.User;
 using Domain.Entities;
+using KVBchat_ASP.Areas.Authentication.Models;
 using KVBchat_ASP.Models.User;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace KVBchat_ASP.Infrastructure.Mapping
     {
         public UserMapping()
         {
-            CreateMap<User, UserEditViewModel>();
+            CreateMap<User, UserEditViewModel>()
+                .ForMember(dest => dest.Birthdate, opt => opt.MapFrom(src => src.Birthdate));
             CreateMap<UserInfoViewModel, UserEditViewModel>();
             CreateMap<UserRegistrationViewModel, User>()
                 .ForMember(dest => dest.LastTimeAccess, opt => opt.MapFrom(src => DateTime.Now));

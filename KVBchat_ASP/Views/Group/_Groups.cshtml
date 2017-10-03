@@ -7,7 +7,7 @@
         {
             <div>
                 @Ajax.ActionLink(
-               group.Name, "GroupMessages", "Message", new { id = group.Id },
+               group.Name, "GroupMessages", "Message", new { area = "", id = group.Id },
                new AjaxOptions
                {
                    HttpMethod = "GET",
@@ -17,4 +17,5 @@
             </div>
         }
     </div>
+
 

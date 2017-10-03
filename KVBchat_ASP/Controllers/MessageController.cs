@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace KVBchat_ASP.Controllers
 {
+    [Authorize]
     public class MessageController : Controller
     {
         IMessageService _messageService = null;
@@ -46,7 +47,8 @@ namespace KVBchat_ASP.Controllers
                 return null;
             }
             var newMessage = _mapper.Map<MessageViewModel>(message);
-            var groupId =TempData["groupId"];
+            var groupId = TempData.Peek("groupId");
+            
             if (groupId == null)
             {
                 return null;
@@ -59,9 +61,6 @@ namespace KVBchat_ASP.Controllers
             {
                 serverMessage
             };
-
-            TempData.Clear();
-            TempData.Add("groupId", serverMessage.IdGroup);
 
             return PartialView("_GroupMessages", viewModel);
         }

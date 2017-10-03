@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using DataAccess.Repositories.Base;
 using BusinessLogic.DTO.User;
+using BusinessLogic.DTO.Group;
+using AutoMapper;
 
 namespace BusinessLogic.Service
 {
@@ -14,10 +16,12 @@ namespace BusinessLogic.Service
         : IGroupService
     {
         IGroupRepository _repository = null;
+        IMapper _mapper = null;
 
-        public GroupService(IGroupRepository repository)
+        public GroupService(IGroupRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public Group GetGroup(int id)
@@ -30,5 +34,13 @@ namespace BusinessLogic.Service
             return _repository.GetGroups(x => x.Name.Contains(name));
         }
 
+        public IEnumerable<GroupViewModel> GetUsersGroups(int id)
+        {
+            var groups = _repository
+                .GetUsersGroups(id)
+                .Select(x => _mapper.Map<GroupViewModel>(x))
+                .ToList();
+            return groups;
+        }
     }
 }
