@@ -50,6 +50,11 @@ namespace BusinessLogic.Service
             return _repository.GetMessages(x => x.IsDelivered == false);
         }
 
+        public IEnumerable<MessageViewModel> GetUnreadMessages(int idGroup, int idUser)
+        {
+            return _repository.GetUnreadMessages(idGroup, idUser).Select(x => _mapper.Map<MessageViewModel>(x));
+        }
+
         public IEnumerable<Message> GetUsersMessages(int id)
         {
             return _repository.GetUsersMessages(id);
@@ -63,6 +68,16 @@ namespace BusinessLogic.Service
             _repository.SendMessage(mess);
 
             return _mapper.Map<MessageViewModel>(mess);
+        }
+
+        public void SetAsRead(IEnumerable<int> id)
+        {
+            var messages = _repository.GetMessages(id);
+            foreach (var message in messages)
+            {
+                message.IsRead = true;
+            }
+            _repository.SaveChanges();
         }
     }
 }

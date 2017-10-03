@@ -24,7 +24,8 @@ namespace KVBchat_ASP
 
             bundles.Add(new ScriptBundle("~/bundles/global").Include(
             "~/Scripts/globalize/globalize.js",
-           "~/Scripts/globalize/cultures/globalize.culture."+ Thread.CurrentThread.CurrentCulture.ToString() +".js"));
+           "~/Scripts/globalize/cultures/globalize.culture."+ Thread.CurrentThread.CurrentCulture.ToString() +".js")
+           );
 
             bundles.Add(new ScriptBundle("~/bundles/globalLastFile").Include(
             "~/Scripts/jquery.validate.globalize*"));

@@ -54,6 +54,7 @@ namespace DataAccess.Repositories
                 .Include(x => x.Group)
                 .Where(x => x.IdUser == id)
                 .Select(x => x.Group)
+                .Include(x=>x.Messages)
                 .ToList();
         }
 

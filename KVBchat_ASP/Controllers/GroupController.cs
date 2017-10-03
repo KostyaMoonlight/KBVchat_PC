@@ -21,10 +21,12 @@ namespace KVBchat_ASP.Controllers
         }
 
         [HttpGet]
-        [ChildActionOnly]
+        //[ChildActionOnly]
         public ActionResult Groups()
         {
             var user = _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name);
+            ViewBag.UserId = user.Id;
+
 
             var groups = _groupService.GetUsersGroups(user.Id);
 

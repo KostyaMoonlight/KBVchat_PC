@@ -41,9 +41,10 @@ namespace DataAccess.Initializers
                         LastTimeAccess = DateTime.Now,
                         Birthdate = DateTime.Now.AddYears(-20),
                         FirstName = "Vlad",
-                        MiddleName = "Betin",
+                        MiddleName = "Gromadskiy",
                         ThirdName = "But`kovich",
-                        Nickname = "Mandarin"
+                        Nickname = "Grom"
+
                     },
                     new User
                     {
@@ -69,9 +70,9 @@ namespace DataAccess.Initializers
                         LastTimeAccess = DateTime.Now,
                         Birthdate = DateTime.Now.AddYears(-20),
                         FirstName = "Vlad",
-                        MiddleName = "Gromadskiy",
+                        MiddleName = "Betin",
                         ThirdName = "But`kovich",
-                        Nickname = "Grom"
+                        Nickname = "Mandarin"
                     }
                 });
 

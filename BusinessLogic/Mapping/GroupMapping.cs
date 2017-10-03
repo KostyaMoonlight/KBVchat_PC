@@ -15,7 +15,11 @@ namespace BusinessLogic.Mapping
         public GroupMapping()
         {
             CreateMap<Group, GroupViewModel>()
-                .ForMember(dest => dest.AdminName, opt => opt.MapFrom(src => src.Admin != null ? src.Admin.Nickname : ""));
+                .ForMember(dest => dest.AdminName, 
+                    opt => opt.MapFrom(src => src.Admin != null ? src.Admin.Nickname : ""))
+                .ForMember(dest => dest.UnreadMessagesCount,
+                    opt => opt.MapFrom(src => src.Messages.Where(um => um.IsRead == false).Count()))
+                .ForMember(dest => dest.LastSenderId, opt => opt.MapFrom(src => src.Messages.Last().IdSender));
 
         }
     }

@@ -16,6 +16,8 @@ namespace DataAccess.Repositories.Base
         IEnumerable<Message> GetMessages(Expression<Func<Message, bool>> func);
         IEnumerable<Message> GetMessages(int idSender, int idResiver);
         IEnumerable<Message> GetMessages(int idSender, int idResiver, Expression<Func<Message, bool>> func);
+        IQueryable<Message> GetMessages(IEnumerable<int> idCollection);
+        IEnumerable<Message> GetUnreadMessages(int idGroup, int idSender);
         void SendMessage(Message message);
     }
 }

@@ -13,9 +13,11 @@ namespace BusinessLogic.Service.Base
         MessageViewModel SendMessage(MessageViewModel message);
         IEnumerable<Message> GetMessages();
         IEnumerable<Message> GetUnreadMessages();
+        IEnumerable<MessageViewModel> GetUnreadMessages(int idGroup, int idUser);
         IEnumerable<Message> GetUsersMessages(int id);
         IEnumerable<Message> GetMessages(int idSender, int idResiver);
         IEnumerable<Message> GetMessages(int idSender, int idResiver, string text);
         IEnumerable<MessageViewModel> GetMessagesFromGroup(int groupId);
+        void SetAsRead(IEnumerable<int> id);
     }
 }

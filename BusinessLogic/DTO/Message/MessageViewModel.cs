@@ -9,6 +9,7 @@ namespace BusinessLogic.DTO.Message
 {
     public class MessageViewModel
     {
+        public int Id { get; set; }
 
         public int IdSender { get; set; }
 

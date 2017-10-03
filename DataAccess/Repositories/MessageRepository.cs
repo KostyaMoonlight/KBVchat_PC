@@ -36,6 +36,11 @@ namespace DataAccess.Repositories
             return _context.Messages.ToArray();
         }
 
+        public IQueryable<Message> GetMessages(IEnumerable<int> idCollection)
+        {
+            return _context.Messages.Where(x => idCollection.Contains(x.Id));
+        }
+
         public IEnumerable<Message> GetMessages(Expression<Func<Message, bool>> func)
         {
             return _context.Messages.Where(func).ToArray();
@@ -45,6 +50,16 @@ namespace DataAccess.Repositories
         public IEnumerable<Message> GetMessagesIncludeUsers(Expression<Func<Message, bool>> func)
         {
             return _context.Messages.Include(x => x.User).Where(func).ToArray();
+        }
+
+        public IEnumerable<Message> GetUnreadMessages(int idGroup, int idSender)
+        {
+            return _context.Messages
+                .Include(x=>x.User)
+                .Where(x => x.IdGroup == idGroup)
+                .Where(x => x.IdSender != idSender)
+                .Where(x => x.IsRead == false)
+                .ToList();
         }
 
         public IEnumerable<Message> GetUsersMessages(int id)
