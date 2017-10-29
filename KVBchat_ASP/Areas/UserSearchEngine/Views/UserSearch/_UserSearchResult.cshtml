@@ -1,13 +1,42 @@
 ﻿@model IEnumerable<BusinessLogic.DTO.User.UserShortInfoViewModel>
+@{ 
+    IEnumerable<int> friendsIds = ViewBag.friendsIds;
+}
+
 
 <div>
-    @foreach(var user in Model)
+    @foreach (var user in Model)
     {
         <div>
             <span>@Html.ActionLink(user.Nickname, "Index", "Home", new {area = "",  id = user.Id }, null)</span>
             <span>@user.FirstName @user.MiddleName @user.ThirdName</span>
             <span>Age: @user.Age</span>
 
+            @if (!friendsIds.Contains(user.Id))
+            {
+                <span>
+                    @Ajax.ActionLink("Add", "AddFriend", "UserSearch", new { area = "UserSearchEngine", id = user.Id },
+                   new AjaxOptions
+                   {
+                       HttpMethod = "POST",
+                       OnSuccess = "(function(){hideButton('" + "addButton" + user.Id.ToString() + "');})();"
+                   }, new
+                   {
+                       style = "background-color:darkslategrey; color:green",
+                       id = "addButton" + user.Id.ToString()
+                   })
+                </span>
+            }
         </div>
+
+
     }
 </div>
+
+
+    <script type="text/javascript">
+        function hideButton(buttonId) {
+            console.log(buttonId);
+            document.getElementById(buttonId).hidden = "hidden";
+        }
+    </script>

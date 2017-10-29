@@ -10,14 +10,15 @@ namespace DataAccess.Repositories.Base
 {
     public interface IMessageRepository: ISaveChanges
     {
+        void SendMessage(Message message);
         IEnumerable<Message> GetMessages();
-        IEnumerable<Message> GetUsersMessages(int id);
-        IEnumerable<Message> GetMessagesIncludeUsers(Expression<Func<Message, bool>> func);
         IEnumerable<Message> GetMessages(Expression<Func<Message, bool>> func);
         IEnumerable<Message> GetMessages(int idSender, int idResiver);
         IEnumerable<Message> GetMessages(int idSender, int idResiver, Expression<Func<Message, bool>> func);
-        IQueryable<Message> GetMessages(IEnumerable<int> idCollection);
+        IEnumerable<Message> GetUsersMessages(int id);
         IEnumerable<Message> GetUnreadMessages(int idGroup, int idSender);
-        void SendMessage(Message message);
+        IEnumerable<Message> GetMessagesIncludeUsers(Expression<Func<Message, bool>> func);
+        IQueryable<Message> GetMessages(IEnumerable<int> idCollection);
+
     }
 }

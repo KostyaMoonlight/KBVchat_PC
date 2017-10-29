@@ -4,7 +4,7 @@
 }
 
 
-    <div class="navbar navbar-left col-sm-3 col-lg-2">
+    <div >
         @foreach (var group in @Model)
         {
             <div>
@@ -16,10 +16,18 @@
                {
                    HttpMethod = "GET",
                    InsertionMode = InsertionMode.Replace,
-                   UpdateTargetId = "MessageId"
+                   UpdateTargetId = "MessageId",
+                   OnSuccess = "hideFriends"
                }, null)
             </div>
         }
     </div>
 
+
+
+    <script type="text/javascript">
+        function hideFriends() {
+            document.getElementById("friendsId").innerHTML = "";
+        }
+    </script>
 

@@ -22,9 +22,20 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
+        public void AddUser(User user)
+        {
+            _context.Users.Add(user);
+            SaveChanges();
+        }
+
         public User GetUser(int id)
         {
             return _context.Users.FirstOrDefault(x => x.Id == id);
+        }
+
+        public User GetUser(Expression<Func<User, bool>> func)
+        {
+            return _context.Users.FirstOrDefault(func);
         }
 
         public IEnumerable<User> GetUsers()
@@ -42,28 +53,6 @@ namespace DataAccess.Repositories
             return _context.Users.Where(func).ToArray();
         }
 
-        public IEnumerable<User> GetUsersFriends(int id)
-        {
-            var users = _context.Friends
-                .Include(x => x.SecondUser)
-                .Where(x => x.IdFirst == id)
-                .Select(x => x.SecondUser)
-                .ToList();
-
-            users.AddRange(
-                _context.Friends
-                .Include(x => x.FirstUser)
-                .Where(x => x.IdSecond == id)
-                .Select(x => x.FirstUser)
-                .ToList()
-                );
-
-            return users;
-
-        }
-
-
-
         public IEnumerable<User> GetUsersFromGroup(int id)
         {
             return _context.UsersGroups.Include(x => x.User).Where(x => x.IdGroup == id).Select(x => x.User).ToArray();
@@ -74,18 +63,5 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public User GetUser(Expression<Func<User, bool>> func)
-        {
-            return _context.Users.FirstOrDefault(func);
         }
-
-        public void AddUser(User user)
-        {
-            _context.Users.Add(user);
-            SaveChanges();
-        }
-
- 
-
-    }
 }

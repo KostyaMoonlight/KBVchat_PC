@@ -1,15 +1,57 @@
 ﻿@model IEnumerable<BusinessLogic.DTO.User.FriendShortInfoViewModel>
 @{
     ViewBag.Title = "GetFriends";
+    var unconfirmedFriens = ViewBag.uncofrirmedFriends as IEnumerable<int>;
 }
 
 <h2>GetFriends</h2>
 
-@foreach(var friend in @Model)
+@foreach (var friend in @Model)
 {
     <div>
-        @Html.ActionLink(friend.Nickname, "User", "User", new { area = "", id = friend.Id}, null)
-        @friend.IsOnline
-        @friend.LastTimeAccess
+        
+        @if (unconfirmedFriens != null && unconfirmedFriens.Contains(friend.Id))
+        {
+            <span>
+                @Ajax.ActionLink("Confirme ", "ConfirmeFriend", "Friends", new { area = "", id = friend.Id },
+                    new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        OnSuccess = "(function(){hideButton('" + "confirmeButton" + friend.Id.ToString() + "');})();"
+                    }, new
+                    {
+                        style = "background-color:darkslategrey; color:red",
+                        id = "confirmeButton" + friend.Id.ToString()
+                    })
+            </span>
+        }
+        <span>
+            @Html.ActionLink(friend.Nickname, "User", "User", new { area = "", id = friend.Id }, null)
+            @friend.IsOnline
+            @friend.LastTimeAccess
+        </span>
+
+       <span>
+           @Ajax.ActionLink("Delete", "DeleteFriend", "Friends", new { area = "", id = friend.Id },
+          new AjaxOptions
+          {
+              HttpMethod = "POST",
+              OnSuccess = "(function(){hideButton('" + "deleteButton" + friend.Id.ToString() + "');})();"
+          }, new
+          {
+              style = "background-color:darkslategrey; color:red",
+              id = "deleteButton" + friend.Id.ToString()
+          })
+       </span>
+
     </div>
+
 }
+
+@section Scripts{
+    <script type="text/javascript">
+        function hideButton(buttonId) {
+            document.getElementById(buttonId).hidden = "hidden";
+        }
+    </script>
+    }

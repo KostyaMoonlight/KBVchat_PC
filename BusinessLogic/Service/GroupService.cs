@@ -24,6 +24,29 @@ namespace BusinessLogic.Service
             _mapper = mapper;
         }
 
+        public void AddGroup(int creatorId, IEnumerable<int> members, string name)
+        {
+            var groupId = _repository.AddGroup(creatorId, name);
+            _repository.AddUserGroup(groupId, creatorId);
+            foreach (var member in members)
+            {
+                _repository.AddUserGroup(groupId, member);
+            }
+            
+        }
+
+        public void LeaveGroup(int member, int groupId)
+        {
+            _repository.RemoveUserFromGroup(member, groupId);
+            if (IsGroupEmpty(groupId))
+                _repository.RemoveGroupAndMessages(groupId);
+        }
+
+        public void AddUserToGroup(int userId, int groupId)
+        {
+            _repository.AddUserGroup(groupId, userId);
+        }
+
         public Group GetGroup(int id)
         {
             return _repository.GetGroup(id);
@@ -42,5 +65,13 @@ namespace BusinessLogic.Service
                 .ToList();
             return groups;
         }
+
+        public bool IsGroupEmpty(int groupId)
+        {
+            var groups = _repository.GetUsersGroupsIncludeUsers(x => x.IdGroup == groupId);
+            return !groups.Any();
+        }
+
+
     }
 }

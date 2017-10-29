@@ -1,0 +1,19 @@
+﻿@model KVBchat_ASP.Models.Group.GroupCreationViewModel
+@{
+    ViewBag.Title = "AddGroup";
+}
+
+<h2>AddGroup</h2>
+@using (Html.BeginForm())
+{
+    <div>
+        Group name: 
+        @Html.TextBoxFor(x=>x.Name)
+    </div>
+    <div>
+        Select users: 
+        @Html.ListBoxFor(x => x.SelectedMembers, Model.Members, new { style = "width:300px; height:500px;" })
+    </div>
+
+    <div><input type="submit" value="Submit" /></div>
+}

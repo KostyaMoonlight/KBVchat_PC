@@ -21,6 +21,44 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
+        public void AddUserGroup(int groupId, int memberId)
+        {
+            if (!_context.UsersGroups.Any(x=>x.IdUser == memberId && x.IdGroup == groupId))
+                _context.UsersGroups.Add(new UsersGroup { IdGroup = groupId, IdUser = memberId });
+            SaveChanges();
+        }
+
+        public void RemoveUserFromGroup(int userId, int groupId)
+        {
+            var user = _context.UsersGroups.FirstOrDefault(x => x.IdGroup == groupId && x.IdUser == userId);
+            if (user != null)
+            {
+                _context.UsersGroups.Remove(user);
+                SaveChanges();
+            }
+
+        }
+
+        public void RemoveGroupAndMessages(int groupId)
+        {
+            var group = _context.Groups.FirstOrDefault(x => x.Id == groupId);
+            if (group != null)
+            {
+                _context.Groups.Remove(group);
+                var messages = _context.Messages.Where(x => x.IdGroup == groupId);
+                _context.Messages.RemoveRange(messages);
+                SaveChanges();
+            }
+        }
+
+        public int AddGroup(int creatorId, string name)
+        {
+            var group = _context.Groups.Add(new Group { IdAdmin = creatorId, Name = name });
+            SaveChanges();
+            var groupId = group.Id;
+            return groupId;
+        }
+
         public Group GetGroup(int id)
         {
             return _context.Groups.FirstOrDefault(x => x.Id == id);
@@ -37,6 +75,21 @@ namespace DataAccess.Repositories
 
         }
 
+        public IEnumerable<Group> GetUsersGroups(int idUser)
+        {
+            return _context.UsersGroups
+                .Include(x => x.Group)
+                .Where(x => x.IdUser == idUser)
+                .Select(x => x.Group)
+                .Include(x=>x.Messages)
+                .ToList();
+        }
+
+        public IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func)
+        {
+            return _context.Groups.Where(func).ToArray();
+        }
+
         public IEnumerable<UsersGroup> GetUsersGroupsIncludeUsers(Expression<Func<UsersGroup, bool>> func)
         {
             return _context.UsersGroups.Include(x=>x.User).Where(func).ToArray();
@@ -48,19 +101,6 @@ namespace DataAccess.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<Group> GetUsersGroups(int id)
-        {
-            return _context.UsersGroups
-                .Include(x => x.Group)
-                .Where(x => x.IdUser == id)
-                .Select(x => x.Group)
-                .Include(x=>x.Messages)
-                .ToList();
-        }
 
-        public IEnumerable<Group> GetUsersGroups(Expression<Func<Group, bool>> func)
-        {
-            return _context.Groups.Where(func).ToArray();
-        }
     }
 }

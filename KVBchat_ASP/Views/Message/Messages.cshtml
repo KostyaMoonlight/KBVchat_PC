@@ -1,21 +1,20 @@
 ﻿@model BusinessLogic.DTO.Message.SendMessageViewModel
 @{
     ViewBag.Title = "GroupMessages";
-    
 }
 
 <h2>GroupMessages</h2>
-<div>
-    <div id="groupsId">
+<div class="row">
+    <div id="groupsId" class="col-sm-3 col-lg-3">
 
         @Html.Action("Groups", "Group", new { area = "" })
 
     </div>
 
-    <div  class="col-sm-9 col-lg-10">
-    <div id="MessageId">
+    <div  class="col-sm-6 col-lg-6">
+        <div id="MessageId">
 
-    </div>
+        </div>
         <div>
             @using (@Ajax.BeginForm("SendMessage", "Message", new { area = "" }, new AjaxOptions
             {
@@ -31,10 +30,29 @@
             }            
         </div>
     </div>
-    <script type="text/javascript">
-        (function () { console.log("Start page"); })();        
-    </script>
+
+
+    <div class="col-sm-3 col-lg-3">
+        @Ajax.ActionLink("friends out of group", "GetFriendsOutOfGroup", "Friends", new { area = "" },
+               new AjaxOptions
+               {
+                   HttpMethod = "GET",
+                   InsertionMode = InsertionMode.Replace,
+                   UpdateTargetId = "friendsId"
+               }, null)
+        <div id="friendsId">
+
+        </div>
+    </div>
+
 </div>
+
+<br />
+<br/>
+<div>
+    @Html.ActionLink("Leave group", "LeaveGroup", "Group", new { area = "" }, new { style = "margin-top:500px; margin-left:500px;" })
+</div>
+
 
 @Ajax.ActionLink("GroupUpdater", "Groups", "Group", new { area = "" }, new AjaxOptions
 {
@@ -60,10 +78,10 @@
     </script>
 
 <script type="text/javascript">
-        (function groupUpdater() {
+        (function Updater() {
             document.getElementById("groupUpdaterId").click();
             document.getElementById("messageUpdaterId").click();
-            setTimeout(groupUpdater, 5000);
+            setTimeout(Updater, 5000);
         })();
 </script>
 

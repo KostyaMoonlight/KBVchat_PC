@@ -23,6 +23,31 @@ namespace BusinessLogic.Service
             _repository = repository;
         }
 
+        public void SetAsRead(IEnumerable<int> id)
+        {
+            var messages = _repository.GetMessages(id);
+            foreach (var message in messages)
+            {
+                message.IsRead = true;
+            }
+            _repository.SaveChanges();
+        }
+
+        public MessageViewModel SendMessage(MessageViewModel message)
+        {
+            var group = message.IdGroup;
+            var mess = _mapper.Map<Message>(message);
+
+            _repository.SendMessage(mess);
+
+            return _mapper.Map<MessageViewModel>(mess);
+        }
+
+        public IEnumerable<Message> GetMessages()
+        {
+            return _repository.GetMessages();
+        }
+
         public IEnumerable<Message> GetMessages(int idSender, int idResiver)
         {
             return _repository.GetMessages(idSender, idResiver);
@@ -31,18 +56,6 @@ namespace BusinessLogic.Service
         public IEnumerable<Message> GetMessages(int idSender, int idResiver, string text)
         {
             return _repository.GetMessages(idSender, idResiver, x => x.Text.Contains(text));
-        }
-
-        public IEnumerable<Message> GetMessages()
-        {
-            return _repository.GetMessages();
-        }
-
-        public IEnumerable<MessageViewModel> GetMessagesFromGroup(int groupId)
-        {
-            return _repository
-                .GetMessagesIncludeUsers(x => x.IdGroup == groupId)
-                .Select(x => _mapper.Map<MessageViewModel>(x));
         }
 
         public IEnumerable<Message> GetUnreadMessages()
@@ -60,24 +73,12 @@ namespace BusinessLogic.Service
             return _repository.GetUsersMessages(id);
         }
 
-        public MessageViewModel SendMessage(MessageViewModel message)
+        public IEnumerable<MessageViewModel> GetMessagesFromGroup(int groupId)
         {
-            var group = message.IdGroup;
-            var mess = _mapper.Map<Message>(message);
-
-            _repository.SendMessage(mess);
-
-            return _mapper.Map<MessageViewModel>(mess);
+            return _repository
+                .GetMessagesIncludeUsers(x => x.IdGroup == groupId)
+                .Select(x => _mapper.Map<MessageViewModel>(x));
         }
 
-        public void SetAsRead(IEnumerable<int> id)
-        {
-            var messages = _repository.GetMessages(id);
-            foreach (var message in messages)
-            {
-                message.IsRead = true;
-            }
-            _repository.SaveChanges();
-        }
     }
 }

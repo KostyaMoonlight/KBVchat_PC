@@ -60,10 +60,12 @@
     <Compile Include="Mapping\UserMapping.cs" />
     <Compile Include="Service\AuthenticationService.cs" />
     <Compile Include="Service\Base\IAuthenticationService.cs" />
+    <Compile Include="Service\Base\IFriendService.cs" />
     <Compile Include="Service\Base\IGroupService.cs" />
     <Compile Include="Service\Base\IMessageService.cs" />
     <Compile Include="Service\Base\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\FriendService.cs" />
     <Compile Include="Service\GroupService.cs" />
     <Compile Include="Service\MessageService.cs" />
     <Compile Include="Service\UserService.cs" />

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<BusinessLogic.DTO.User.FriendShortInfoViewModel>
+
+@if(@Model.Any())
+{
+    foreach (var friend in Model)
+    {
+        <div>
+            <span>@friend.Nickname </span>  
+            <span>@Ajax.ActionLink("Add to group", "AddToGroup", "Group", new { area = "", id = friend.Id }
+             , new AjaxOptions
+             {
+                 HttpMethod = "POST",
+                 OnSuccess = "(function(){hideButton('" + "friendButton" + friend.Id.ToString() + "');})();"
+             },
+             new { id = "friendButton" + friend.Id.ToString() })</span>
+        </div> 
+    }
+}
+else
+{
+    <h3>No friends</h3>
+}
+    <script type="text/javascript">
+        function hideButton(buttonId) {
+            document.getElementById(buttonId).hidden = "hidden";
+        }
+    </script>

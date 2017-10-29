@@ -18,10 +18,7 @@ namespace KVBchat_ASP.Controllers
         IUserService _userService = null;
         IMapper _mapper;
 
-        public UserController(
-            IUserService userService,
-            IMapper mapper
-            )
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
@@ -31,7 +28,7 @@ namespace KVBchat_ASP.Controllers
         public new ActionResult User(int id = -1)
         {
             UserInfoViewModel user = null;
-            
+
             if (id == -1)
             {
                 user = _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name);

@@ -42,6 +42,21 @@ namespace BusinessLogic.Service
             _repository.SaveChanges();
         }
 
+        public void UserNotification(IEnumerable<Message> messages)
+        {
+            var groupsIds = messages.Select(x => x.IdGroup);
+            var userUnreadMessages = new List<UserUnreadMessage>();
+            foreach (var groupId in groupsIds)
+            {
+                var users = _repository.GetUsersFromGroup(groupId);
+                foreach (var user in users)
+                {
+                    user.UnreadMessages++;
+                }
+            }
+            _repository.SaveChanges();
+        }
+
         public User GetUser(int id)
         {
             return _repository.GetUser(id);
@@ -52,21 +67,6 @@ namespace BusinessLogic.Service
             return _mapper.Map<UserInfoViewModel>(
                 _repository.GetUser(x => x.Email == login || x.Phone == login)
                 );
-        }
-
-        public IEnumerable<User> GetUsers()
-        {
-            return _repository.GetUsers();
-        }
-
-        public IEnumerable<FriendViewModel> GetUsersFriends(int id)
-        {
-            return _repository.GetUsersFriends(id).Select(x => _mapper.Map<FriendViewModel>(x));
-        }
-
-        public IEnumerable<FriendShortInfoViewModel> GetUsersFriendsShortInfo(int id)
-        {
-            return _repository.GetUsersFriends(id).Select(x=>_mapper.Map<FriendShortInfoViewModel>(x));
         }
 
         public bool RegisterUser(User user)
@@ -80,6 +80,11 @@ namespace BusinessLogic.Service
             user.Password = newPassword;
             _repository.AddUser(user);
             return true;
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return _repository.GetUsers();
         }
 
         public IEnumerable<UserShortInfoViewModel> SearchUsers(string fullName, int age)
@@ -96,19 +101,9 @@ namespace BusinessLogic.Service
                 ).Select(x => _mapper.Map<UserShortInfoViewModel>(x));
         }
 
-        public void UserNotification(IEnumerable<Message> messages)
+        public IEnumerable<FriendShortInfoViewModel> GetUsersFromGroup(int groupId)
         {
-            var groupsIds = messages.Select(x => x.IdGroup);
-            var userUnreadMessages = new List<UserUnreadMessage>();
-            foreach (var groupId in groupsIds)
-            {
-                var users = _repository.GetUsersFromGroup(groupId);
-                foreach (var user in users)
-                {
-                    user.UnreadMessages++;
-                }
-            }
-            _repository.SaveChanges();
+            return _repository.GetUsersFromGroup(groupId).Select(x=> _mapper.Map<FriendShortInfoViewModel>(x));
         }
     }
 }

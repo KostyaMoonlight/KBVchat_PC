@@ -30,10 +30,37 @@ namespace KVBchat_ASP.Controllers
             return View();
         }
 
+        [HttpPost]
+        public PartialViewResult SendMessage(SendMessageViewModel message)
+        {
+            if (string.IsNullOrWhiteSpace(message.Text))
+            {
+                return null;
+            }
+            var newMessage = _mapper.Map<MessageViewModel>(message);
+            newMessage.IsRead = false;
+
+            var groupId = TempData.Peek("groupId");
+            if (groupId == null)
+            {
+                return null;
+            }
+
+            newMessage.IdGroup = Convert.ToInt32(groupId);
+            newMessage.IdSender = _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name).Id;
+            var serverMessage = _messageService.SendMessage(newMessage);
+            IEnumerable<MessageViewModel> viewModel = new List<MessageViewModel>
+            {
+                serverMessage
+            };
+
+            return PartialView("_GroupMessages", viewModel);
+        }
+
         public PartialViewResult GroupMessages(int id)
         {
             var messages = _messageService.GetMessagesFromGroup(id);
-            var lastMessageSenderId = messages.Last().IdSender;
+            var lastMessageSenderId = messages.LastOrDefault() != null ? messages.LastOrDefault().IdSender : -1;
             var userId = _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name).Id;
             if (userId != lastMessageSenderId)
             {
@@ -74,31 +101,6 @@ namespace KVBchat_ASP.Controllers
             return PartialView("_GroupMessages", messages);
         }
 
-        [HttpPost]
-        public PartialViewResult SendMessage(SendMessageViewModel message)
-        {
-            if (string.IsNullOrWhiteSpace(message.Text))
-            {
-                return null;
-            }
-            var newMessage = _mapper.Map<MessageViewModel>(message);
-            newMessage.IsRead = false;
 
-            var groupId = TempData.Peek("groupId");
-            if (groupId == null)
-            {
-                return null;
-            }
-
-            newMessage.IdGroup = Convert.ToInt32(groupId);
-            newMessage.IdSender = _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name).Id;
-            var serverMessage = _messageService.SendMessage(newMessage);
-            IEnumerable<MessageViewModel> viewModel = new List<MessageViewModel>
-            {
-                serverMessage
-            };
-
-            return PartialView("_GroupMessages", viewModel);
-        }
     }
 }

@@ -11,9 +11,12 @@ namespace BusinessLogic.Service.Base
 {
     public interface IGroupService
     {
+        void AddGroup(int creatorId, IEnumerable<int> members, string name);
+        void LeaveGroup(int member, int groupId);
+        void AddUserToGroup(int userId, int groupId);
         Group GetGroup(int id);
         IEnumerable<Group> GetGroups(string name);
         IEnumerable<GroupViewModel> GetUsersGroups(int id);
-
+        bool IsGroupEmpty(int groupId);
     }
 }

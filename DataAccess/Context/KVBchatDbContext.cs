@@ -24,6 +24,12 @@ namespace DataAccess.Context
             modelBuilder.Configurations.Add(new UserEntityTypeConfiguration());
 
             modelBuilder.Entity<User>()
+                .HasMany(m => m.FirstFriend)
+                .WithRequired(r => r.FirstUser)
+                .HasForeignKey(f => f.IdFirst)
+                .WillCascadeOnDelete(false);;
+
+            modelBuilder.Entity<User>()
                 .HasMany(m => m.SecondFriend)
                 .WithRequired(r => r.SecondUser)
                 .HasForeignKey(f => f.IdSecond);

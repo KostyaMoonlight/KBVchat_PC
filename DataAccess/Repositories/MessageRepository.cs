@@ -21,6 +21,22 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
+        public void SendMessage(Message message)
+        {
+            _context.Messages.Add(message);
+            SaveChanges();
+        }
+
+        public IEnumerable<Message> GetMessages()
+        {
+            return _context.Messages.ToArray();
+        }
+
+        public IEnumerable<Message> GetMessages(Expression<Func<Message, bool>> func)
+        {
+            return _context.Messages.Where(func).ToArray();
+        }
+
         public IEnumerable<Message> GetMessages(int idSender, int idResiver)
         {
             return _context.Messages.Where(x => x.IdSender == idSender || x.IdGroup == idResiver).ToArray();
@@ -29,37 +45,6 @@ namespace DataAccess.Repositories
         public IEnumerable<Message> GetMessages(int idSender, int idResiver, Expression<Func<Message, bool>> func)
         {
             return _context.Messages.Where(x => x.IdSender == idSender || x.IdGroup == idResiver).Where(func).ToArray();
-        }
-
-        public IEnumerable<Message> GetMessages()
-        {
-            return _context.Messages.ToArray();
-        }
-
-        public IQueryable<Message> GetMessages(IEnumerable<int> idCollection)
-        {
-            return _context.Messages.Where(x => idCollection.Contains(x.Id));
-        }
-
-        public IEnumerable<Message> GetMessages(Expression<Func<Message, bool>> func)
-        {
-            return _context.Messages.Where(func).ToArray();
-
-        }
-
-        public IEnumerable<Message> GetMessagesIncludeUsers(Expression<Func<Message, bool>> func)
-        {
-            return _context.Messages.Include(x => x.User).Where(func).ToArray();
-        }
-
-        public IEnumerable<Message> GetUnreadMessages(int idGroup, int idSender)
-        {
-            return _context.Messages
-                .Include(x=>x.User)
-                .Where(x => x.IdGroup == idGroup)
-                .Where(x => x.IdSender != idSender)
-                .Where(x => x.IsRead == false)
-                .ToList();
         }
 
         public IEnumerable<Message> GetUsersMessages(int id)
@@ -76,15 +61,30 @@ namespace DataAccess.Repositories
             return messages;
         }
 
+        public IEnumerable<Message> GetUnreadMessages(int idGroup, int idSender)
+        {
+            return _context.Messages
+                .Include(x => x.User)
+                .Where(x => x.IdGroup == idGroup)
+                .Where(x => x.IdSender != idSender)
+                .Where(x => x.IsRead == false)
+                .ToList();
+        }
+
+        public IEnumerable<Message> GetMessagesIncludeUsers(Expression<Func<Message, bool>> func)
+        {
+            return _context.Messages.Include(x => x.User).Where(func).ToArray();
+        }
+
+        public IQueryable<Message> GetMessages(IEnumerable<int> idCollection)
+        {
+            return _context.Messages.Where(x => idCollection.Contains(x.Id));
+        }
+
         public void SaveChanges()
         {
             _context.SaveChanges();
         }
 
-        public void SendMessage(Message message)
-        {
-            _context.Messages.Add(message);
-            SaveChanges();
-        }
     }
 }

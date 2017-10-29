@@ -55,7 +55,9 @@
     <Compile Include="Initializers\KVBchatDbInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\IAuthenticationRepository.cs" />
+    <Compile Include="Repositories\Base\IFriendRepository.cs" />
     <Compile Include="Repositories\Base\ISaveChanges.cs" />
+    <Compile Include="Repositories\FriendRepository.cs" />
     <Compile Include="Repositories\GroupRepository.cs" />
     <Compile Include="Repositories\Base\IGroupRepository.cs" />
     <Compile Include="Repositories\Base\IMessageRepository.cs" />

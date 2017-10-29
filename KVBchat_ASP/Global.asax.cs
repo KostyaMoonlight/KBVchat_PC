@@ -15,14 +15,13 @@ namespace KVBchat_ASP
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(new KVBchatDbInitializer());
+            DependencyConfig.Register();
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            DependencyConfig.Register();
-            Database.SetInitializer(new KVBchatDbInitializer());
-
         }
     }
 }
