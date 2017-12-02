@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KBVchat_PC", "KBVchat_PC\KBVchat_PC.csproj", "{537B0CE5-6574-42A5-920C-3567544DC563}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KVBchat_ASP", "KVBchat_ASP\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.csproj", "{822E7921-1CBD-4D01-94FC-F30FBFC704B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleDriveAPI", "GoogleDriveAPI\GoogleDriveAPI.csproj", "{C15653E1-31C5-44FE-85E0-7BFF53F4341F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{822E7921-1CBD-4D01-94FC-F30FBFC704B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{822E7921-1CBD-4D01-94FC-F30FBFC704B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{822E7921-1CBD-4D01-94FC-F30FBFC704B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C15653E1-31C5-44FE-85E0-7BFF53F4341F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C15653E1-31C5-44FE-85E0-7BFF53F4341F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C15653E1-31C5-44FE-85E0-7BFF53F4341F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C15653E1-31C5-44FE-85E0-7BFF53F4341F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

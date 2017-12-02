@@ -10,7 +10,7 @@ namespace DataAccess.Repositories.Base
 {
     public interface IGroupRepository : ISaveChanges
     {
-        void AddUserGroup(int groupId, int memberId);
+        void AddUserToGroup(int groupId, int memberId);
         void RemoveUserFromGroup(int userId, int groupId);
         void RemoveGroupAndMessages(int groupId);
         int AddGroup(int creatorId, string name);

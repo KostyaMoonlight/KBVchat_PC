@@ -21,7 +21,7 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public void AddUserGroup(int groupId, int memberId)
+        public void AddUserToGroup(int groupId, int memberId)
         {
             if (!_context.UsersGroups.Any(x=>x.IdUser == memberId && x.IdGroup == groupId))
                 _context.UsersGroups.Add(new UsersGroup { IdGroup = groupId, IdUser = memberId });

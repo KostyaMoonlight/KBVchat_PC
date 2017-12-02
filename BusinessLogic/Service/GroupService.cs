@@ -27,10 +27,10 @@ namespace BusinessLogic.Service
         public void AddGroup(int creatorId, IEnumerable<int> members, string name)
         {
             var groupId = _repository.AddGroup(creatorId, name);
-            _repository.AddUserGroup(groupId, creatorId);
+            _repository.AddUserToGroup(groupId, creatorId);
             foreach (var member in members)
             {
-                _repository.AddUserGroup(groupId, member);
+                _repository.AddUserToGroup(groupId, member);
             }
             
         }
@@ -44,7 +44,7 @@ namespace BusinessLogic.Service
 
         public void AddUserToGroup(int userId, int groupId)
         {
-            _repository.AddUserGroup(groupId, userId);
+            _repository.AddUserToGroup(groupId, userId);
         }
 
         public Group GetGroup(int id)
