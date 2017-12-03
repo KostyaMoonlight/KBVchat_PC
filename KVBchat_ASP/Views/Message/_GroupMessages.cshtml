@@ -14,6 +14,16 @@
                     @Html.ValueFor(x => message.IsRead)
                     @Html.ValueFor(x => message.Time)
                 </div>
+                @if (message.Files != null && message.Files.Count() > 0)
+                {
+                    foreach (var file in message.Files)
+                    {
+                        <div>
+                            @Html.ActionLink(file.FileName, "DownloadFile", "Message", new { area="",fileName = file.FileName, fileId = file.FileId },null)
+                        </div>
+                    }
+
+                }
             </div>
         }
     </div>

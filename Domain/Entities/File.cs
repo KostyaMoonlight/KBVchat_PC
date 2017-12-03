@@ -16,8 +16,10 @@ namespace Domain.Entities
         public int Id { get; set; }
 
         [Column("file")]
-        public byte[]  FileName{ get; set; }
+        public string FileName{ get; set; }
 
+        [Column("fileId")]
+        public string FileId { get; set; }
 
         public virtual ICollection<MessageFile> MessageFiles { get; set; }
     }

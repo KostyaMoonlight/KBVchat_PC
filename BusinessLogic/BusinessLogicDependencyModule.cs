@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using BusinessLogic.Service;
 using BusinessLogic.Service.Base;
+using GoogleDriveAPI.Service;
+using GoogleDriveAPI.Service.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +35,11 @@ namespace BusinessLogic
             builder.RegisterType(typeof(AuthenticationService))
                 .As(typeof(IAuthenticationService))
                 .InstancePerRequest();
+
+            builder.RegisterType(typeof(GoogleDriveApiService))
+                .As(typeof(IGoogleDriveApiService))
+                .InstancePerRequest();
+            
         }
     }
 }

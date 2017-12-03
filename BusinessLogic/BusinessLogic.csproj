@@ -48,6 +48,8 @@
   <ItemGroup>
     <Compile Include="BusinessLogicDependencyModule.cs" />
     <Compile Include="DTO\Group\GroupViewModel.cs" />
+    <Compile Include="DTO\Message\FileDownloadViewModel.cs" />
+    <Compile Include="DTO\Message\FileViewModel.cs" />
     <Compile Include="DTO\Message\MessageViewModel.cs" />
     <Compile Include="DTO\Message\SendMessageViewModel.cs" />
     <Compile Include="DTO\User\FriendShortInfoViewModel.cs" />
@@ -78,6 +80,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{c88ba215-ef5f-4d41-bb0a-015d07651aab}</Project>
       <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GoogleDriveAPI\GoogleDriveAPI.csproj">
+      <Project>{c15653e1-31c5-44fe-85e0-7bff53f4341f}</Project>
+      <Name>GoogleDriveAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{822e7921-1cbd-4d01-94fc-f30fbfc704b7}</Project>

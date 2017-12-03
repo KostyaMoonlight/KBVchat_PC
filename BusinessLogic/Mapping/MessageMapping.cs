@@ -16,9 +16,12 @@ namespace BusinessLogic.Mapping
         {
             CreateMap<Message, MessageViewModel>()
                 .ForMember(dest => dest.Sender, opt => opt.MapFrom(src => src.User.Nickname))
-                .ForMember(dest => dest.IdSender, opt => opt.MapFrom(src => src.IdSender));
+                .ForMember(dest => dest.IdSender, opt => opt.MapFrom(src => src.IdSender))
+                .ForMember(dest => dest.Files, opt => opt.MapFrom(src => new List<FileDownloadViewModel>()));
 
             CreateMap<MessageViewModel, Message>();
+
+            CreateMap<File, FileDownloadViewModel>();
 
             CreateMap<SendMessageViewModel, MessageViewModel>()
                 .ForMember(dest => dest.IsDelivered, opt => opt.MapFrom(src => true))

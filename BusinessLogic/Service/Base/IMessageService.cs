@@ -2,6 +2,7 @@
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,8 @@ namespace BusinessLogic.Service.Base
     public interface IMessageService
     {
         void SetAsRead(IEnumerable<int> id);
-        MessageViewModel SendMessage(MessageViewModel message);
+        MessageViewModel SendMessage(MessageViewModel message, IEnumerable<FileViewModel> files);
+        Stream GetFile(string fileId);
         IEnumerable<Message> GetMessages();
         IEnumerable<Message> GetMessages(int idSender, int idResiver);
         IEnumerable<Message> GetMessages(int idSender, int idResiver, string text);

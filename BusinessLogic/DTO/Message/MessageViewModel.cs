@@ -25,5 +25,7 @@ namespace BusinessLogic.DTO.Message
 
         public DateTime Time { get; set; }
 
+        public List<FileDownloadViewModel> Files { get; set; }
+
     }
 }

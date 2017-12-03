@@ -17,5 +17,10 @@ namespace Utility
         {
             return DateTime.Now.Year - date.Year;
         }
+
+        public static string SelectFileName(this string file)
+        {
+            return string.Join("", file.Reverse().TakeWhile(x => x != '\\').Reverse());
+        }
     }
 }

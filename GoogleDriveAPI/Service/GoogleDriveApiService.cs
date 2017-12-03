@@ -23,7 +23,7 @@ namespace GoogleDriveAPI.Service
         public GoogleDriveApiService()
         {
             UserCredential credential;
-
+            
             using (var stream =
                 new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
             {
@@ -53,7 +53,7 @@ namespace GoogleDriveAPI.Service
             var getRequest = _service.Files.Get(id);
             getRequest.Download(stream);
             getRequest.Execute();
-
+            
             return stream;
         }
 

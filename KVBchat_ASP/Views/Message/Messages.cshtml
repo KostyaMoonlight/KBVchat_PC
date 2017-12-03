@@ -11,7 +11,8 @@
 
     </div>
 
-    <div  class="col-sm-6 col-lg-6">
+
+    <div class="col-sm-6 col-lg-6">
         <div id="MessageId">
 
         </div>
@@ -21,13 +22,22 @@
                 UpdateTargetId = "MessageId",
                 HttpMethod = "POST",
                 InsertionMode = InsertionMode.InsertAfter,
-                OnSuccess = "onSuccess"
+                OnSuccess = "onSuccess",
+                OnBegin = "OnBegin",
+                LoadingElementId = "LoadingId"
 
-            },null))
+            }, null))
             {
                 @Html.TextBoxFor(x => x.Text, new { id = "textBoxId" });
                 <input type="submit" value="Process" class="btn btn-primary" />
-            }            
+            }
+
+            <div>
+                <input type="file" name="upload" id="uploadFile" /><br />
+                <button id="uploadButtonId" hidden="hidden">Загрузить</button>
+            </div>
+            <a id="LoadingId" hidden="hidden">Loading</a>
+
         </div>
     </div>
 
@@ -48,7 +58,7 @@
 </div>
 
 <br />
-<br/>
+<br />
 <div>
     @Html.ActionLink("Leave group", "LeaveGroup", "Group", new { area = "" }, new { style = "margin-top:500px; margin-left:500px;" })
 </div>
@@ -72,19 +82,48 @@
 @section scripts
 {
     <script type="text/javascript">
-        function onSuccess(){
+        function onSuccess() {
             document.getElementById("textBoxId").value = "";
         }
     </script>
 
-<script type="text/javascript">
+    <script type="text/javascript">
+        function OnBegin() {
+            document.getElementById("uploadButtonId").click();
+            document.getElementById("uploadFile").value = "";
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        $('#uploadButtonId').on('click', function (e) {
+        e.preventDefault();
+        var files = document.getElementById('uploadFile').files;
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    data.append("file" + x, files[x]);
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Upload", "Message")',
+                    contentType: false,
+                    processData: false,
+                    data: data
+                });
+            }
+        }
+    });
+    </script>
+
+    <script type="text/javascript">
         (function Updater() {
             document.getElementById("groupUpdaterId").click();
             document.getElementById("messageUpdaterId").click();
             setTimeout(Updater, 5000);
         })();
-</script>
+    </script>
 
 }
-
-

@@ -10,7 +10,11 @@ namespace DataAccess.Repositories.Base
 {
     public interface IMessageRepository: ISaveChanges
     {
-        void SendMessage(Message message);
+        Message SendMessage(Message message);
+        void AddFile(string name, string fileId);
+        int GetFileIdByName(string fileId);
+        void AddMessageFile(int messageId, int fileId);
+        IEnumerable<File> GetFilesFromMessage(int messageId);
         IEnumerable<Message> GetMessages();
         IEnumerable<Message> GetMessages(Expression<Func<Message, bool>> func);
         IEnumerable<Message> GetMessages(int idSender, int idResiver);

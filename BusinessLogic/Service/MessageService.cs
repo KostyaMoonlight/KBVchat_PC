@@ -8,6 +8,8 @@ using Domain.Entities;
 using DataAccess.Repositories.Base;
 using BusinessLogic.DTO.Message;
 using AutoMapper;
+using System.IO;
+using GoogleDriveAPI.Service.Base;
 
 namespace BusinessLogic.Service
 {
@@ -15,12 +17,14 @@ namespace BusinessLogic.Service
         : IMessageService
     {
         IMessageRepository _repository = null;
+        IGoogleDriveApiService _googleDriveApiService = null;
         IMapper _mapper = null;
 
-        public MessageService(IMessageRepository repository, IMapper mapper)
+        public MessageService(IMessageRepository repository, IGoogleDriveApiService googleDriveApiService, IMapper mapper)
         {
             _mapper = mapper;
             _repository = repository;
+            _googleDriveApiService = googleDriveApiService;
         }
 
         public void SetAsRead(IEnumerable<int> id)
@@ -33,14 +37,36 @@ namespace BusinessLogic.Service
             _repository.SaveChanges();
         }
 
-        public MessageViewModel SendMessage(MessageViewModel message)
+        public MessageViewModel SendMessage(MessageViewModel message, IEnumerable<FileViewModel> files)
         {
             var group = message.IdGroup;
             var mess = _mapper.Map<Message>(message);
 
-            _repository.SendMessage(mess);
+            var messWithId = _repository.SendMessage(mess);
 
-            return _mapper.Map<MessageViewModel>(mess);
+            var messViewModel = _mapper.Map<MessageViewModel>(mess);
+
+
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    var gId = _googleDriveApiService.UploadFile(file.Name, file.Content);
+                    _repository.AddFile(file.Name, gId);
+                    int fileId = _repository.GetFileIdByName(gId);
+                    _repository.AddMessageFile(messWithId.Id, fileId);
+                    messViewModel.Files.Add(new FileDownloadViewModel { FileId = gId, FileName = file.Name });
+                }
+
+            }
+            
+            
+            return messViewModel;
+        }
+
+        public Stream GetFile(string fileId)
+        {
+            return _googleDriveApiService.DownloadFile(fileId);
         }
 
         public IEnumerable<Message> GetMessages()
@@ -75,9 +101,29 @@ namespace BusinessLogic.Service
 
         public IEnumerable<MessageViewModel> GetMessagesFromGroup(int groupId)
         {
-            return _repository
+            var messages = _repository
                 .GetMessagesIncludeUsers(x => x.IdGroup == groupId)
-                .Select(x => _mapper.Map<MessageViewModel>(x));
+                .Select(x => _mapper.Map<MessageViewModel>(x)).ToList();
+
+            foreach (var message in messages)
+            {
+                var files = _repository.GetFilesFromMessage(message.Id).ToList();
+                if (files != null && files.Count() > 0)
+                {
+                    for (var i = 0; i < files.Count(); i++)
+                    {
+                        messages.FirstOrDefault(x => x.Id == message.Id)
+                            .Files
+                            .Add(new FileDownloadViewModel
+                            {
+                                FileId = files[i].FileId,
+                                FileName = files[i].FileName
+                            });
+                    }
+                }
+            }
+
+            return messages;
         }
 
     }

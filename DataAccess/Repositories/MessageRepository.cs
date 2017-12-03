@@ -21,10 +21,37 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public void SendMessage(Message message)
+        public Message SendMessage(Message message)
         {
-            _context.Messages.Add(message);
+            var mess = _context.Messages.Add(message);
             SaveChanges();
+            return mess;
+        }
+
+        public void AddFile(string name, string fileId)
+        {
+            _context.Files.Add(new File { FileName = name, FileId = fileId });
+            SaveChanges();
+        }
+
+        public int GetFileIdByName(string fileId)
+        {
+            return _context.Files.FirstOrDefault(x => x.FileId == fileId).Id;
+        }
+
+        public void AddMessageFile(int messageId, int fileId)
+        {
+            _context.MessageFiles.Add(new MessageFile { IdMessage = messageId, IdFile = fileId });
+            SaveChanges();
+        }
+
+        public IEnumerable<File> GetFilesFromMessage(int messageId)
+        {
+            return _context.MessageFiles
+                .Include(x => x.File)
+                .Where(x => x.IdMessage == messageId)
+                .Select(x => x.File)
+                .ToList();
         }
 
         public IEnumerable<Message> GetMessages()
@@ -85,6 +112,7 @@ namespace DataAccess.Repositories
         {
             _context.SaveChanges();
         }
+
 
     }
 }
