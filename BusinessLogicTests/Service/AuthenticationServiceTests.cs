@@ -27,14 +27,35 @@ namespace BusinessLogic.Service.Tests
             Assert.IsTrue(result);
         }
 
-        public class AuthenticationRepositoryTests
-    : IAuthenticationRepository
+        [TestMethod()]
+        public void AuthenticateTest_UnvalidData_False()
+        {
+            string email = "email1";
+            string pass = "pass2";
+            IAuthenticationService service = new AuthenticationService(new AuthenticationRepositoryTests());
+
+            var result = service.Authenticate(email, pass);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod()]
+        public void AuthenticateTest_EmptyData_False()
+        {
+            IAuthenticationService service = new AuthenticationService(new AuthenticationRepositoryTests());
+
+            var result = service.Authenticate(null, null);
+
+            Assert.IsFalse(result);
+        }
+    }
+
+    public class AuthenticationRepositoryTests
+        : IAuthenticationRepository
         {
             public User GetUser(string login)
             {
                 return new User { Email = "email1", Password = "pass1".EncryptPassword() };
             }
         }
-
-    }
 }
