@@ -50,6 +50,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "Utility\Utility.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleDriveAPI", "GoogleDriveAPI\GoogleDriveAPI.csproj", "{C15653E1-31C5-44FE-85E0-7BFF53F4341F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicTests", "BusinessLogicTests\BusinessLogicTests.csproj", "{B347E579-B7A2-4D39-913C-74CE357E993D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,10 @@ Global
 		{C15653E1-31C5-44FE-85E0-7BFF53F4341F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C15653E1-31C5-44FE-85E0-7BFF53F4341F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C15653E1-31C5-44FE-85E0-7BFF53F4341F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B347E579-B7A2-4D39-913C-74CE357E993D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B347E579-B7A2-4D39-913C-74CE357E993D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B347E579-B7A2-4D39-913C-74CE357E993D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B347E579-B7A2-4D39-913C-74CE357E993D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

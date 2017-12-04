@@ -22,6 +22,10 @@ namespace BusinessLogic.Service
 
         public bool Authenticate(string login, string password)
         {
+            if (login == null || password == null)
+            {
+                return false;
+            }
             var passwordBase64 = password.EncryptPassword();
 
             var user = _repository.GetUser(login);
