@@ -73,6 +73,10 @@
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Blackjack\Blackjack.csproj">
+      <Project>{126044de-1d7d-49b7-81f8-51ea88cd760e}</Project>
+      <Name>Blackjack</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
       <Project>{3444a42e-b46e-479d-a30a-e235b5eb5191}</Project>
       <Name>DataAccess</Name>
