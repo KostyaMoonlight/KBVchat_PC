@@ -27,7 +27,7 @@ namespace DataAccess.Context
                 .HasMany(m => m.FirstFriend)
                 .WithRequired(r => r.FirstUser)
                 .HasForeignKey(f => f.IdFirst)
-                .WillCascadeOnDelete(false);;
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
                 .HasMany(m => m.SecondFriend)
@@ -70,6 +70,11 @@ namespace DataAccess.Context
                 .WithRequired(r => r.File)
                 .HasForeignKey(f => f.IdFile);
 
+            modelBuilder.Entity<Room>()
+                .HasMany(m => m.Users)
+                .WithOptional(r => r.Room)
+                .HasForeignKey(f => f.RoomId);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -80,5 +85,7 @@ namespace DataAccess.Context
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<UsersGroup> UsersGroups { get; set; }
         public virtual DbSet<User> Users{ get; set; }
+        public virtual DbSet<Room> Rooms { get; set; }
+
     }
 }

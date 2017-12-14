@@ -30,7 +30,7 @@ namespace Blackjack
         public bool IsEnd { get => PlayersCount - 1 == CurrentPlayer; }
         [JsonIgnore]
         private int PlayersCount { get => Players.Count; }
-        [JsonIgnore]
+        [JsonProperty]
         private Random random;
 
         public Game()

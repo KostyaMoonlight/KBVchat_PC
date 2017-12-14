@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    [Table("files")]
-    public class File
+    [Table("rooms")]
+    public class Room
     {
         [Key, Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Column("file")]
-        public string FileName{ get; set; }
+        [Column("name")]
+        public string Name { get; set; }
 
-        [Column("file_id")]
-        public string FileId { get; set; }
-
-        public virtual ICollection<MessageFile> MessageFiles { get; set; }
+        [Column("state")]
+        public string State { get; set; }
+        
+        public virtual ICollection<User> Users { get; set; }
     }
 }

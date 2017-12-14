@@ -29,7 +29,9 @@ namespace DataAccess.Initializers
                         FirstName = "Kostya",
                         MiddleName = "Zdor",
                         ThirdName = "Andr",
-                        Nickname = "Moonlight"
+                        Nickname = "Moonlight",
+                        Balance = 200,
+                        RoomId=null
                     },
                     new User
                     {
@@ -43,7 +45,9 @@ namespace DataAccess.Initializers
                         FirstName = "Vlad",
                         MiddleName = "Gromadskiy",
                         ThirdName = "But`kovich",
-                        Nickname = "Grom"
+                        Nickname = "Grom",
+                        Balance = 200,
+                        RoomId=null
 
                     },
                     new User
@@ -58,7 +62,9 @@ namespace DataAccess.Initializers
                         FirstName = "Bodya",
                         MiddleName = "Shuker",
                         ThirdName = "But`kovich",
-                        Nickname = "Melkiy"
+                        Nickname = "Melkiy",
+                        Balance = 200,
+                        RoomId=null
                     },
                     new User
                     {
@@ -72,7 +78,9 @@ namespace DataAccess.Initializers
                         FirstName = "Vlad",
                         MiddleName = "Betin",
                         ThirdName = "But`kovich",
-                        Nickname = "Mandarin"
+                        Nickname = "Mandarin",
+                        Balance = 200,
+                        RoomId=null
                     }
                 });
 

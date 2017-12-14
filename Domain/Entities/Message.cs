@@ -11,29 +11,29 @@ namespace Domain.Entities
     [Table("messages")]
     public class Message
     {
-        [Key, Column("Id")]
+        [Key, Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Column("idsender")]
+        [Column("id_sender")]
         public int IdSender { get; set; }
 
-        [Column("isread")]
+        [Column("is_read")]
         public bool IsRead { get; set; }
 
-        [Column("isdelivered")]
+        [Column("is_delivered")]
         public bool IsDelivered { get; set; }
 
         [Column("text")]
         public string Text { get; set; }
 
-        [Column("idfiles")]
+        [Column("id_files")]
         public int? IdFiles { get; set; }
 
         [Column("time")]
         public DateTime Time { get; set; }
 
-        [Column("idgroup")]
+        [Column("id_group")]
         public int IdGroup { get; set; }
 
 

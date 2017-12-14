@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Autofac;
+using BusinessLogic.Service.Base;
+using KBVchat_PC.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +25,10 @@ namespace KBVchat_PC
     {
         public MainWindow()
         {
+            var container = DependencyConfig.GetContainer();
+            var userService = container.Resolve<IUserService>();
+            var frienService = container.Resolve<IFriendService>();
+            
             InitializeComponent();
         }
     }

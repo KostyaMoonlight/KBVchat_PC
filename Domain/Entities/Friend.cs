@@ -11,13 +11,13 @@ namespace Domain.Entities
     [Table("friends")]
     public class Friend
     {
-        [Key, Column("idfirst", Order = 1)]
+        [Key, Column("id_first", Order = 1)]
         public int IdFirst { get; set; }
 
-        [Key, Column("idsecond", Order = 2)]
+        [Key, Column("id_second", Order = 2)]
         public int IdSecond { get; set; }
 
-        [Column("isconfirmed")]
+        [Column("is_confirmed")]
         public bool IsConfirmed { get; set; }
 
         public User FirstUser { get; set; }

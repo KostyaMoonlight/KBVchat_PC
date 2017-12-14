@@ -62,6 +62,7 @@
     <Compile Include="Mapping\UserMapping.cs" />
     <Compile Include="Service\AuthenticationService.cs" />
     <Compile Include="Service\Base\IAuthenticationService.cs" />
+    <Compile Include="Service\Base\IBlackjackService.cs" />
     <Compile Include="Service\Base\IFriendService.cs" />
     <Compile Include="Service\Base\IGroupService.cs" />
     <Compile Include="Service\Base\IMessageService.cs" />

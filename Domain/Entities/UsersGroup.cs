@@ -11,10 +11,10 @@ namespace Domain.Entities
     [Table("usersgroup")]
     public class UsersGroup
     {
-        [Key, Column("iduser", Order = 1)]
+        [Key, Column("id_user", Order = 1)]
         public int IdUser { get; set; }
 
-        [Key, Column("idgroup", Order = 2)]
+        [Key, Column("id_group", Order = 2)]
         public int IdGroup { get; set; }
 
 

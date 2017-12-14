@@ -12,7 +12,7 @@ namespace Domain.Entities
     [Table("Users")]
     public class User
     {
-        [Key, Column("iduser")]
+        [Key, Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
@@ -25,31 +25,37 @@ namespace Domain.Entities
         [Column("phone")]
         public string Phone { get; set; }
 
-        [Column("lasttimeaccess")]
+        [Column("last_time_access")]
         public DateTime LastTimeAccess { get; set; }
 
-        [Column("unreadmessages")]
+        [Column("unread_messages")]
         public int UnreadMessages { get; set; }
 
-        [Column("isonline")]
+        [Column("is_online")]
         public int IsOnline { get; set; }
 
+        [Column("balance")]
+        public double Balance { get; set; }
+
+        [Column("room_id")]
+        public int? RoomId { get; set; }
 
         [Column("nick")]
         public string Nickname { get; set; }
 
-        [Column("firstname")]
+        [Column("first_name")]
         public string FirstName { get; set; }
 
-        [Column("middlename")]
+        [Column("middle_name")]
         public string MiddleName { get; set; }
 
-        [Column("thirdname")]
+        [Column("third_name")]
         public string ThirdName { get; set; }
 
         [Column("birthdate")]
         public DateTime Birthdate { get; set; }
 
+        public Room Room { get; set; }
 
         public virtual ICollection<Friend> FirstFriend { get; set; }
 
@@ -79,7 +85,8 @@ namespace Domain.Entities
                     x.Nickname,
                     x.Password,
                     x.UnreadMessages,
-
+                    x.Balance,
+                    x.RoomId
                 });
                 m.ToTable("Users");
             })
