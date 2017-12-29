@@ -36,6 +36,9 @@
     <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogicDependencyModule.cs" />
+    <Compile Include="DTO\BJ\BlackjackViewModel.cs" />
     <Compile Include="DTO\Group\GroupViewModel.cs" />
     <Compile Include="DTO\Message\FileDownloadViewModel.cs" />
     <Compile Include="DTO\Message\FileViewModel.cs" />
@@ -57,6 +61,7 @@
     <Compile Include="DTO\User\UserInfoViewModel.cs" />
     <Compile Include="DTO\User\UserShortInfoViewModel.cs" />
     <Compile Include="DTO\User\UserUnreadMessage.cs" />
+    <Compile Include="Mapping\BJMapping.cs" />
     <Compile Include="Mapping\GroupMapping.cs" />
     <Compile Include="Mapping\MessageMapping.cs" />
     <Compile Include="Mapping\UserMapping.cs" />
@@ -64,19 +69,21 @@
     <Compile Include="Service\Base\IAuthenticationService.cs" />
     <Compile Include="Service\Base\IBlackjackService.cs" />
     <Compile Include="Service\Base\IFriendService.cs" />
+    <Compile Include="Service\Base\IGameService.cs" />
     <Compile Include="Service\Base\IGroupService.cs" />
     <Compile Include="Service\Base\IMessageService.cs" />
     <Compile Include="Service\Base\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\BlackjackService.cs" />
     <Compile Include="Service\FriendService.cs" />
     <Compile Include="Service\GroupService.cs" />
     <Compile Include="Service\MessageService.cs" />
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Blackjack\Blackjack.csproj">
-      <Project>{126044de-1d7d-49b7-81f8-51ea88cd760e}</Project>
-      <Name>Blackjack</Name>
+    <ProjectReference Include="..\BJ\BJ.csproj">
+      <Project>{ee3d05f5-3ae5-4b5d-b29d-acd53542bca4}</Project>
+      <Name>BJ</Name>
     </ProjectReference>
     <ProjectReference Include="..\DataAccess\DataAccess.csproj">
       <Project>{3444a42e-b46e-479d-a30a-e235b5eb5191}</Project>
@@ -96,6 +103,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

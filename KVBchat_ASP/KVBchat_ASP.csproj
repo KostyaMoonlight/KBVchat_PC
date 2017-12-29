@@ -162,6 +162,9 @@
     <Compile Include="Areas\Authentication\AuthenticationAreaRegistration.cs" />
     <Compile Include="Areas\Authentication\Controllers\LoginController.cs" />
     <Compile Include="Areas\Authentication\Controllers\RegisterController.cs" />
+    <Compile Include="Areas\Blackjack\BlackjackAreaRegistration.cs" />
+    <Compile Include="Areas\Blackjack\Controllers\BlackjackController.cs" />
+    <Compile Include="Areas\Blackjack\Models\BlackjackWithCurrentPlayerViewModel.cs" />
     <Compile Include="Areas\UserSearchEngine\Controllers\UserSearchController.cs" />
     <Compile Include="Areas\UserSearchEngine\Models\User\UserSearchViewModel.cs" />
     <Compile Include="Areas\UserSearchEngine\UserSearchEngineAreaRegistration.cs" />
@@ -217,6 +220,11 @@
     <Content Include="Areas\Authentication\Views\Register\Register.cshtml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Blackjack\Views\web.config" />
+    <Content Include="Areas\Blackjack\Views\Blackjack\Room.cshtml" />
+    <Content Include="Areas\Blackjack\Views\Shared\_Table.cshtml" />
+    <Content Include="Areas\Blackjack\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Blackjack\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\cldr.js" />
     <Content Include="Scripts\cldr\event.js" />
@@ -282,6 +290,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BJ\BJ.csproj">
+      <Project>{ee3d05f5-3ae5-4b5d-b29d-acd53542bca4}</Project>
+      <Name>BJ</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj">
       <Project>{99ac112c-b4bf-4dc1-bc05-4120f66287ef}</Project>
       <Name>BusinessLogic</Name>

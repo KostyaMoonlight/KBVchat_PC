@@ -15,6 +15,13 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
+        public Room AddRoom(string name, string state)
+        {
+            var room = _context.Rooms.Add(new Room { Name = name, State = state });
+            SaveChanges();
+            return room;
+        }
+
         public void DeleteRoom(int id)
         {
             var room = _context.Rooms.FirstOrDefault(x => x.Id == id);

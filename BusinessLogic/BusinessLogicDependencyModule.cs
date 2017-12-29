@@ -39,7 +39,10 @@ namespace BusinessLogic
             builder.RegisterType(typeof(GoogleDriveApiService))
                 .As(typeof(IGoogleDriveApiService))
                 .InstancePerRequest();
-            
+
+            builder.RegisterType(typeof(BlackjackService))
+                .As(typeof(IBlackjackService))
+                .InstancePerRequest();
         }
     }
 }

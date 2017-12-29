@@ -10,6 +10,7 @@ namespace DataAccess.Repositories.Base
     public interface IRoomRepository
         :ISaveChanges
     {
+        Room AddRoom(string name, string state);
         Room GetRoomById(int id);
         void UpdateRoom(Room room);
         void DeleteRoom(int id);

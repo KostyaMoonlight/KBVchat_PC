@@ -21,7 +21,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "User", "User", new { id = -1, area = "" }, null)</li>
-                </ul>               
+                </ul>
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Friends", "GetFriends", "Friends", new { area = "" }, null)</li>
                 </ul>
@@ -34,10 +34,13 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Search", "UserSearch", "UserSearch", new { area = "UserSearchEngine" }, null)</li>
                 </ul>
-                
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.Action("UserLogin", "Login", new { area = "Authentication" })</li>
-    </ul>
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("BJ", "JoinRoom", "Blackjack", new { area = "Blackjack", id = 1 }, null)</li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.Action("UserLogin", "Login", new { area = "Authentication" })</li>
+                </ul>
 
             </div>
         </div>

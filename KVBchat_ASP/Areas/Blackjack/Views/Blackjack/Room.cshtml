@@ -1,0 +1,109 @@
+﻿@model KVBchat_ASP.Areas.Blackjack.Models.BlackjackWithCurrentPlayerViewModel
+@{
+    ViewBag.Title = "BlackjackRoom";
+}
+<h2>Blackjack Room @Model.BlackjackViewModel.RoomId</h2>
+
+<div id="TableId">
+    <div id="board">
+        <div style="align-self:center;">
+            Casino
+            <div>
+                Bat: @Model.BlackjackViewModel.Casino.Bet
+            </div>
+            <div>
+                @foreach (var card in Model.BlackjackViewModel.Casino.Cards)
+                {
+                    <div>
+                        @card.Name - @card.Suit
+                    </div>
+                }
+            </div>
+        </div>
+
+        Other players:
+        <div>
+            @foreach (var player in Model.BlackjackViewModel.Players)
+            {
+                @player.Nickname
+                <div>
+                    Bat: @player.Bet
+                </div>
+                <div>
+                    @foreach (var card in Model.BlackjackViewModel.Casino.Cards)
+                    {
+                        <div>
+                            @card.Name - @card.Suit
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (Model.BlackjackViewModel.CurrentPlayerId == Model.CurrentUserId)
+    {
+        <div>
+            <span>
+                @using (@Ajax.BeginForm("Double", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId }, new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnSuccess = "Updater"
+                }, null))
+                {
+                    <input type="submit" value="Double" class="btn btn-success" />
+                }
+            </span>
+
+            <span>
+                @using (@Ajax.BeginForm("Hit", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId }, new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnSuccess = "Updater"
+                }, null))
+                {
+                    <input type="submit" value="Hit" class="btn btn-primary" />
+                }
+            </span>
+
+            <span>
+                @using (@Ajax.BeginForm("Stand", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId }, new AjaxOptions
+                {
+                    HttpMethod = "POST",
+                    OnSuccess = "Updater"
+                }, null))
+                {
+                    <input type="submit" value="Stand" class="btn btn-warning" />
+                }
+            </span>
+        </div>
+
+    }
+    else
+    {
+        <div> W8 u turn!</div>
+    }
+</div>
+
+@Ajax.ActionLink("reloadGame", "Reload", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId },
+    new AjaxOptions
+    {
+        UpdateTargetId = "TableId",
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.InsertAfter
+    }, new { hidden = "hidden", id = "roomUpdaterId" })
+
+@*@if (!string.IsNullOrEmpty(Model.BlackjackViewModel.Winners))
+    {
+        @Html.DisplayText(@Model.BlackjackViewModel.Winners)
+    }*@
+
+
+
+<script type="text/javascript">
+    (function Updater() {
+        document.getElementById("roomUpdaterId").click();
+        setTimeout(Updater, 7000);
+    })();
+</script>
+
