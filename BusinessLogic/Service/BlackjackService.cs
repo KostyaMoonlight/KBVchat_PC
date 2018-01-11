@@ -31,7 +31,7 @@ namespace BusinessLogic.Service
         {
             var game = new Game
             {
-                Casino = new Player() { Id = 1, Nickname = "Casino", Bet = bet }
+                Casino = new Player() { Id = 3, Nickname = "Casino", Bet = bet }
             };
             var serGame = Serialize(game);
             var room = _roomRepository.AddRoom("Blackjack", serGame);
@@ -42,6 +42,12 @@ namespace BusinessLogic.Service
         {
             var room = _roomRepository.GetRoomById(roomId);
             var game = Deserialize(room.State);
+            if (game.Players.Count>=1)
+            {
+                var gameVM = _mapper.Map<BlackjackViewModel>(game);
+                gameVM.RoomId = roomId;
+                return gameVM;
+            }
             game.Players.Add(new Player { Id = userId, Nickname = nickname, Bet = 100 });
 
             game.GameStart();
@@ -74,8 +80,9 @@ namespace BusinessLogic.Service
             var room = _roomRepository.GetRoomById(roomId);
             var game = Deserialize(room.State);
             var gameViewModel = _mapper.Map<BlackjackViewModel>(game);
+            gameViewModel.RoomId = roomId;
             if (game.IsEnd)
-                gameViewModel.Winners = string.Join(", ", game.GetWinners().Ids) + " won " + game.GetWinners().Money;
+                gameViewModel.Winners = "Winners: " + string.Join(", ", game.GetWinners().Names) + " won " + game.GetWinners().Money;
             return gameViewModel;
         }
 
@@ -92,8 +99,6 @@ namespace BusinessLogic.Service
             room.State = state;
             _roomRepository.UpdateRoom(room);
         }
-
-
 
         public void Stand(int roomId, int userId)
         {

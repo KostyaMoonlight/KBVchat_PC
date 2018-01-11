@@ -14,7 +14,7 @@ namespace BusinessLogic.DTO.BJ
         public List<Player> Players { get; set; }
         public List<Card> Cards { get; set; }
         public int CurrentPlayer { get; set; }
-        public int CurrentPlayerId { get => Players[CurrentPlayer > 0 ? CurrentPlayer : 0].Id; }
+        public int CurrentPlayerId { get => CurrentPlayer < Players.Count ? Players [CurrentPlayer].Id : -1; }
         public string Winners { get; set; }
     }
 }

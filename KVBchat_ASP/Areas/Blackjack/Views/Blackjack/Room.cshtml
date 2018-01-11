@@ -30,7 +30,7 @@
                     Bat: @player.Bet
                 </div>
                 <div>
-                    @foreach (var card in Model.BlackjackViewModel.Casino.Cards)
+                    @foreach (var card in player.Cards)
                     {
                         <div>
                             @card.Name - @card.Suit
@@ -83,27 +83,35 @@
     {
         <div> W8 u turn!</div>
     }
+    @if (!string.IsNullOrEmpty(Model.BlackjackViewModel.Winners))
+    {
+        <div>@Html.DisplayText(@Model.BlackjackViewModel.Winners)</div>
+    }
+    else
+    {
+        <div>Stil playing</div>
+    }
 </div>
 
 @Ajax.ActionLink("reloadGame", "Reload", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId },
     new AjaxOptions
     {
         UpdateTargetId = "TableId",
-        HttpMethod = "GET",
-        InsertionMode = InsertionMode.InsertAfter
-    }, new { hidden = "hidden", id = "roomUpdaterId" })
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace
+    }, new { id = "roomUpdaterId" })
 
-@*@if (!string.IsNullOrEmpty(Model.BlackjackViewModel.Winners))
-    {
-        @Html.DisplayText(@Model.BlackjackViewModel.Winners)
-    }*@
-
-
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
 <script type="text/javascript">
-    (function Updater() {
-        document.getElementById("roomUpdaterId").click();
-        setTimeout(Updater, 7000);
-    })();
-</script>
+        (function selfUpdater() {
+            document.getElementById("roomUpdaterId").click();
+            setTimeout(selfUpdater, 7000);
+        })();
+    </script>
 
+<script type="text/javascript">
+    function Updater() {
+        document.getElementById("roomUpdaterId").click();
+    }
+</script>

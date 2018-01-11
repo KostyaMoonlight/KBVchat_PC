@@ -27,17 +27,17 @@ namespace Blackjack
                 ).Count();
         }
         [JsonIgnore]
-        public bool IsEnd { get => PlayersCount - 1 == CurrentPlayer; }
+        public bool IsEnd { get => PlayersCount == CurrentPlayer; }
         [JsonIgnore]
         private int PlayersCount { get => Players.Count; }
-        [JsonProperty]
-        private Random random;
+        [JsonIgnore]
+        private Random Random { get; set; } = new Random();
 
         public Game()
         {
             Players = new List<Player>();
             Cards = new Deck().Cards.ToList();
-            random = new Random();
+            //Random = new Random();
             CurrentPlayer = 0;
         }
 
@@ -106,6 +106,7 @@ namespace Blackjack
 
                 case PlayerAction.Double:
                     Players[CurrentPlayer].Bet *= 2;
+                    Casino.Bet *= 2;
                     Players[CurrentPlayer].Cards.Add(GetNextCard());
                     CurrentPlayer++;
                     break;
@@ -125,8 +126,10 @@ namespace Blackjack
         {
             var cards = Cards.Where(x => x.Active == true).ToList();
             var count = cards.Count();
-            var cardIndex = random.Next(count);
-            return cards[cardIndex];
+            var cardIndex = Random.Next(count);
+            var card = cards[cardIndex];
+            card.Active = false;
+            return card;
         }
 
         public Winners GetWinners()
@@ -145,14 +148,17 @@ namespace Blackjack
                 return new Winners
                 {
                     Ids = new List<int> { Casino.Id },
+                    Names = new List<string> { Casino.Nickname},
                     Money = Players.Select(x => x.Bet).Sum() + Casino.Bet
                 };
             }
             var maxScore = scores.Max();
             var winnersIds = playersScore.Where(x => x.Score == maxScore).Select(x => x.Id);
+            var winnersNames = Players.Where(x => winnersIds.Contains( x.Id)).Select(x => x.Nickname);
             var winners = new Winners()
             {
                 Ids = winnersIds,
+                Names = winnersNames,
                 Money = (Players.Select(x => x.Bet).Sum() + Casino.Bet) / winnersIds.Count()
             };
             return winners;
