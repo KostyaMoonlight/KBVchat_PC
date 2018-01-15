@@ -1,7 +1,31 @@
-﻿
+﻿@model KVBchat_ASP.Areas.Cabinet.Models.UserCabinetViewModel
 @{
     ViewBag.Title = "EditCard";
 }
 
 <h2>EditCard</h2>
-
+@using (Html.BeginForm("EditCard", "Cabinet", new { area = "Cabinet" }, FormMethod.Post, null))
+{
+    <div>
+        @Html.HiddenFor(x => x.Id)
+        <div class="form-group">
+            @Html.LabelFor(x => x.Card):
+            @Html.TextBoxFor(x => x.Card)
+            @Html.ValidationMessageFor(x => x.Card)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.CardExpirationDate):
+            @Html.TextBoxFor(x => x.CardExpirationDate)
+            @Html.ValidationMessageFor(x => x.CardExpirationDate)
+            @ViewBag.Orror
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.CardCVV):
+            @Html.TextBoxFor(x => x.CardCVV)
+            @Html.ValidationMessageFor(x => x.CardCVV)
+        </div>      
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+    </div>
+}

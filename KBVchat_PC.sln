@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleDriveAPI", "GoogleDri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BJ", "BJ\BJ.csproj", "{EE3D05F5-3AE5-4B5D-B29D-ACD53542BCA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Poker", "Poker\Poker.csproj", "{E6FB0830-63FB-40AD-9F46-365A6241A808}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{EE3D05F5-3AE5-4B5D-B29D-ACD53542BCA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE3D05F5-3AE5-4B5D-B29D-ACD53542BCA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE3D05F5-3AE5-4B5D-B29D-ACD53542BCA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6FB0830-63FB-40AD-9F46-365A6241A808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6FB0830-63FB-40AD-9F46-365A6241A808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6FB0830-63FB-40AD-9F46-365A6241A808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6FB0830-63FB-40AD-9F46-365A6241A808}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

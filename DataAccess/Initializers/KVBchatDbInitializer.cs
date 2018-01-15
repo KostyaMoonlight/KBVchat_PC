@@ -11,7 +11,7 @@ using Utility;
 namespace DataAccess.Initializers
 {
     public class KVBchatDbInitializer
-        : DropCreateDatabaseIfModelChanges<KVBchatDbContext>
+        : DropCreateDatabaseAlways<KVBchatDbContext>
     {
         protected override void Seed(KVBchatDbContext context)
         {
@@ -27,13 +27,12 @@ namespace DataAccess.Initializers
                         LastTimeAccess = DateTime.Now,
                         Birthdate = DateTime.Now.AddYears(-10),
                         FirstName = "Kostya",
-                        MiddleName = "Zdor",
-                        ThirdName = "Andr",
+                        LastName = "Zdor",
                         Nickname = "Moonlight",
                         Balance = 200,
-                        Card = "5550-2123-3432-4322",
-                        CardDate = "09/18",
-                        CardSVV = "456",
+                        Card = "5550212334324322",
+                        CardExpirationDate = "09/18",
+                        CardCVV = "456",
                         RoomId=null
                     },
                     new User
@@ -46,13 +45,12 @@ namespace DataAccess.Initializers
                         LastTimeAccess = DateTime.Now,
                         Birthdate = DateTime.Now.AddYears(-20),
                         FirstName = "Vlad",
-                        MiddleName = "Gromadskiy",
-                        ThirdName = "But`kovich",
+                        LastName = "Gromadskiy",
                         Nickname = "Grom",
                         Balance = 200,
-                        Card = "5550-2121-3211-4444",
-                        CardDate = "10/18",
-                        CardSVV = "233",
+                        Card = "5550212132114444",
+                        CardExpirationDate = "10/18",
+                        CardCVV = "233",
                         RoomId=null
 
                     },
@@ -66,13 +64,12 @@ namespace DataAccess.Initializers
                         LastTimeAccess = DateTime.Now,
                         Birthdate = DateTime.Now.AddYears(-20),
                         FirstName = "Bodya",
-                        MiddleName = "Shuker",
-                        ThirdName = "But`kovich",
+                        LastName = "Shuker",
                         Nickname = "Melkiy",
                         Balance = 200,
-                        Card = "5550-2123-3432-4322",
-                        CardDate = "09/18",
-                        CardSVV = "456",
+                        Card = "5550212334324322",
+                        CardExpirationDate = "09/18",
+                        CardCVV = "456",
                         RoomId=null
                     },
                     new User
@@ -85,13 +82,12 @@ namespace DataAccess.Initializers
                         LastTimeAccess = DateTime.Now,
                         Birthdate = DateTime.Now.AddYears(-20),
                         FirstName = "Vlad",
-                        MiddleName = "Betin",
-                        ThirdName = "But`kovich",
+                        LastName = "Betin",
                         Nickname = "Mandarin",
                         Balance = 200,
-                        Card = "5550-2123-3432-4322",
-                        CardDate = "09/18",
-                        CardSVV = "456",
+                        Card = "5550212334324322",
+                        CardExpirationDate = "09/18",
+                        CardCVV = "456",
                         RoomId=null
                     }
                 });

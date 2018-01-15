@@ -41,10 +41,10 @@ namespace Domain.Entities
         public string Card { get; set; }
 
         [Column("card_date")]
-        public string CardDate { get; set; }
+        public string CardExpirationDate { get; set; }
 
         [Column("card_svv")]
-        public string CardSVV { get; set; }
+        public string CardCVV { get; set; }
 
         [Column("room_id")]
         public int? RoomId { get; set; }
@@ -56,10 +56,7 @@ namespace Domain.Entities
         public string FirstName { get; set; }
 
         [Column("middle_name")]
-        public string MiddleName { get; set; }
-
-        [Column("third_name")]
-        public string ThirdName { get; set; }
+        public string LastName { get; set; }
 
         [Column("birthdate")]
         public DateTime Birthdate { get; set; }
@@ -96,8 +93,8 @@ namespace Domain.Entities
                     x.UnreadMessages,
                     x.Balance,
                     x.Card,
-                    x.CardDate,
-                    x.CardSVV,
+                    x.CardExpirationDate,
+                    x.CardCVV,
                     x.RoomId
                 });
                 m.ToTable("Users");
@@ -108,9 +105,8 @@ namespace Domain.Entities
                 {
                     x.Birthdate,
                     x.FirstName,
-                    x.MiddleName,
-                    x.Phone,
-                    x.ThirdName
+                    x.LastName,
+                    x.Phone
                 });
                 m.ToTable("UserInfo");
             });

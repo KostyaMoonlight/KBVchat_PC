@@ -37,17 +37,11 @@ namespace KVBchat_ASP.Areas.Authentication.Models
         [MaxLength(50, ErrorMessage ="Max length is 50 chars")]
         public string FirstName { get; set; }
 
-        [DisplayName("Middle name")]
+        [DisplayName("Last name")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Enter data")]
         [MinLength(2, ErrorMessage = "Min length is 2 chars")]
         [MaxLength(50, ErrorMessage ="Max length is 50 chars")]
-        public string MiddleName { get; set; }
-
-        [DisplayName("Third name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Enter data")]
-        [MinLength(2, ErrorMessage = "Min length is 2 chars")]
-        [MaxLength(50, ErrorMessage ="Max length is 50 chars")]
-        public string ThirdName { get; set; }
+        public string LastName { get; set; }
 
         [DisplayName("Birthdate")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Enter data")]

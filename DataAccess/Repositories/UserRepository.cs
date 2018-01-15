@@ -35,7 +35,8 @@ namespace DataAccess.Repositories
 
         public User GetUser(Expression<Func<User, bool>> func)
         {
-            return _context.Users.FirstOrDefault(func);
+            var user = _context.Users.FirstOrDefault(func);
+            return user;
         }
 
         public IEnumerable<User> GetUsers()

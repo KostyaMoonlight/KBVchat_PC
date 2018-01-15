@@ -35,14 +35,9 @@ namespace BusinessLogic.Service
 
             oldUser.Nickname = user.Nickname;
             oldUser.FirstName = user.FirstName;
-            oldUser.MiddleName = user.MiddleName;
-            oldUser.ThirdName = user.ThirdName;
+            oldUser.LastName = user.LastName;
             oldUser.Birthdate = user.Birthdate;
-            oldUser.Balance = user.Balance;
-            oldUser.Card = user.Card;
-            oldUser.CardDate = user.CardDate;
-            oldUser.CardSVV = user.CardSVV;
-
+            
             _repository.SaveChanges();
         }
 
@@ -99,8 +94,7 @@ namespace BusinessLogic.Service
                     (
                         x.Nickname.Contains(fullName) ||
                         x.FirstName.Contains(fullName) ||
-                        x.MiddleName.Contains(fullName) ||
-                        x.ThirdName.Contains(fullName)
+                        x.LastName.Contains(fullName)
                     )
                 ).Select(x => _mapper.Map<UserShortInfoViewModel>(x));
         }
@@ -108,6 +102,34 @@ namespace BusinessLogic.Service
         public IEnumerable<FriendShortInfoViewModel> GetUsersFromGroup(int groupId)
         {
             return _repository.GetUsersFromGroup(groupId).Select(x=> _mapper.Map<FriendShortInfoViewModel>(x));
+        }
+
+        public void EditBalance(User user)
+        {
+            var oldUser = _repository.GetUser(user.Id);
+            if (oldUser == null)
+            {
+                return;
+            }
+
+            oldUser.Balance = user.Balance;
+
+            _repository.SaveChanges();
+        }
+
+        public void EditUserCard(User user)
+        {
+            var oldUser = _repository.GetUser(user.Id);
+            if (oldUser == null)
+            {
+                return;
+            }
+
+            oldUser.Card = user.Card;
+            oldUser.CardExpirationDate = user.CardExpirationDate;
+            oldUser.CardCVV = user.CardCVV;
+
+            _repository.SaveChanges();
         }
     }
 }

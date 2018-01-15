@@ -24,17 +24,15 @@ namespace BusinessLogic.DTO.User
 
         public string FirstName { get; set; }
 
-        public string MiddleName { get; set; }
+        public string LastName { get; set; }
 
         public double Balance { get; set; }
 
         public string Card { get; set; }
 
-        public string CardDate { get; set; }
+        public string CardExpirationDate { get; set; }
 
-        public string CardSVV { get; set; }
-
-        public string ThirdName { get; set; }
+        public string CardCVV { get; set; }
 
         public DateTime Birthdate { get; set; }
     }

@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace KVBchat_ASP.Areas.Poker.Controllers
 {
+    [Authorize]
     public class PokerController : Controller
     {
-        // GET: Poker/Poker
         public ActionResult JoinRoom()
         {
             return View("Room");

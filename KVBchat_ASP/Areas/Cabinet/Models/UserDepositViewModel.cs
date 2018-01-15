@@ -9,6 +9,8 @@ namespace KVBchat_ASP.Areas.Cabinet.Models
 {
     public class UserDepositViewModel
     {
+        public int Id { get; set; }
+
         [DisplayName("Your balance")]
         [DataType(DataType.Currency)]
         public double Balance { get; set; }

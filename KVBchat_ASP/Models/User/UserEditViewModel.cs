@@ -25,17 +25,11 @@ namespace KVBchat_ASP.Models.User
         [MaxLength(50, ErrorMessage = "Max length is 50 chars")]
         public string FirstName { get; set; }
 
-        [DisplayName("Middle name")]
+        [DisplayName("Last name")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Enter your middle name")]
         [MinLength(2, ErrorMessage = "Min length is 6 chars")]
         [MaxLength(50, ErrorMessage = "Max length is 50 chars")]
-        public string MiddleName { get; set; }
-
-        [DisplayName("Third name")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Enter your third name")]
-        [MinLength(2, ErrorMessage = "Min length is 6 chars")]
-        [MaxLength(50, ErrorMessage = "Max length is 50 chars")]
-        public string ThirdName { get; set; }
+        public string LastName { get; set; }
 
         [DisplayName("Birthdate")]
         [DataType(DataType.Date)]

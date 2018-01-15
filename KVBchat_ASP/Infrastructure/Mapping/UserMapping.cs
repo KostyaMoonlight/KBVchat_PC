@@ -21,6 +21,7 @@ namespace KVBchat_ASP.Infrastructure.Mapping
                 .ForMember(dest => dest.Birthdate, opt => opt.MapFrom(src => src.Birthdate));
             CreateMap<UserInfoViewModel, UserEditViewModel>();
             CreateMap<UserInfoViewModel, UserCabinetViewModel>();
+            CreateMap<User, UserCabinetViewModel>();
             CreateMap<UserInfoViewModel, UserWithdrawViewModel>().
                 ForMember(dest => dest.Withdraw, opt => opt.MapFrom(src => 0));
             CreateMap<UserInfoViewModel, UserDepositViewModel>().
@@ -31,8 +32,6 @@ namespace KVBchat_ASP.Infrastructure.Mapping
             CreateMap<UserCabinetViewModel, User>();
             CreateMap<UserDepositViewModel, User>();
             CreateMap<UserWithdrawViewModel, User>();
-            CreateMap<UserDepositViewModel, UserInfoViewModel>();
-            CreateMap<UserWithdrawViewModel, UserInfoViewModel>();
         }
 
     }

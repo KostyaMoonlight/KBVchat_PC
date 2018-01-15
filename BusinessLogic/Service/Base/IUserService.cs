@@ -12,6 +12,8 @@ namespace BusinessLogic.Service.Base
     public interface IUserService
     {
         void EditUser(User user);
+        void EditBalance(User user);
+        void EditUserCard(User user);
         void UserNotification(IEnumerable<Message> messages);
         User GetUser(int id);
         UserInfoViewModel GetUserByLogin(string login);

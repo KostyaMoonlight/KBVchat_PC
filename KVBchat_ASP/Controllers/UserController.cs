@@ -69,7 +69,8 @@ namespace KVBchat_ASP.Controllers
             {
                 TempData.Remove("Birthdate");
             }
-            _userService.EditUser(_mapper.Map<User>(userEditView));
+            var user = _mapper.Map<User>(userEditView);
+            _userService.EditUser(user);
 
             return Redirect("User");
         }
