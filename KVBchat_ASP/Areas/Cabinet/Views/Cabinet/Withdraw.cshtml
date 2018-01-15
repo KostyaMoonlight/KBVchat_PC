@@ -1,0 +1,25 @@
+﻿@model KVBchat_ASP.Areas.Cabinet.Models.UserWithdrawViewModel
+@{
+    ViewBag.Title = "Withdraw";
+}
+
+<h2>Withdraw</h2>
+@using (Html.BeginForm("Withdraw", "Cabinet", new { area = "Cabinet" }, FormMethod.Post, null))
+{
+<div>
+    @Html.HiddenFor(x => x.Balance)
+    <div>
+        @Html.LabelFor(x => x.Balance):
+        @Html.DisplayTextFor(x => x.Balance)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Withdraw):
+        @Html.TextBoxFor(x => x.Withdraw)
+        @Html.ValidationMessageFor(x => x.Withdraw)
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Withdraw</button>
+    </div>
+</div>
+
+}

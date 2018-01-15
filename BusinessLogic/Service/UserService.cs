@@ -38,6 +38,10 @@ namespace BusinessLogic.Service
             oldUser.MiddleName = user.MiddleName;
             oldUser.ThirdName = user.ThirdName;
             oldUser.Birthdate = user.Birthdate;
+            oldUser.Balance = user.Balance;
+            oldUser.Card = user.Card;
+            oldUser.CardDate = user.CardDate;
+            oldUser.CardSVV = user.CardSVV;
 
             _repository.SaveChanges();
         }

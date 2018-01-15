@@ -11,7 +11,7 @@ using Utility;
 namespace DataAccess.Initializers
 {
     public class KVBchatDbInitializer
-        : CreateDatabaseIfNotExists<KVBchatDbContext>
+        : DropCreateDatabaseIfModelChanges<KVBchatDbContext>
     {
         protected override void Seed(KVBchatDbContext context)
         {
@@ -31,6 +31,9 @@ namespace DataAccess.Initializers
                         ThirdName = "Andr",
                         Nickname = "Moonlight",
                         Balance = 200,
+                        Card = "5550-2123-3432-4322",
+                        CardDate = "09/18",
+                        CardSVV = "456",
                         RoomId=null
                     },
                     new User
@@ -47,6 +50,9 @@ namespace DataAccess.Initializers
                         ThirdName = "But`kovich",
                         Nickname = "Grom",
                         Balance = 200,
+                        Card = "5550-2121-3211-4444",
+                        CardDate = "10/18",
+                        CardSVV = "233",
                         RoomId=null
 
                     },
@@ -64,6 +70,9 @@ namespace DataAccess.Initializers
                         ThirdName = "But`kovich",
                         Nickname = "Melkiy",
                         Balance = 200,
+                        Card = "5550-2123-3432-4322",
+                        CardDate = "09/18",
+                        CardSVV = "456",
                         RoomId=null
                     },
                     new User
@@ -80,6 +89,9 @@ namespace DataAccess.Initializers
                         ThirdName = "But`kovich",
                         Nickname = "Mandarin",
                         Balance = 200,
+                        Card = "5550-2123-3432-4322",
+                        CardDate = "09/18",
+                        CardSVV = "456",
                         RoomId=null
                     }
                 });

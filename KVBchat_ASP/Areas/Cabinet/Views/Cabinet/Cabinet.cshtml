@@ -1,0 +1,36 @@
+﻿@model KVBchat_ASP.Areas.Cabinet.Models.UserCabinetViewModel
+@{
+    ViewBag.Title = "Cabinet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cabinet</h2>
+
+<div>
+    <div>
+        @Html.LabelFor(x => x.Balance):
+        @Html.DisplayTextFor(x => x.Balance)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Card):
+        @Html.DisplayTextFor(x => x.Card)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.CardDate):
+        @Html.DisplayTextFor(x => x.CardDate)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.CardSVV):
+        @Html.DisplayTextFor(x => x.CardSVV)
+    </div>
+
+    @if (ViewBag.User == true)
+    {
+        <div>@Html.ActionLink("Withdraw", "Withdraw", "Cabinet", new { area = "Cabinet" }, null)</div>
+        <div>@Html.ActionLink("Deposit", "Deposit", "Cabinet", new { area = "Cabinet" }, null)</div>
+        <div>@Html.ActionLink("Edit card", "EditCard", "Cabinet", new { area = "Cabinet" }, null)</div>
+    }
+
+
+
+</div>

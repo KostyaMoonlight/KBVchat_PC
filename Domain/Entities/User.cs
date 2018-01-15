@@ -37,6 +37,15 @@ namespace Domain.Entities
         [Column("balance")]
         public double Balance { get; set; }
 
+        [Column("card")]
+        public string Card { get; set; }
+
+        [Column("card_date")]
+        public string CardDate { get; set; }
+
+        [Column("card_svv")]
+        public string CardSVV { get; set; }
+
         [Column("room_id")]
         public int? RoomId { get; set; }
 
@@ -86,6 +95,9 @@ namespace Domain.Entities
                     x.Password,
                     x.UnreadMessages,
                     x.Balance,
+                    x.Card,
+                    x.CardDate,
+                    x.CardSVV,
                     x.RoomId
                 });
                 m.ToTable("Users");

@@ -37,10 +37,17 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("BJ", "JoinRoom", "Blackjack", new { area = "Blackjack", id = 1 }, null)</li>
                 </ul>
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Poker", "JoinRoom", "Poker", new { area = "Poker" }, null)</li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Cabinet", "Cabinet", "Cabinet", new { area = "Cabinet" }, null)</li>
+                </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.Action("UserLogin", "Login", new { area = "Authentication" })</li>
                 </ul>
+
 
             </div>
         </div>
