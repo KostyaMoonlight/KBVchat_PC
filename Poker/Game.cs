@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Poker
 {
-    class Game
+    public class Game
     {
         [JsonProperty]
         public List<Card> Deck { get; set; }
@@ -20,7 +20,10 @@ namespace Poker
         public List<Player> Players { get; set; }
 
         [JsonProperty]
-        public int CurrentPlayerId { get; set; }
+        public int CurrentPlayerId { get; set; } = 0;
+
+        [JsonProperty]
+        public int GiveCardsCounter { get; set; } = 0;
 
         [JsonIgnore]
         public int ActivePlayers
@@ -41,17 +44,20 @@ namespace Poker
         {
             Players = new List<Player>();
             CardsOnTable = new List<Card>();
-            CurrentPlayerId = 0;
         }
 
         public void GameStart()
         {
+            GiveCardsCounter = 0;
             Deck = new DeckOfCards().Deck;
             CardsOnTable.Clear();
             CurrentPlayerId = 0;
             foreach (var player in Players)
             {
                 player.Cards = new List<Card>();
+                player.Cards.Add(Deck[0]);
+                player.Cards.Add(Deck[1]);
+                Deck.RemoveRange(0, 2);
             }
         }
 
@@ -60,9 +66,36 @@ namespace Poker
             
         }
 
-        private List<Card> GetNextCards()
+        private List<Card> GetNextCardsToTable()
         {
-            throw new Exception();
+            if (GiveCardsCounter == 0)
+            {
+                var list = new List<Card>();
+                list.Add(Deck[0]);
+                list.Add(Deck[1]);
+                list.Add(Deck[2]);
+                Deck.RemoveRange(0, 3);
+                GiveCardsCounter++;
+                return list;
+            }
+            if (GiveCardsCounter == 1)
+            {
+                var list = new List<Card>();
+                list.Add(Deck[0]);
+                Deck.RemoveAt(0);
+                GiveCardsCounter++;
+                return list;
+            }
+            if (GiveCardsCounter == 2)
+            {
+                var list = new List<Card>();
+                list.Add(Deck[0]);
+                Deck.RemoveAt(0);
+                GiveCardsCounter++;
+                return list;
+            }
+            else
+                return null;
         }
 
         public void GetWinners()

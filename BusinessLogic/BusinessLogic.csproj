@@ -57,6 +57,7 @@
     <Compile Include="DTO\Message\FileViewModel.cs" />
     <Compile Include="DTO\Message\MessageViewModel.cs" />
     <Compile Include="DTO\Message\SendMessageViewModel.cs" />
+    <Compile Include="DTO\Poker\PokerViewModel.cs" />
     <Compile Include="DTO\User\FriendShortInfoViewModel.cs" />
     <Compile Include="DTO\User\FriendViewModel.cs" />
     <Compile Include="DTO\User\UserInfoViewModel.cs" />
@@ -73,12 +74,14 @@
     <Compile Include="Service\Base\IGameService.cs" />
     <Compile Include="Service\Base\IGroupService.cs" />
     <Compile Include="Service\Base\IMessageService.cs" />
+    <Compile Include="Service\Base\IPokerService.cs" />
     <Compile Include="Service\Base\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\BlackjackService.cs" />
     <Compile Include="Service\FriendService.cs" />
     <Compile Include="Service\GroupService.cs" />
     <Compile Include="Service\MessageService.cs" />
+    <Compile Include="Service\PokerService.cs" />
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +100,10 @@
     <ProjectReference Include="..\GoogleDriveAPI\GoogleDriveAPI.csproj">
       <Project>{c15653e1-31c5-44fe-85e0-7bff53f4341f}</Project>
       <Name>GoogleDriveAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Poker\Poker.csproj">
+      <Project>{e6fb0830-63fb-40ad-9f46-365a6241a808}</Project>
+      <Name>Poker</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{822e7921-1cbd-4d01-94fc-f30fbfc704b7}</Project>

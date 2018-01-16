@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Poker.DTO
 {
-    class PlayerAction
+    public class PlayerAction
     {
         public Action Action { get; set; }
         public double Bet { get; set; }

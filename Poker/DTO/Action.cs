@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Poker.DTO
 {
-    enum Action
+    public enum Action
     {
         Check,
         Raise,

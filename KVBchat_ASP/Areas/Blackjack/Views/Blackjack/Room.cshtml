@@ -3,9 +3,8 @@
     ViewBag.Title = "BlackjackRoom";
 }
 <h2>Blackjack Room @Model.BlackjackViewModel.RoomId</h2>
-
 <div id="TableId">
-    <div id="board">
+    <div>
         <div style="align-self:center;">
             Casino
             <div>
@@ -97,21 +96,21 @@
     new AjaxOptions
     {
         UpdateTargetId = "TableId",
-        HttpMethod = "POST",
+        HttpMethod = "GET",
         InsertionMode = InsertionMode.Replace
-    }, new { id = "roomUpdaterId" })
+    }, new { hidden="hidden", id = "roomUpdaterId" })
 
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
-<script type="text/javascript">
-        (function selfUpdater() {
-            document.getElementById("roomUpdaterId").click();
-            setTimeout(selfUpdater, 7000);
-        })();
-    </script>
 
 <script type="text/javascript">
     function Updater() {
         document.getElementById("roomUpdaterId").click();
     }
+</script>
+
+<script type="text/javascript">
+    (function selfUpdater() {
+        document.getElementById("roomUpdaterId").click();
+        setTimeout(selfUpdater, 7000);
+    })();
 </script>

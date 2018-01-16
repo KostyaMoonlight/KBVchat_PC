@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Poker
 {
-    class DeckOfCards
+    public class DeckOfCards
     {
         const int NUM_OF_CARDS = 52;
         public List<Card> Deck { get; private set; }
