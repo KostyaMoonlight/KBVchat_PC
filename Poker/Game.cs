@@ -54,5 +54,20 @@ namespace Poker
                 player.Cards = new List<Card>();
             }
         }
+
+        public void PlayerTurn(PlayerAction playerAction)
+        {
+            
+        }
+
+        private List<Card> GetNextCards()
+        {
+            throw new Exception();
+        }
+
+        public void GetWinners()
+        {
+            
+        }
     }
 }

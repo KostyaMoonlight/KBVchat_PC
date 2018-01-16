@@ -44,8 +44,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeckOfCards.cs" />
+    <Compile Include="DTO\Action.cs" />
     <Compile Include="DTO\Card.cs" />
     <Compile Include="DTO\Player.cs" />
+    <Compile Include="DTO\PlayerAction.cs" />
     <Compile Include="Enums\Hand.cs" />
     <Compile Include="Enums\Suit.cs" />
     <Compile Include="Enums\Value.cs" />
