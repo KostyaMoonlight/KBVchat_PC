@@ -36,6 +36,20 @@ namespace KVBchat_ASP.Areas.Authentication.Controllers
             {
                 return View(user);
             }
+
+            var dates = user.CardExpirationDate.Split('/');
+
+            string s = "";
+            foreach (var item in DateTime.Now.Year.ToString().Skip(2))
+                s += item;
+            int currentYear = int.Parse(s);
+
+            if (currentYear > int.Parse(dates[1]) ||
+               (currentYear == int.Parse(dates[1]) && DateTime.Now.Month > int.Parse(dates[0])))
+            {
+                ViewBag.Orror = "Incorect card expiration date";
+                return View(user);
+            }
             if (_userService.RegisterUser(_mapper.Map<User>(user)))
             {
                 return Redirect(FormsAuthentication.LoginUrl);
