@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Poker.Enums
 {
-    enum Suit
+    public enum Suit
     {
         Heart,
         Spade,

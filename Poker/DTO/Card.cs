@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Poker.DTO
 {
-    class Card
+    public class Card
     {
+        [JsonIgnore]
+        public string Name { get => Suit.ToString() + " " + Value.ToString(); }
         [JsonProperty]
         public Suit Suit { get; set; }
         [JsonProperty]

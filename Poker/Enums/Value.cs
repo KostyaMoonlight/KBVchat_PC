@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Poker.Enums
 {
-    enum Value
+    public enum Value
     {
         Two = 2,
         Three,

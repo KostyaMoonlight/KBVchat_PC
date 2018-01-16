@@ -16,15 +16,17 @@ namespace Poker
         public DeckOfCards()
         {
             Deck = new List<Card>(NUM_OF_CARDS);
+            SetUpDeck();
         }
 
-        public void setUpDeck()
+        public void SetUpDeck()
         {
+            Deck.Clear();
             foreach (Suit suit in Enum.GetValues(typeof(Suit)))
             {
                 foreach (Value value in Enum.GetValues(typeof(Value)))
                 {
-                    Deck.Add(new Card { Suit = suit, Value = value });
+                    Deck.Add(new Card { Suit = suit, Value = value});
                 }
             }
             ShuffleCards();
