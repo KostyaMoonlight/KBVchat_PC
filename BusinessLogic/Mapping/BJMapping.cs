@@ -10,13 +10,15 @@ using System.Threading.Tasks;
 namespace BusinessLogic.Mapping
 {
     public class BJMapping
-        :Profile
+        : Profile
     {
         public BJMapping()
         {
             CreateMap<Game, BlackjackViewModel>()
-                .ForMember(dest => dest.RoomId, opt => opt.MapFrom(src=>0))
+                .ForMember(dest => dest.GameId, opt => opt.MapFrom(src => 0))
                 .ForMember(dest => dest.Winners, opt => opt.Ignore());
+            CreateMap<Game, BlackJackSearchViewModel>()
+                .ForMember(dest => dest.Bet, opt => opt.MapFrom(src => src.Bet));
         }
     }
 }

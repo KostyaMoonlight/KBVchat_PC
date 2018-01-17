@@ -9,20 +9,20 @@
 @foreach (var friend in @Model)
 {
     <div>
-        
+
         @if (unconfirmedFriens != null && unconfirmedFriens.Contains(friend.Id))
         {
             <span>
                 @Ajax.ActionLink("Confirme ", "ConfirmeFriend", "Friends", new { area = "", id = friend.Id },
-                    new AjaxOptions
-                    {
-                        HttpMethod = "POST",
-                        OnSuccess = "(function(){hideButton('" + "confirmeButton" + friend.Id.ToString() + "');})();"
-                    }, new
-                    {
-                        style = "background-color:darkslategrey; color:red",
-                        id = "confirmeButton" + friend.Id.ToString()
-                    })
+                                        new AjaxOptions
+                                        {
+                                            HttpMethod = "POST",
+                                            OnSuccess = "(function(){hideButton('" + "confirmeButton" + friend.Id.ToString() + "');})();"
+                                        }, new
+                                        {
+                                            style = "background-color:darkslategrey; color:red",
+                                            id = "confirmeButton" + friend.Id.ToString()
+                                        })
             </span>
         }
         <span>
@@ -31,18 +31,18 @@
             @friend.LastTimeAccess
         </span>
 
-       <span>
-           @Ajax.ActionLink("Delete", "DeleteFriend", "Friends", new { area = "", id = friend.Id },
-          new AjaxOptions
-          {
-              HttpMethod = "POST",
-              OnSuccess = "(function(){hideButton('" + "deleteButton" + friend.Id.ToString() + "');})();"
-          }, new
-          {
-              style = "background-color:darkslategrey; color:red",
-              id = "deleteButton" + friend.Id.ToString()
-          })
-       </span>
+        <span>
+            @Ajax.ActionLink("Delete", "DeleteFriend", "Friends", new { area = "", id = friend.Id },
+                               new AjaxOptions
+                               {
+                                   HttpMethod = "POST",
+                                   OnSuccess = "(function(){hideButton('" + "deleteButton" + friend.Id.ToString() + "');})();"
+                               }, new
+                               {
+                                   style = "background-color:darkslategrey; color:red",
+                                   id = "deleteButton" + friend.Id.ToString()
+                               })
+        </span>
 
     </div>
 
@@ -54,4 +54,4 @@
             document.getElementById(buttonId).hidden = "hidden";
         }
     </script>
-    }
+}

@@ -11,7 +11,7 @@ using Utility;
 namespace DataAccess.Initializers
 {
     public class KVBchatDbInitializer
-        : DropCreateDatabaseAlways<KVBchatDbContext>
+        : DropCreateDatabaseIfModelChanges<KVBchatDbContext>
     {
         protected override void Seed(KVBchatDbContext context)
         {
@@ -203,8 +203,6 @@ namespace DataAccess.Initializers
             });
 
             context.SaveChanges();
-
-
         }
     }
 }

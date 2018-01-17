@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogicDependencyModule.cs" />
+    <Compile Include="DTO\BJ\BlackJackSearchViewModel.cs" />
     <Compile Include="DTO\BJ\BlackjackViewModel.cs" />
     <Compile Include="DTO\Group\GroupViewModel.cs" />
     <Compile Include="DTO\Message\FileDownloadViewModel.cs" />

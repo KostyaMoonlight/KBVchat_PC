@@ -11,11 +11,13 @@ namespace BusinessLogic.Service.Base
     public interface IBlackjackService
         :IGameService<Game>
     {
-        int AddRoom(int bet);
-        BlackjackViewModel AddUserToRoom(int userId, string nickname, int roomId);
+        int AddRoom(int bet, int maxPlayersCount);
+        BlackjackViewModel AddUserToRoom(int userId, double balance, string nickname, int roomId);
+        BlackjackViewModel RemoveUserFromRoom(int userId, int roomId);
         BlackjackViewModel GetRoomState(int id);
         void Double(int roomId, int userId);
         void Hit(int roomId, int userId);
         void Stand(int roomId, int userId);
+        IEnumerable<BlackJackSearchViewModel> GetBlackJackRooms();
     }
 }

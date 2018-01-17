@@ -14,5 +14,7 @@ namespace DataAccess.Repositories.Base
         Room GetRoomById(int id);
         void UpdateRoom(Room room);
         void DeleteRoom(int id);
+        IEnumerable<Room> GetBlakJackRooms();
+        IEnumerable<Room> GetPokerRooms();
     }
 }

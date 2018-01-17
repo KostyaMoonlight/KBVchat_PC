@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BusinessLogic.DTO.User;
 using BusinessLogic.Service.Base;
+using Domain.Entities;
 using KVBchat_ASP.Areas.Blackjack.Models;
 using System;
 using System.Collections.Generic;
@@ -18,27 +19,37 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
         IBlackjackService _blackjackService = null;
         IMapper _mapper = null;
 
-        private UserInfoViewModel CurrentUser { get => _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name); }
+        private UserInfoViewModel CurrentUser { get; set; }
 
         public BlackjackController(IUserService userService, IBlackjackService blackjackService, IMapper mapper)
-        {
+        {            
             _userService = userService;
             _blackjackService = blackjackService;
             _mapper = mapper;
+            CurrentUser = _userService.GetUserByLogin(Thread.CurrentPrincipal.Identity.Name);
+        }
 
-            _blackjackService.AddRoom(100);
+        public ActionResult RoomsList()
+        {
+            return View(_blackjackService.GetBlackJackRooms());
         }
 
         public ActionResult JoinRoom(int id)
         {
-            _blackjackService.AddRoom(200);
-            var room = _blackjackService.AddUserToRoom(CurrentUser.Id, CurrentUser.Nickname, id);
-            var roomWithUser = new BlackjackWithCurrentPlayerViewModel()
+            var room = _blackjackService.GetRoomState(id);
+            if ((room.Players.Count < room.MaxPlayersCount) &&
+                (CurrentUser.Balance > room.Bet * 2))
             {
-                BlackjackViewModel = room,
-                CurrentUserId = CurrentUser.Id
-            };
-            return View("Room", roomWithUser);
+                room = _blackjackService.AddUserToRoom(CurrentUser.Id, CurrentUser.Balance, CurrentUser.Nickname, id);
+                var roomWithUser = new BlackjackWithCurrentPlayerViewModel()
+                {
+                    BlackjackViewModel = room,
+                    CurrentUserId = CurrentUser.Id
+                };
+                return View("Room", roomWithUser);
+            }
+            else
+                return View("RoomsList", _blackjackService.GetBlackJackRooms());
         }
 
         public PartialViewResult Reload(int id)
@@ -50,6 +61,23 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
                 CurrentUserId = CurrentUser.Id
             };
             return PartialView("_Table", roomWithUser);
+        }
+
+        public ActionResult ExitGame(int id)
+        {
+            var room = _blackjackService.GetRoomState(id);
+            var roomWithUser = new BlackjackWithCurrentPlayerViewModel()
+            {
+                BlackjackViewModel = room,
+                CurrentUserId = CurrentUser.Id
+            };
+            var player = roomWithUser.BlackjackViewModel.Players.
+                FirstOrDefault(user => user.Id == CurrentUser.Id);
+            CurrentUser.Balance = player.Balance;
+
+            _userService.EditBalance(_mapper.Map<User>(CurrentUser));
+            _blackjackService.RemoveUserFromRoom(CurrentUser.Id, id);
+            return View("RoomsList", _blackjackService.GetBlackJackRooms());
         }
 
         [HttpPost]

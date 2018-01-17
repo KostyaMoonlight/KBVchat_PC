@@ -27,39 +27,53 @@ namespace BusinessLogic.Service
             _mapper = mapper;
         }
 
-        public int AddRoom(int bet = 100)
+        public int AddRoom(int bet = 10, int maxPlayersCount = 2)
         {
             var game = new Game
             {
-                Casino = new Player() { Id = 3, Nickname = "Casino", Bet = bet }
+                Casino = new Player()
+                {
+                    Id = 3,
+                    Nickname = "Casino",
+                    Bet = bet,
+                    Cards = new List<Card>()
+                },
+                MaxPlayersCount = maxPlayersCount,
+                Bet = bet
             };
             var serGame = Serialize(game);
             var room = _roomRepository.AddRoom("Blackjack", serGame);
             return room.Id;
         }
 
-        public BlackjackViewModel AddUserToRoom(int userId, string nickname, int roomId)
+        public BlackjackViewModel AddUserToRoom(int userId, double balance, string nickname, int roomId)
         {
             var room = _roomRepository.GetRoomById(roomId);
             var game = Deserialize(room.State);
-            if (game.Players.Count>=1)
+            if (game.Players.Count < game.MaxPlayersCount)
             {
-                var gameVM = _mapper.Map<BlackjackViewModel>(game);
-                gameVM.RoomId = roomId;
-                return gameVM;
+                game.Players.Add(new Player
+                {
+                    Id = userId,
+                    Nickname = nickname,
+                    Bet = game.Bet,
+                    Balance = balance - game.Bet,
+                    Cards = new List<Card>()
+                });
+
+                if (game.Players.Count == game.MaxPlayersCount)
+                {
+                    game.GameStart();
+                    game.CasinosTurn();
+                    game.PlayerTurn(PlayerAction.FirstTurn);
+                }
+
+                room.State = Serialize(game);
+                _roomRepository.UpdateRoom(room);
             }
-            game.Players.Add(new Player { Id = userId, Nickname = nickname, Bet = 100 });
-
-            game.GameStart();
-            game.CasinosTurn();
-            game.PlayerTurn(PlayerAction.FirstTurn);
-
 
             var gameViewModel = _mapper.Map<BlackjackViewModel>(game);
-            gameViewModel.RoomId = roomId;
-
-            room.State = Serialize(game);
-            _roomRepository.UpdateRoom(room);
+            gameViewModel.GameId = roomId;
             return gameViewModel;
         }
 
@@ -80,7 +94,7 @@ namespace BusinessLogic.Service
             var room = _roomRepository.GetRoomById(roomId);
             var game = Deserialize(room.State);
             var gameViewModel = _mapper.Map<BlackjackViewModel>(game);
-            gameViewModel.RoomId = roomId;
+            gameViewModel.GameId = roomId;
             if (game.IsEnd)
                 gameViewModel.Winners = "Winners: " + string.Join(", ", game.GetWinners().Names) + " won " + game.GetWinners().Money;
             return gameViewModel;
@@ -119,6 +133,33 @@ namespace BusinessLogic.Service
         public Game Deserialize(string obj)
         {
             return JsonConvert.DeserializeObject<Game>(obj);
+        }
+
+        public IEnumerable<BlackJackSearchViewModel> GetBlackJackRooms()
+        {
+            return _roomRepository.GetBlakJackRooms().
+                     Select(room => new { game = Deserialize(room.State), id = room.Id }).
+                     Where(game => game.game.PlayersCount < game.game.MaxPlayersCount).
+                     Select(game =>
+                     {
+                         var gm = _mapper.Map<BlackJackSearchViewModel>(game.game);
+                         gm.GameId = game.id;
+                         return gm;
+                     });
+        }
+
+        public BlackjackViewModel RemoveUserFromRoom(int userId, int roomId)
+        {
+            var room = _roomRepository.GetRoomById(roomId);
+            var game = Deserialize(room.State);
+
+            game.Players.Remove(game.Players.FirstOrDefault(player => player.Id == userId));
+            var gameViewModel = _mapper.Map<BlackjackViewModel>(game);
+
+            room.State = Serialize(game);
+            _roomRepository.UpdateRoom(room);
+
+            return gameViewModel;
         }
     }
 }

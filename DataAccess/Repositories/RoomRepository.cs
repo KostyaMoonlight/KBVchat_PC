@@ -1,6 +1,7 @@
 ﻿using DataAccess.Context;
 using DataAccess.Repositories.Base;
 using Domain.Entities;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataAccess.Repositories
@@ -45,6 +46,16 @@ namespace DataAccess.Repositories
         public void SaveChanges()
         {
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Room> GetBlakJackRooms()
+        {
+            return _context.Rooms.Where(room => room.Name.Equals("Blackjack"));
+        }
+
+        public IEnumerable<Room> GetPokerRooms()
+        {
+            return _context.Rooms.Where(room => room.Name.Equals("Poker"));
         }
     }
 }

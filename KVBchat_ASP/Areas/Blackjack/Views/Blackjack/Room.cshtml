@@ -1,8 +1,9 @@
 ﻿@model KVBchat_ASP.Areas.Blackjack.Models.BlackjackWithCurrentPlayerViewModel
 @{
     ViewBag.Title = "BlackjackRoom";
+    Layout = "~/Areas/Blackjack/Views/Shared/_Layout.cshtml";
 }
-<h2>Blackjack Room @Model.BlackjackViewModel.RoomId</h2>
+<h2>Blackjack Room @Model.BlackjackViewModel.GameId</h2>
 <div id="TableId">
     <div>
         <div style="align-self:center;">
@@ -11,11 +12,16 @@
                 Bat: @Model.BlackjackViewModel.Casino.Bet
             </div>
             <div>
-                @foreach (var card in Model.BlackjackViewModel.Casino.Cards)
+                @if (Model.BlackjackViewModel.Casino.Cards != null)
                 {
-                    <div>
-                        @card.Name - @card.Suit
-                    </div>
+                    @:Count of cards: @Model.BlackjackViewModel.Casino.Cards.Count
+
+                    @*foreach (var card in Model.BlackjackViewModel.Casino.Cards)
+                        {
+                            <div>
+                                @card.Name - @card.Suit
+                            </div>
+                        }*@
                 }
             </div>
         </div>
@@ -24,27 +30,38 @@
         <div>
             @foreach (var player in Model.BlackjackViewModel.Players)
             {
+                <br />
                 @player.Nickname
                 <div>
                     Bat: @player.Bet
                 </div>
                 <div>
-                    @foreach (var card in player.Cards)
-                    {
-                        <div>
-                            @card.Name - @card.Suit
-                        </div>
+                    @{
+                        if (player.Id == Model.CurrentUserId)
+                        {
+                            foreach (var card in player.Cards)
+                            {
+                                <div>
+                                    @card.Name - @card.Suit
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            @:Count of cards: @player.Cards.Count
+                        }
                     }
                 </div>
             }
         </div>
     </div>
 
-    @if (Model.BlackjackViewModel.CurrentPlayerId == Model.CurrentUserId)
+    @if ((Model.BlackjackViewModel.CurrentPlayer != -1) &&
+        (Model.BlackjackViewModel.CurrentPlayerId == Model.CurrentUserId))
     {
         <div>
             <span>
-                @using (@Ajax.BeginForm("Double", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId }, new AjaxOptions
+                @using (@Ajax.BeginForm("Double", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
                 {
                     HttpMethod = "POST",
                     OnSuccess = "Updater"
@@ -55,7 +72,7 @@
             </span>
 
             <span>
-                @using (@Ajax.BeginForm("Hit", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId }, new AjaxOptions
+                @using (@Ajax.BeginForm("Hit", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
                 {
                     HttpMethod = "POST",
                     OnSuccess = "Updater"
@@ -66,7 +83,7 @@
             </span>
 
             <span>
-                @using (@Ajax.BeginForm("Stand", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId }, new AjaxOptions
+                @using (@Ajax.BeginForm("Stand", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
                 {
                     HttpMethod = "POST",
                     OnSuccess = "Updater"
@@ -76,7 +93,6 @@
                 }
             </span>
         </div>
-
     }
     else
     {
@@ -92,25 +108,27 @@
     }
 </div>
 
-@Ajax.ActionLink("reloadGame", "Reload", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId },
+@Ajax.ActionLink("reloadGame", "Reload", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId },
     new AjaxOptions
     {
         UpdateTargetId = "TableId",
         HttpMethod = "GET",
         InsertionMode = InsertionMode.Replace
-    }, new { hidden="hidden", id = "roomUpdaterId" })
+    }, new { hidden = "hidden", id = "roomUpdaterId" })
 
+@section scripts
+{
 
+    <script type="text/javascript">
+        function Updater() {
+            document.getElementById("roomUpdaterId").click();
+        }
+    </script>
 
-<script type="text/javascript">
-    function Updater() {
-        document.getElementById("roomUpdaterId").click();
-    }
-</script>
-
-<script type="text/javascript">
-    (function selfUpdater() {
-        document.getElementById("roomUpdaterId").click();
-        setTimeout(selfUpdater, 7000);
-    })();
-</script>
+    <script type="text/javascript">
+        (function selfUpdater() {
+            document.getElementById("roomUpdaterId").click();
+            setTimeout(selfUpdater, 1000);
+        })();
+    </script>
+}

@@ -43,6 +43,10 @@ namespace BusinessLogic
             builder.RegisterType(typeof(BlackjackService))
                 .As(typeof(IBlackjackService))
                 .InstancePerRequest();
+
+            builder.RegisterType(typeof(PokerService))
+               .As(typeof(IPokerService))
+               .InstancePerRequest();
         }
     }
 }

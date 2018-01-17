@@ -1,0 +1,18 @@
+﻿@model IEnumerable<BusinessLogic.DTO.BJ.BlackJackSearchViewModel>
+@{
+    ViewBag.Title = "RoomsList";
+}
+
+<h2>Blackjack rooms</h2>
+
+<div>
+    @foreach (var game in @Model)
+    {
+        <div>
+            @Html.ActionLink("Game #" + game.GameId +
+                             " Bet: " + game.Bet +
+                             " Players: " + game.PlayersCount + "/" + game.MaxPlayersCount,
+                             "JoinRoom", "Blackjack", new { area = "Blackjack", id = game.GameId }, null)           
+        </div>
+    }
+</div>

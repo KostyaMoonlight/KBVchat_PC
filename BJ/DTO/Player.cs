@@ -11,6 +11,8 @@ namespace Blackjack.DTO
         [JsonProperty]
         public int Id { get; set; }
         [JsonProperty]
+        public double Balance { get; set; }
+        [JsonProperty]
         public double Bet { get; set; }
         [JsonProperty]
         public List<Card> Cards { get; set; }

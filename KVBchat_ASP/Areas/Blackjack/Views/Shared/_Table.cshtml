@@ -7,11 +7,19 @@
             Bat: @Model.BlackjackViewModel.Casino.Bet
         </div>
         <div>
-            @foreach (var card in Model.BlackjackViewModel.Casino.Cards)
+            @if (Model.BlackjackViewModel.Casino.Cards != null)
             {
-                <div>
-                    @card.Name - @card.Suit
-                </div>
+                @:Count of cards: @Model.BlackjackViewModel.Casino.Cards.Count
+
+
+
+
+                @*foreach (var card in Model.BlackjackViewModel.Casino.Cards)
+                    {
+                        <div>
+                            @card.Name - @card.Suit
+                        </div>
+                    }*@
             }
         </div>
     </div>
@@ -20,27 +28,38 @@
     <div>
         @foreach (var player in Model.BlackjackViewModel.Players)
         {
+            <br />
             @player.Nickname
             <div>
                 Bat: @player.Bet
             </div>
             <div>
-                @foreach (var card in player.Cards)
-                {
-                    <div>
-                        @card.Name - @card.Suit
-                    </div>
+                @{
+                    if (player.Id == Model.CurrentUserId)
+                    {
+                        foreach (var card in player.Cards)
+                        {
+                            <div>
+                                @card.Name - @card.Suit
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        @:Count of cards: @player.Cards.Count
+                    }
                 }
             </div>
         }
     </div>
 </div>
 
-@if (Model.BlackjackViewModel.CurrentPlayerId == Model.CurrentUserId)
+@if ((Model.BlackjackViewModel.CurrentPlayer != -1) &&
+    (Model.BlackjackViewModel.CurrentPlayerId == Model.CurrentUserId))
 {
     <div>
         <span>
-            @using (@Ajax.BeginForm("Double", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId }, new AjaxOptions
+            @using (@Ajax.BeginForm("Double", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
             {
                 HttpMethod = "POST",
                 OnSuccess = "Updater"
@@ -51,7 +70,7 @@
         </span>
 
         <span>
-            @using (@Ajax.BeginForm("Hit", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId }, new AjaxOptions
+            @using (@Ajax.BeginForm("Hit", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
             {
                 HttpMethod = "POST",
                 OnSuccess = "Updater"
@@ -62,7 +81,7 @@
         </span>
 
         <span>
-            @using (@Ajax.BeginForm("Stand", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.RoomId }, new AjaxOptions
+            @using (@Ajax.BeginForm("Stand", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
             {
                 HttpMethod = "POST",
                 OnSuccess = "Updater"
@@ -72,7 +91,6 @@
             }
         </span>
     </div>
-
 }
 else
 {
@@ -86,3 +104,10 @@ else
 {
     <div>Stil playing</div>
 }
+
+<div>
+    @Html.BeginForm("ExitGame", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId })
+    {
+    <input type="submit" value="Exit game" class="btn btn-warning" />
+    }
+</div>

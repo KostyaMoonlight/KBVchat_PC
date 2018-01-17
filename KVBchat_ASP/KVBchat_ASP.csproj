@@ -167,6 +167,7 @@
     <Compile Include="Areas\Authentication\Controllers\RegisterController.cs" />
     <Compile Include="Areas\Blackjack\BlackjackAreaRegistration.cs" />
     <Compile Include="Areas\Blackjack\Controllers\BlackjackController.cs" />
+    <Compile Include="Areas\Blackjack\Controllers\BlackJackInitializeController.cs" />
     <Compile Include="Areas\Blackjack\Models\BlackjackWithCurrentPlayerViewModel.cs" />
     <Compile Include="Areas\Cabinet\CabinetAreaRegistration.cs" />
     <Compile Include="Areas\Cabinet\Controllers\CabinetController.cs" />
@@ -244,6 +245,7 @@
     <Content Include="Areas\Cabinet\Views\Cabinet\EditCard.cshtml" />
     <Content Include="Areas\Cabinet\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Cabinet\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Blackjack\Views\Blackjack\RoomsList.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
