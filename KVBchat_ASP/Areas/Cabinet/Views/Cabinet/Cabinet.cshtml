@@ -9,23 +9,20 @@
 <div>
     <div>
         @Html.LabelFor(x => x.Balance):
+        @Model.Balance
         @Html.DisplayTextFor(x => x.Balance)
-        @Html.ValidationMessageFor(x => x.Balance)
     </div>
     <div>
         @Html.LabelFor(x => x.Card):
         @Html.DisplayTextFor(x => x.Card)
-        @Html.ValidationMessageFor(x => x.Card)
     </div>
     <div>
         @Html.LabelFor(x => x.CardExpirationDate):
         @Html.DisplayTextFor(x => x.CardExpirationDate)
-        @Html.ValidationMessageFor(x => x.CardExpirationDate)        
     </div>
     <div>
         @Html.LabelFor(x => x.CardCVV):
         @Html.DisplayTextFor(x => x.CardCVV)
-        @Html.ValidationMessageFor(x => x.CardCVV)
     </div>
 
     @if (ViewBag.User == true)

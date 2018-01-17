@@ -113,7 +113,6 @@ namespace BusinessLogic.Service
             }
 
             oldUser.Balance = user.Balance;
-
             _repository.SaveChanges();
         }
 

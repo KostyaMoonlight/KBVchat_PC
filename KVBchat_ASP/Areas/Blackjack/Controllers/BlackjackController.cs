@@ -22,7 +22,7 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
         private UserInfoViewModel CurrentUser { get; set; }
 
         public BlackjackController(IUserService userService, IBlackjackService blackjackService, IMapper mapper)
-        {            
+        {
             _userService = userService;
             _blackjackService = blackjackService;
             _mapper = mapper;
@@ -52,18 +52,24 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
                 return View("RoomsList", _blackjackService.GetBlackJackRooms());
         }
 
-        public PartialViewResult Reload(int id)
+        public ActionResult StartNewGame(int id)
         {
             var room = _blackjackService.GetRoomState(id);
+
+                _blackjackService.RemoveUserFromRoom(CurrentUser.Id, id);
+
+                room = _blackjackService.AddUserToRoom(CurrentUser.Id, CurrentUser.Balance, 
+                    CurrentUser.Nickname, id);
+
             var roomWithUser = new BlackjackWithCurrentPlayerViewModel()
             {
                 BlackjackViewModel = room,
                 CurrentUserId = CurrentUser.Id
             };
-            return PartialView("_Table", roomWithUser);
+            return View("Room", roomWithUser);
         }
 
-        public ActionResult ExitGame(int id)
+        public PartialViewResult Reload(int id)
         {
             var room = _blackjackService.GetRoomState(id);
             var roomWithUser = new BlackjackWithCurrentPlayerViewModel()
@@ -73,9 +79,19 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
             };
             var player = roomWithUser.BlackjackViewModel.Players.
                 FirstOrDefault(user => user.Id == CurrentUser.Id);
-            CurrentUser.Balance = player.Balance;
-
+            if (player != null)
+                CurrentUser.Balance = player.Balance;
             _userService.EditBalance(_mapper.Map<User>(CurrentUser));
+
+            if (room.IsEnd)
+                ViewBag.IsBlackjackGameFinished = true;
+            else
+                ViewBag.IsBlackjackGameFinished = false;
+            return PartialView("_Table", roomWithUser);
+        }
+
+        public ActionResult ExitGame(int id)
+        {
             _blackjackService.RemoveUserFromRoom(CurrentUser.Id, id);
             return View("RoomsList", _blackjackService.GetBlackJackRooms());
         }

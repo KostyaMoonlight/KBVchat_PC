@@ -57,25 +57,25 @@ namespace Blackjack
             new Card{ Name="10", Suit=Suit.Heart, Value=10 },
             new Card{ Name="10", Suit=Suit.Spade, Value=10 },
 
-            new Card{ Name="V", Suit=Suit.Club, Value=10 },
-            new Card{ Name="V", Suit=Suit.Diamond, Value=10 },
-            new Card{ Name="V", Suit=Suit.Heart, Value=10 },
-            new Card{ Name="V", Suit=Suit.Spade, Value=10 },
+            new Card{ Name="Jack", Suit=Suit.Club, Value=10 },
+            new Card{ Name="Jack", Suit=Suit.Diamond, Value=10 },
+            new Card{ Name="Jack", Suit=Suit.Heart, Value=10 },
+            new Card{ Name="Jack", Suit=Suit.Spade, Value=10 },
 
-            new Card{ Name="D", Suit=Suit.Club, Value=10 },
-            new Card{ Name="D", Suit=Suit.Diamond, Value=10 },
-            new Card{ Name="D", Suit=Suit.Heart, Value=10 },
-            new Card{ Name="D", Suit=Suit.Spade, Value=10 },
+            new Card{ Name="Queen", Suit=Suit.Club, Value=10 },
+            new Card{ Name="Queen", Suit=Suit.Diamond, Value=10 },
+            new Card{ Name="Queen", Suit=Suit.Heart, Value=10 },
+            new Card{ Name="Queen", Suit=Suit.Spade, Value=10 },
 
-            new Card{ Name="K", Suit=Suit.Club, Value=10 },
-            new Card{ Name="K", Suit=Suit.Diamond, Value=10 },
-            new Card{ Name="K", Suit=Suit.Heart, Value=10 },
-            new Card{ Name="K", Suit=Suit.Spade, Value=10 },
+            new Card{ Name="King", Suit=Suit.Club, Value=10 },
+            new Card{ Name="King", Suit=Suit.Diamond, Value=10 },
+            new Card{ Name="King", Suit=Suit.Heart, Value=10 },
+            new Card{ Name="King", Suit=Suit.Spade, Value=10 },
 
-            new Card{ Name="T", Suit=Suit.Club, Value=11 },
-            new Card{ Name="T", Suit=Suit.Diamond, Value=11 },
-            new Card{ Name="T", Suit=Suit.Heart, Value=11 },
-            new Card{ Name="T", Suit=Suit.Spade, Value=11 }
+            new Card{ Name="Ace", Suit=Suit.Club, Value=11 },
+            new Card{ Name="Ace", Suit=Suit.Diamond, Value=11 },
+            new Card{ Name="Ace", Suit=Suit.Heart, Value=11 },
+            new Card{ Name="Ace", Suit=Suit.Spade, Value=11 }
         };
         }
     }

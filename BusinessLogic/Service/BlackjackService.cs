@@ -83,6 +83,8 @@ namespace BusinessLogic.Service
             var game = Deserialize(room.State);
             game.PlayerTurn(PlayerAction.Double);
             game.CasinosTurn();
+            var currentPlayer = game.Players.FirstOrDefault(player => player.Id == userId);
+            currentPlayer.Balance = currentPlayer.Balance - currentPlayer.Bet;
             var state = Serialize(game);
             room.State = state;
             _roomRepository.UpdateRoom(room);
@@ -96,7 +98,10 @@ namespace BusinessLogic.Service
             var gameViewModel = _mapper.Map<BlackjackViewModel>(game);
             gameViewModel.GameId = roomId;
             if (game.IsEnd)
-                gameViewModel.Winners = "Winners: " + string.Join(", ", game.GetWinners().Names) + " won " + game.GetWinners().Money;
+            {
+                var winners = game.GetWinners();
+                gameViewModel.Winners = "Winners: " + string.Join(", ", winners.Names) + " won " + winners.Money;
+            }
             return gameViewModel;
         }
 

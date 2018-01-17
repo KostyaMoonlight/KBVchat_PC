@@ -4,117 +4,18 @@
     Layout = "~/Areas/Blackjack/Views/Shared/_Layout.cshtml";
 }
 <h2>Blackjack Room @Model.BlackjackViewModel.GameId</h2>
+
 <div id="TableId">
-    <div>
-        <div style="align-self:center;">
-            Casino
-            <div>
-                Bat: @Model.BlackjackViewModel.Casino.Bet
-            </div>
-            <div>
-                @if (Model.BlackjackViewModel.Casino.Cards != null)
-                {
-                    @:Count of cards: @Model.BlackjackViewModel.Casino.Cards.Count
-
-                    @*foreach (var card in Model.BlackjackViewModel.Casino.Cards)
-                        {
-                            <div>
-                                @card.Name - @card.Suit
-                            </div>
-                        }*@
-                }
-            </div>
-        </div>
-
-        Other players:
-        <div>
-            @foreach (var player in Model.BlackjackViewModel.Players)
-            {
-                <br />
-                @player.Nickname
-                <div>
-                    Bat: @player.Bet
-                </div>
-                <div>
-                    @{
-                        if (player.Id == Model.CurrentUserId)
-                        {
-                            foreach (var card in player.Cards)
-                            {
-                                <div>
-                                    @card.Name - @card.Suit
-                                </div>
-                            }
-                        }
-                        else
-                        {
-                            @:Count of cards: @player.Cards.Count
-                        }
-                    }
-                </div>
-            }
-        </div>
-    </div>
-
-    @if ((Model.BlackjackViewModel.CurrentPlayer != -1) &&
-        (Model.BlackjackViewModel.CurrentPlayerId == Model.CurrentUserId))
-    {
-        <div>
-            <span>
-                @using (@Ajax.BeginForm("Double", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
-                {
-                    HttpMethod = "POST",
-                    OnSuccess = "Updater"
-                }, null))
-                {
-                    <input type="submit" value="Double" class="btn btn-success" />
-                }
-            </span>
-
-            <span>
-                @using (@Ajax.BeginForm("Hit", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
-                {
-                    HttpMethod = "POST",
-                    OnSuccess = "Updater"
-                }, null))
-                {
-                    <input type="submit" value="Hit" class="btn btn-primary" />
-                }
-            </span>
-
-            <span>
-                @using (@Ajax.BeginForm("Stand", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
-                {
-                    HttpMethod = "POST",
-                    OnSuccess = "Updater"
-                }, null))
-                {
-                    <input type="submit" value="Stand" class="btn btn-warning" />
-                }
-            </span>
-        </div>
-    }
-    else
-    {
-        <div> W8 u turn!</div>
-    }
-    @if (!string.IsNullOrEmpty(Model.BlackjackViewModel.Winners))
-    {
-        <div>@Html.DisplayText(@Model.BlackjackViewModel.Winners)</div>
-    }
-    else
-    {
-        <div>Stil playing</div>
-    }
+    
 </div>
 
 @Ajax.ActionLink("reloadGame", "Reload", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId },
-    new AjaxOptions
-    {
-        UpdateTargetId = "TableId",
-        HttpMethod = "GET",
-        InsertionMode = InsertionMode.Replace
-    }, new { hidden = "hidden", id = "roomUpdaterId" })
+                 new AjaxOptions
+                 {
+                     UpdateTargetId = "TableId",
+                     HttpMethod = "GET",
+                     InsertionMode = InsertionMode.Replace
+                 }, new { hidden = "hidden", id = "roomUpdaterId" })
 
 @section scripts
 {

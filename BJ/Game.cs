@@ -29,7 +29,13 @@ namespace Blackjack
                 ).Count();
         }
         [JsonIgnore]
-        public bool IsEnd { get => PlayersCount == CurrentPlayer; }
+        public bool IsEnd
+        {
+            get
+            {
+                return PlayersCount == CurrentPlayer;
+            }
+        }
         [JsonIgnore]
         public int PlayersCount { get => Players.Count; }
         [JsonProperty]
@@ -41,7 +47,6 @@ namespace Blackjack
         {
             Players = new List<Player>();
             Cards = new Deck().Cards.ToList();
-            //Random = new Random();
             CurrentPlayer = -1;
         }
 
@@ -50,12 +55,14 @@ namespace Blackjack
             foreach (var player in Players)
             {
                 player.Cards = new List<Card>();
+                player.Bet = Bet;
             }
             foreach (var card in Cards)
             {
                 card.Active = true;
             }
             Casino.Cards = new List<Card>();
+            Casino.Bet = Bet;
             CurrentPlayer = 0;
 
         }
@@ -96,14 +103,13 @@ namespace Blackjack
             switch (playerAction)
             {
                 case PlayerAction.FirstTurn:
-                    foreach(var player in Players)
+                    foreach (var player in Players)
                     {
                         player.Cards.Add(GetNextCard());
                         player.Cards.Add(GetNextCard());
-                    }
-                    if (Players[CurrentPlayer].Cards.Select(x => x.Value).Sum() >= 21)
-                    {
-                        CurrentPlayer++;
+                        // if two aces - win 
+                        if (player.Cards.Select(x => x.Value).Sum() == 22)
+                            CurrentPlayer = PlayersCount;
                     }
                     break;
 
@@ -113,7 +119,6 @@ namespace Blackjack
 
                 case PlayerAction.Double:
                     Players[CurrentPlayer].Bet *= 2;
-                    Players[CurrentPlayer].Balance -= Players[CurrentPlayer].Bet;
                     Casino.Bet *= 2;
                     Players[CurrentPlayer].Cards.Add(GetNextCard());
                     CurrentPlayer++;
@@ -142,6 +147,33 @@ namespace Blackjack
 
         public Winners GetWinners()
         {
+            // two aces - win
+            foreach (var player in Players)
+            {
+                if (player.Cards.Where(card => card.Value == 11).Count() == 2 &&
+                    player.Cards.Count() == 2)
+                {
+                    return new Winners
+                    {
+                        Ids = new List<int> { player.Id },
+                        Names = new List<string> { player.Nickname },
+                        Money = Players.Select(x => x.Bet).Sum() + Casino.Bet
+                    };
+                }
+            }
+            if (Casino.Cards.Where(card => card.Value == 11).Count() == 2 &&
+                Casino.Cards.Count() == 2)
+            {
+                return new Winners
+                {
+                    Ids = new List<int> { Casino.Id },
+                    Names = new List<string> { Casino.Nickname },
+                    Money = Players.Select(x => x.Bet).Sum() + Casino.Bet
+                };
+            }
+
+
+
             var casinoScore = new PlayerScore { Id = Casino.Id, Score = Casino.Cards.Select(x => x.Value).Sum() };
             var playersScore = Players
                 .Select(x => new PlayerScore
@@ -156,13 +188,16 @@ namespace Blackjack
                 return new Winners
                 {
                     Ids = new List<int> { Casino.Id },
-                    Names = new List<string> { Casino.Nickname},
+                    Names = new List<string> { Casino.Nickname },
                     Money = Players.Select(x => x.Bet).Sum() + Casino.Bet
                 };
             }
             var maxScore = scores.Max();
-            var winnersIds = playersScore.Where(x => x.Score == maxScore).Select(x => x.Id);            
-            var winnersNames = Players.Where(x => winnersIds.Contains( x.Id)).Select(x => x.Nickname);
+            var winnersIds = playersScore.Where(x => x.Score == maxScore).Select(x => x.Id);
+            var winnersNames = Players.Where(x => winnersIds.Contains(x.Id)).Select(x => x.Nickname).ToList();
+            if (winnersIds.Contains(Casino.Id))
+                winnersNames.Add(Casino.Nickname);
+
             var winners = new Winners()
             {
                 Ids = winnersIds,

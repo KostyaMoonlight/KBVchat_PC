@@ -12,6 +12,7 @@ namespace BusinessLogic.DTO.BJ
         public int GameId { get; set; }
         public double Bet { get; set; }
         public Player Casino { get; set; }
+        public bool IsEnd { get; set; }
         public List<Player> Players { get; set; }
         public List<Card> Cards { get; set; }
         public int CurrentPlayer { get; set; }

@@ -84,7 +84,9 @@ namespace KVBchat_ASP.Areas.Cabinet.Controllers
             }
             userWithdrawViewModel.Balance -= userWithdrawViewModel.Withdraw;
 
-            _userService.EditBalance(_mapper.Map<User>(userWithdrawViewModel));
+            var user = _mapper.Map<User>(userWithdrawViewModel);
+
+            _userService.EditBalance(user);
 
             return Redirect("Cabinet");
         }

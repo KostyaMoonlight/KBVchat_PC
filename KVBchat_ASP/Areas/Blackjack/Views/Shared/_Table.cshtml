@@ -10,43 +10,86 @@
             @if (Model.BlackjackViewModel.Casino.Cards != null)
             {
                 @:Count of cards: @Model.BlackjackViewModel.Casino.Cards.Count
-
-
-
-
-                @*foreach (var card in Model.BlackjackViewModel.Casino.Cards)
-                    {
-                        <div>
-                            @card.Name - @card.Suit
-                        </div>
-                    }*@
+                <br />
+                if (ViewBag.IsBlackjackGameFinished)
+                {
+                    @:Sum of cards: @Model.BlackjackViewModel.Casino.Cards.Sum(card => card.Value)
+                }
+                <br />
+                for (int i = 0; i < Model.BlackjackViewModel.Casino.Cards.Count; i++)
+                {
+                    <span>
+                        @{
+                            string url;
+                            if (i == 0 || ViewBag.IsBlackjackGameFinished)
+                            {
+                                url = "/Content/PNG/" + Model.BlackjackViewModel.Casino.Cards[i].Name
+                                + Model.BlackjackViewModel.Casino.Cards[i].Suit + ".png";
+                            }
+                            else
+                            {
+                                url = "/Content/PNG/blue_back.png";
+                            }
+                            <img src=@url width="65" height="100" />
+                        }
+                    </span>
+                }
             }
         </div>
     </div>
 
-    Other players:
+
     <div>
         @foreach (var player in Model.BlackjackViewModel.Players)
         {
             <br />
             @player.Nickname
             <div>
-                Bat: @player.Bet
+                Bet: @player.Bet
             </div>
             <div>
+                Count of cards: @player.Cards.Count
+                <br />
                 @{
                     if (player.Id == Model.CurrentUserId)
                     {
+                        @:Balance: @player.Balance
+                        <br />
+                        @:Sum of cards: @player.Cards.Sum(card => card.Value)
+                        <br />
                         foreach (var card in player.Cards)
                         {
-                            <div>
-                                @card.Name - @card.Suit
-                            </div>
+                            <span>
+                                @{
+                                    string url = "/Content/PNG/" + card.Name + card.Suit + ".png";
+                                }
+                                <img src=@url width="65" height="100" />
+                            </span>
                         }
                     }
                     else
                     {
-                        @:Count of cards: @player.Cards.Count
+                        if (ViewBag.IsBlackjackGameFinished)
+                        {
+                            @:Sum of cards: @player.Cards.Sum(card => card.Value)
+                        }
+                        foreach (var card in player.Cards)
+                        {
+                            <span>
+                                @{
+                                    string url;
+                                    if (ViewBag.IsBlackjackGameFinished)
+                                    {
+                                        url = "/Content/PNG/" + card.Name + card.Suit + ".png";
+                                    }
+                                    else
+                                    {
+                                        url = "/Content/PNG/blue_back.png";
+                                    }
+                                }
+                                <img src=@url width="65" height="100" />
+                            </span>
+                        }
                     }
                 }
             </div>
@@ -59,6 +102,7 @@
 {
     <div>
         <span>
+            <br />
             @using (@Ajax.BeginForm("Double", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
             {
                 HttpMethod = "POST",
@@ -70,6 +114,7 @@
         </span>
 
         <span>
+            <br />
             @using (@Ajax.BeginForm("Hit", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
             {
                 HttpMethod = "POST",
@@ -81,6 +126,7 @@
         </span>
 
         <span>
+            <br />
             @using (@Ajax.BeginForm("Stand", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
             {
                 HttpMethod = "POST",
@@ -105,9 +151,17 @@ else
     <div>Stil playing</div>
 }
 
-<div>
-    @Html.BeginForm("ExitGame", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId })
+<br />
+@using (Html.BeginForm("ExitGame", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }))
+{
+    <input type="submit" value="Exit game" class="btn btn-info" />
+}
+<br />
+@if (ViewBag.IsBlackjackGameFinished)
+{
+    using (Html.BeginForm("StartNewGame", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }))
     {
-    <input type="submit" value="Exit game" class="btn btn-warning" />
+        <input type="submit" value="Start new game" class="btn btn-info" />
     }
-</div>
+}
+
