@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Service.Base
 {
-    interface IPokerService : IGameService<Game>
+   public interface IPokerService : IGameService<Game>
     {
-        int AddRoom(int bet);
+        int AddRoom(int bet,int maxPlayersCount);
         PokerViewModel AddUserToRoom(int userId, string nickname, int roomId);
         PokerViewModel GetRoomState(int id);
+        IEnumerable<PokerRoomSearchViewModel> GetPokerRooms();
     }
 }

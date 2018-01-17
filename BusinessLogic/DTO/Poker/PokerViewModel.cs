@@ -9,7 +9,9 @@ namespace BusinessLogic.DTO.Poker
 {
     public class PokerViewModel
     {
-        public int RoomId { get; set; }
+        public int GameId { get; set; }
+
+        public double Bet { get; set; }
 
         public List<Card> Deck { get; set; }
 

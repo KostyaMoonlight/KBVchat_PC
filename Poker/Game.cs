@@ -14,6 +14,9 @@ namespace Poker
         public List<Card> Deck { get; set; }
 
         [JsonProperty]
+        public double Bet { get; set; }
+
+        [JsonProperty]
         public List<Card> CardsOnTable { get; set; }
 
         [JsonProperty]
@@ -24,6 +27,9 @@ namespace Poker
 
         [JsonProperty]
         public int GiveCardsCounter { get; set; } = 0;
+
+        [JsonProperty]
+        public int MaxPlayersCount { get; set; }
 
         [JsonIgnore]
         public int ActivePlayers

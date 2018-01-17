@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Service
 {
-    class PokerService : IPokerService
+    public class PokerService : IPokerService
     {
         IRoomRepository _roomRepository = null;
         IMapper _mapper = null;
@@ -33,12 +33,13 @@ namespace BusinessLogic.Service
             return JsonConvert.DeserializeObject<Game>(obj);
         }
 
-        public int AddRoom(int bet = 10)
+        public int AddRoom(int bet = 10, int maxPlayersCount = 2)
         {
             Game game = new Game();
-            
+            game.MaxPlayersCount = maxPlayersCount;
+            game.Bet = bet;
             var serGame = Serialize(game);
-            var room = _roomRepository.AddRoom("Blackjack", serGame);
+            var room = _roomRepository.AddRoom("Poker", serGame);
             return room.Id;
         }
 
@@ -66,11 +67,24 @@ namespace BusinessLogic.Service
             //room.State = Serialize(game);
             //_roomRepository.UpdateRoom(room);
             //return gameViewModel;
-        }  
+        }
 
         public PokerViewModel GetRoomState(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<PokerRoomSearchViewModel> GetPokerRooms()
+        {
+            return _roomRepository.GetPokerRooms().
+                     Select(room => new { game = Deserialize(room.State), id = room.Id }).
+                     Where(game => game.game.Players.Count < game.game.MaxPlayersCount).
+                     Select(game =>
+                     {
+                         var gm = _mapper.Map<PokerRoomSearchViewModel>(game.game);
+                         gm.GameId = game.id;
+                         return gm;
+                     });
         }
     }
 }
