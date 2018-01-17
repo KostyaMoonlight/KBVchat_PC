@@ -12,6 +12,7 @@ namespace KVBchat_ASP.Areas.Cabinet.Models
         public int Id { get; set; }
 
         [DisplayName("Your balance")]
+        [DataType(DataType.Currency)]
         public double Balance { get; set; }
 
         [DisplayName("Amount")]
