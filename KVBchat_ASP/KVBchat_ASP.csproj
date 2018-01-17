@@ -175,6 +175,7 @@
     <Compile Include="Areas\Cabinet\Models\UserDepositViewModel.cs" />
     <Compile Include="Areas\Cabinet\Models\UserWithdrawViewModel.cs" />
     <Compile Include="Areas\Poker\Controllers\PokerController.cs" />
+    <Compile Include="Areas\Poker\Controllers\PokerInitializeController.cs" />
     <Compile Include="Areas\Poker\PokerAreaRegistration.cs" />
     <Compile Include="Areas\UserSearchEngine\Controllers\UserSearchController.cs" />
     <Compile Include="Areas\UserSearchEngine\Models\User\UserSearchViewModel.cs" />
@@ -246,6 +247,9 @@
     <Content Include="Areas\Cabinet\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Cabinet\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Blackjack\Views\Blackjack\RoomsList.cshtml" />
+    <Content Include="Areas\Poker\Views\Poker\RoomsList.cshtml" />
+    <Content Include="Areas\Poker\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Poker\Views\Shared\_Layout.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
@@ -313,7 +317,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Poker\Models\" />
-    <Folder Include="Areas\Poker\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,0 +1,18 @@
+﻿@model IEnumerable<BusinessLogic.DTO.Poker.PokerRoomSearchViewModel>
+@{
+    ViewBag.Title = "RoomsList";
+}
+
+<h2>Poker rooms</h2>
+
+<div>
+    @foreach (var game in @Model)
+    {
+        <div>
+            @Html.ActionLink("Game #" + game.GameId +
+                                  " Bet: " + game.Bet +
+                                  " Players: " + game.PlayersCount + "/" + game.MaxPlayersCount,
+                                  "JoinRoom", "Poker", new { area = "Poker", id = game.GameId }, null)
+        </div>
+    }
+</div>
