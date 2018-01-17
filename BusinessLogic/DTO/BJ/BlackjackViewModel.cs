@@ -10,7 +10,7 @@ namespace BusinessLogic.DTO.BJ
     public class BlackjackViewModel
     {
         public int GameId { get; set; }
-        public double Bet { get; set; }
+        public double DefaultBet { get; set; }
         public Player Casino { get; set; }
         public bool IsEnd { get; set; }
         public List<Player> Players { get; set; }

@@ -14,7 +14,9 @@ namespace Blackjack
         [JsonProperty]
         public Player Casino { get; set; }
         [JsonProperty]
-        public double Bet { get; set; }
+        public double DefaultBet { get; set; }
+        [JsonProperty]
+        public double CurrentBet { get; set; }
         [JsonProperty]
         public List<Player> Players { get; set; }
         [JsonProperty]
@@ -48,21 +50,25 @@ namespace Blackjack
             Players = new List<Player>();
             Cards = new Deck().Cards.ToList();
             CurrentPlayer = -1;
+            CurrentBet = 0;
         }
 
         public void GameStart()
         {
+            CurrentBet = 0;
             foreach (var player in Players)
             {
                 player.Cards = new List<Card>();
-                player.Bet = Bet;
+                player.Bet = DefaultBet;
+                CurrentBet += DefaultBet;
             }
             foreach (var card in Cards)
             {
                 card.Active = true;
             }
             Casino.Cards = new List<Card>();
-            Casino.Bet = Bet;
+            Casino.Bet = DefaultBet;
+            CurrentBet += DefaultBet;
             CurrentPlayer = 0;
 
         }
@@ -118,8 +124,10 @@ namespace Blackjack
                     break;
 
                 case PlayerAction.Double:
+                    Players[CurrentPlayer].Balance -= Players[CurrentPlayer].Bet;
                     Players[CurrentPlayer].Bet *= 2;
                     Casino.Bet *= 2;
+                    CurrentBet += (2 * DefaultBet);
                     Players[CurrentPlayer].Cards.Add(GetNextCard());
                     CurrentPlayer++;
                     break;
@@ -189,7 +197,7 @@ namespace Blackjack
                 {
                     Ids = new List<int> { Casino.Id },
                     Names = new List<string> { Casino.Nickname },
-                    Money = Players.Select(x => x.Bet).Sum() + Casino.Bet
+                    Money = CurrentBet
                 };
             }
             var maxScore = scores.Max();
@@ -202,7 +210,7 @@ namespace Blackjack
             {
                 Ids = winnersIds,
                 Names = winnersNames,
-                Money = (Players.Select(x => x.Bet).Sum() + Casino.Bet) / winnersIds.Count()
+                Money = CurrentBet / winnersIds.Count()
             };
 
             foreach (var player in Players.Where(x => winnersIds.Contains(x.Id)))

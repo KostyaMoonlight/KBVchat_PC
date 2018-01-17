@@ -38,7 +38,7 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
         {
             var room = _blackjackService.GetRoomState(id);
             if ((room.Players.Count < room.MaxPlayersCount) &&
-                (CurrentUser.Balance > room.Bet * 2))
+                (CurrentUser.Balance > room.DefaultBet * 2))
             {
                 room = _blackjackService.AddUserToRoom(CurrentUser.Id, CurrentUser.Balance, CurrentUser.Nickname, id);
                 var roomWithUser = new BlackjackWithCurrentPlayerViewModel()

@@ -39,7 +39,7 @@ namespace BusinessLogic.Service
                     Cards = new List<Card>()
                 },
                 MaxPlayersCount = maxPlayersCount,
-                Bet = bet
+                DefaultBet = bet
             };
             var serGame = Serialize(game);
             var room = _roomRepository.AddRoom("Blackjack", serGame);
@@ -56,8 +56,8 @@ namespace BusinessLogic.Service
                 {
                     Id = userId,
                     Nickname = nickname,
-                    Bet = game.Bet,
-                    Balance = balance - game.Bet,
+                    Bet = game.DefaultBet,
+                    Balance = balance - game.DefaultBet,
                     Cards = new List<Card>()
                 });
 
@@ -83,8 +83,6 @@ namespace BusinessLogic.Service
             var game = Deserialize(room.State);
             game.PlayerTurn(PlayerAction.Double);
             game.CasinosTurn();
-            var currentPlayer = game.Players.FirstOrDefault(player => player.Id == userId);
-            currentPlayer.Balance = currentPlayer.Balance - currentPlayer.Bet;
             var state = Serialize(game);
             room.State = state;
             _roomRepository.UpdateRoom(room);
@@ -94,6 +92,8 @@ namespace BusinessLogic.Service
         public BlackjackViewModel GetRoomState(int roomId)
         {
             var room = _roomRepository.GetRoomById(roomId);
+            if (room == null)
+                return null;
             var game = Deserialize(room.State);
             var gameViewModel = _mapper.Map<BlackjackViewModel>(game);
             gameViewModel.GameId = roomId;

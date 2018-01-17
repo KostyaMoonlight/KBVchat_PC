@@ -9,7 +9,7 @@ namespace BusinessLogic.DTO.BJ
     public class BlackJackSearchViewModel
     {
         public int GameId { get; set; }
-        public double Bet { get; set; }
+        public double DefaultBet { get; set; }
         public int PlayersCount { get; set; }
         public int MaxPlayersCount { get; set; }
     }
