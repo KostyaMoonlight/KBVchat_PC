@@ -4,6 +4,7 @@ using BusinessLogic.Service.Base;
 using DataAccess.Repositories.Base;
 using Newtonsoft.Json;
 using Poker;
+using Poker.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,35 +44,37 @@ namespace BusinessLogic.Service
             return room.Id;
         }
 
-        public PokerViewModel AddUserToRoom(int userId, string nickname, int roomId)
+        public PokerViewModel AddUserToRoom(int userId, double balance, string nickname, int roomId)
         {
-            throw new Exception();
-            //var room = _roomRepository.GetRoomById(roomId);
-            //var game = Deserialize(room.State);
-            //if (game.Players.Count >= 1)
-            //{
-            //    var gameVM = _mapper.Map<PokerViewModel>(game);
-            //    gameVM.RoomId = roomId;
-            //    return gameVM;
-            //}
-            //game.Players.Add(new Player { Id = userId, Nickname = nickname, Bet = 100 });
+            var room = _roomRepository.GetRoomById(roomId);
+            var game = Deserialize(room.State);
 
-            //game.GameStart();
-            //game.CasinosTurn();
-            //game.PlayerTurn(PlayerAction.FirstTurn);
+            if (game.Players.Count >= 1)
+            {
+                var gameVM = _mapper.Map<PokerViewModel>(game);
+                gameVM.GameId = roomId;
+                return gameVM;
+            }
+            game.Players.Add(new Player { Id = userId, Nickname = nickname, Bet = 100 });
+            game.GameStart();
 
+            var gameViewModel = _mapper.Map<PokerViewModel>(game);
+            gameViewModel.GameId = roomId;
 
-            //var gameViewModel = _mapper.Map<BlackjackViewModel>(game);
-            //gameViewModel.RoomId = roomId;
-
-            //room.State = Serialize(game);
-            //_roomRepository.UpdateRoom(room);
-            //return gameViewModel;
+            room.State = Serialize(game);
+            _roomRepository.UpdateRoom(room);
+            return gameViewModel;
         }
 
         public PokerViewModel GetRoomState(int id)
         {
-            throw new NotImplementedException();
+            var room = _roomRepository.GetRoomById(id);
+            var game = Deserialize(room.State);
+            var gameViewModel = _mapper.Map<PokerViewModel>(game);
+            gameViewModel.GameId = id;
+            if (game.IsEnd)
+                gameViewModel.Winners = "Winners: " + string.Join(", ", game.GetWinners().Names) + " won " + game.GetWinners().Money;
+            return gameViewModel;
         }
 
         public IEnumerable<PokerRoomSearchViewModel> GetPokerRooms()
@@ -85,6 +88,20 @@ namespace BusinessLogic.Service
                          gm.GameId = game.id;
                          return gm;
                      });
+        }
+
+        public PokerViewModel RemoveUserFromRoom(int userId, int roomId)
+        {
+            var room = _roomRepository.GetRoomById(roomId);
+            var game = Deserialize(room.State);
+
+            game.Players.Remove(game.Players.FirstOrDefault(player => player.Id == userId));
+            var gameViewModel = _mapper.Map<PokerViewModel>(game);
+
+            room.State = Serialize(game);
+            _roomRepository.UpdateRoom(room);
+
+            return gameViewModel;
         }
     }
 }

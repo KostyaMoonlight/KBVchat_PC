@@ -29,6 +29,8 @@ namespace BusinessLogic.DTO.Poker
 
         private int PlayersCount { get => Players.Count; }
 
+        public int MaxPlayersCount { get; set; }
+
         public string Winners { get; set; }
     }
 }
