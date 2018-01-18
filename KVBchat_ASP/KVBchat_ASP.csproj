@@ -251,6 +251,7 @@
     <Content Include="Areas\Poker\Views\Poker\RoomsList.cshtml" />
     <Content Include="Areas\Poker\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Poker\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Poker\Views\Shared\_Table.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />

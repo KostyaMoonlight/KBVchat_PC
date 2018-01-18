@@ -1,8 +1,37 @@
-﻿
+﻿@model KVBchat_ASP.Areas.Poker.Models.PokerWithCurrentPlayerViewModel
 @{
-    ViewBag.Title = "Room";
+    ViewBag.Title = "PokerRoom";
     Layout = "~/Areas/Poker/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Poker</h2>
+<h2>Poker Room @Model.PokerViewModel.GameId</h2>
 
+<div id="TableId">
+
+</div>
+
+
+@Ajax.ActionLink("reloadGame", "Reload", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId },
+                 new AjaxOptions
+                 {
+                     UpdateTargetId = "TableId",
+                     HttpMethod = "GET",
+                     InsertionMode = InsertionMode.Replace
+                 }, new { hidden = "hidden", id = "roomUpdaterId" })
+
+@section scripts
+{
+
+    <script type="text/javascript">
+        function Updater() {
+            document.getElementById("roomUpdaterId").click();
+        }
+    </script>
+
+    <script type="text/javascript">
+        (function selfUpdater() {
+            document.getElementById("roomUpdaterId").click();
+            setTimeout(selfUpdater, 1000);
+        })();
+    </script>
+}

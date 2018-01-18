@@ -32,9 +32,9 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
 
         public ActionResult JoinRoom(int id)
         {
-            var room = _pokerService.GetRoomState(id);
+           var room = _pokerService.GetRoomState(id);
             if ((room.Players.Count < room.MaxPlayersCount) &&
-                (CurrentUser.Balance > room.DefaultBet * 3))
+                (CurrentUser.Balance > room.DefaultBet * 10))
             {
                 room = _pokerService.AddUserToRoom(CurrentUser.Id, CurrentUser.Balance, CurrentUser.Nickname, id);
                 var roomWithUser = new PokerWithCurrentPlayerViewModel()
@@ -68,6 +68,9 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
         public PartialViewResult Reload(int id)
         {
             var room = _pokerService.GetRoomState(id);
+            if (room.IsFinishedStage)
+                _pokerService.GiveNewCards(id);
+
             var roomWithUser = new PokerWithCurrentPlayerViewModel()
             {
                 PokerViewModel = room,
@@ -83,6 +86,8 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
                 ViewBag.IsPokerGameFinished = true;
             else
                 ViewBag.IsPokerGameFinished = false;
+
+
             return PartialView("_Table", roomWithUser);
         }
 

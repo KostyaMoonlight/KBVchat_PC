@@ -36,11 +36,11 @@ namespace Poker
                     var maxPlayersCount = Players.Where(player => player.Bet == max).Count();
 
                     if (CardsOnTable.Count == 0 &&          // if it is first stage, did big blind make turn?
-                        currentPlayerId == 2 &&             // after all
+                        CurrentPlayer == 2 &&             // after all
                         maxPlayersCount == ActivePlayers)
                         return true;
 
-                    else if (currentPlayerId == 1 &&            // in others stage, did smal blind make turn? 
+                    else if (CurrentPlayer == 1 &&            // in others stage, did smal blind make turn? 
                              maxPlayersCount == ActivePlayers)  // after all
                         return true;
                     else
@@ -55,20 +55,25 @@ namespace Poker
         public List<Player> Players { get; set; }
 
         [JsonProperty]
-        private int currentPlayerId = 0;
+        private int currentPlayer = 0;
 
         [JsonProperty]
-        public int CurrentPlayerId
+        public int CurrentPlayer
         {
             get
             {
-                return currentPlayerId;
+                return currentPlayer;
             }
             set
             {
+                if (PlayersCount == 0)
+                {
+                    currentPlayer = 0;
+                    return;
+                }
                 if (value == PlayersCount)
                     IsfinishedCircle = true;
-                currentPlayerId = value % PlayersCount;
+                currentPlayer = value % PlayersCount;
             }
         }
 
@@ -85,7 +90,16 @@ namespace Poker
         }
 
         [JsonIgnore]
-        public bool IsEnd { get => ActivePlayers > 0; }
+        public bool IsEnd
+        {
+            get
+            {
+                if (PlayersCount == 0)
+                    return false;
+                else
+                    return ActivePlayers == 0;
+            }
+        }
 
         [JsonIgnore]
         private int PlayersCount { get => Players.Count; }
@@ -101,16 +115,18 @@ namespace Poker
 
         public void GameStart()
         {
+            CurrentBet = 0;
             GiveCardsCounter = 0;
             Deck = new DeckOfCards().Deck;
             CardsOnTable.Clear();
-            CurrentPlayerId = 0;
+            CurrentPlayer = 0;
             foreach (var player in Players)
             {
                 player.Cards = new List<Card>();
                 player.Cards.Add(Deck[0]);
                 player.Cards.Add(Deck[1]);
                 Deck.RemoveRange(0, 2);
+                player.Bet = 0;
             }
             PlayerTurn(DTO.Action.Bet, DefaultBet);
             PlayerTurn(DTO.Action.Raise, DefaultBet * 2);
@@ -120,46 +136,46 @@ namespace Poker
         {
             if (playerAction == DTO.Action.Bet)
             {
-                Players[CurrentPlayerId].Balance -= bet;
-                Players[CurrentPlayerId].Bet += bet;
+                Players[CurrentPlayer].Balance -= bet;
+                Players[CurrentPlayer].Bet += bet;
                 CurrentBet += bet;
-                CurrentPlayerId++;
+                CurrentPlayer++;
             }
             if (playerAction == DTO.Action.Call)
             {
                 double maxBet = Players.Max(player => player.Bet);
-                double difference = maxBet - Players[CurrentPlayerId].Bet;
-                Players[CurrentPlayerId].Balance -= difference;
-                Players[CurrentPlayerId].Bet += difference;
+                double difference = maxBet - Players[CurrentPlayer].Bet;
+                Players[CurrentPlayer].Balance -= difference;
+                Players[CurrentPlayer].Bet += difference;
                 CurrentBet += difference;
-                CurrentPlayerId++;
+                CurrentPlayer++;
             }
             if (playerAction == DTO.Action.Check)
             {
-                CurrentPlayerId++;
+                CurrentPlayer++;
             }
             if (playerAction == DTO.Action.Fold)
             {
-                Players[CurrentPlayerId].IsPlaying = false;
-                CurrentPlayerId++;
+                Players[CurrentPlayer].IsPlaying = false;
+                CurrentPlayer++;
             }
             if (playerAction == DTO.Action.Raise)
             {
                 double maxBet = Players.Max(player => player.Bet);
-                double difference = maxBet - Players[CurrentPlayerId].Bet;
+                double difference = maxBet - Players[CurrentPlayer].Bet;
                 if (bet > difference)
                 {
-                    Players[CurrentPlayerId].Balance -= bet;
-                    Players[CurrentPlayerId].Bet += bet;
+                    Players[CurrentPlayer].Balance -= bet;
+                    Players[CurrentPlayer].Bet += bet;
                     CurrentBet += bet;
-                    CurrentPlayerId++;
+                    CurrentPlayer++;
                 }
                 else
                     throw new ArgumentException("small bet for raise");
             }
         }
 
-        private void GetNextCardsToTable()
+        public void GetNextCardsToTable()
         {
             if (GiveCardsCounter == 0)
             {

@@ -167,5 +167,19 @@ namespace BusinessLogic.Service
             room.State = state;
             _roomRepository.UpdateRoom(room);
         }
+
+        public void GiveNewCards(int roomId)
+        {
+            var room = _roomRepository.GetRoomById(roomId);
+            var game = Deserialize(room.State);
+
+            game.GetNextCardsToTable();
+            game.CurrentPlayer = 0;
+            game.IsfinishedCircle = false;
+
+            var state = Serialize(game);
+            room.State = state;
+            _roomRepository.UpdateRoom(room);
+        }
     }
 }

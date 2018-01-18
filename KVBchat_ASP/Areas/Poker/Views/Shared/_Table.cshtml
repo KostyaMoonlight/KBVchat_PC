@@ -1,0 +1,165 @@
+﻿@model KVBchat_ASP.Areas.Poker.Models.PokerWithCurrentPlayerViewModel
+
+<div>
+
+    <div style="align-self:center;">
+        <div>
+            @if (Model.PokerViewModel.CardsOnTable != null)
+            {
+                foreach (var card in Model.PokerViewModel.CardsOnTable)
+                {
+                    <span>
+                        @{
+                            string url = "/Content/PNG/" + card.Name + ".png";
+                            <img src=@url width="65" height="100" />
+                        }
+                    </span>
+                }
+            }
+        </div>
+    </div>
+
+    <div>
+        @foreach (var player in Model.PokerViewModel.Players)
+        {
+            <br />
+            @player.Nickname
+            <div>
+                Bet: @player.Bet
+            </div>
+            <div>
+                <br />
+                @{
+                    if (player.Id == Model.CurrentUserId)
+                    {
+                        @:Balance: @player.Balance
+                        <br />
+                        foreach (var card in player.Cards)
+                        {
+                            <span>
+                                @{
+                                    string url = "/Content/PNG/" + card.Name + ".png";
+                                }
+                                <img src=@url width="65" height="100" />
+                            </span>
+                        }
+                    }
+                    else
+                    {
+                        foreach (var card in player.Cards)
+                        {
+                            <span>
+                                @{
+                                    string url;
+                                    if (ViewBag.IsPokerGameFinished)
+                                    {
+                                        url = "/Content/PNG/" + card.Name + ".png";
+                                    }
+                                    else
+                                    {
+                                        url = "/Content/PNG/blue_back.png";
+                                    }
+                                }
+                                <img src=@url width="65" height="100" />
+                            </span>
+                        }
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>
+
+
+@if ((Model.PokerViewModel.CurrentPlayer != -1) &&
+    (Model.PokerViewModel.CurrentPlayerId == Model.CurrentUserId))
+{
+    <div>
+        <span>
+            <br />
+            @using (@Ajax.BeginForm("Check", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "Updater"
+            }, null))
+            {
+                <input type="submit" value="Check" class="btn btn-success" />
+            }
+        </span>
+
+        <span>
+            <br />
+            @using (@Ajax.BeginForm("Raise", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "Updater"
+            }, null))
+            {
+                <input type="submit" value="Raise" class="btn btn-primary" />
+            }
+        </span>
+
+        <span>
+            <br />
+            @using (@Ajax.BeginForm("Bet", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "Updater"
+            }, null))
+            {
+                <input type="submit" value="Bet" class="btn btn-warning" />
+            }
+        </span>
+
+        <span>
+            <br />
+            @using (@Ajax.BeginForm("Fold", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "Updater"
+            }, null))
+            {
+                <input type="submit" value="Fold" class="btn btn-warning" />
+            }
+        </span>
+
+        <span>
+            <br />
+            @using (@Ajax.BeginForm("Call", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnSuccess = "Updater"
+            }, null))
+            {
+                <input type="submit" value="Call" class="btn btn-warning" />
+            }
+        </span>
+    </div>
+}
+else
+{
+    <div> W8 u turn!</div>
+}
+@if (!string.IsNullOrEmpty(Model.PokerViewModel.Winners))
+{
+    <div>@Model.PokerViewModel.Winners</div>
+}
+else
+{
+    <div>Stil playing</div>
+}
+
+<br />
+@using (Html.BeginForm("ExitGame", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }))
+{
+    <input type="submit" value="Exit game" class="btn btn-info" />
+}
+<br />
+@if (ViewBag.IsPokerGameFinished)
+{
+    using (Html.BeginForm("StartNewGame", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }))
+    {
+        <input type="submit" value="Start new game" class="btn btn-info" />
+    }
+}
+

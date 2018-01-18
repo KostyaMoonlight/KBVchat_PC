@@ -18,6 +18,7 @@ namespace BusinessLogic.Service.Base
         void Fold(int roomId, int userId);
         void Raise(int roomId, int userId, double bet);
         void Bet(int roomId, int userId, double bet);
+        void GiveNewCards(int roomId);
         IEnumerable<PokerRoomSearchViewModel> GetPokerRooms();
         PokerViewModel RemoveUserFromRoom(int userId, int roomId);
     }

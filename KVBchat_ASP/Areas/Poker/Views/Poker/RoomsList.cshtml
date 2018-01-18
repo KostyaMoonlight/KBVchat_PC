@@ -10,7 +10,7 @@
     {
         <div>
             @Html.ActionLink("Game #" + game.GameId +
-                                  " Bet: " + game.Bet +
+                                  " Bet: " + game.DefaultBet +
                                   " Players: " + game.PlayersCount + "/" + game.MaxPlayersCount,
                                   "JoinRoom", "Poker", new { area = "Poker", id = game.GameId }, null)
         </div>
