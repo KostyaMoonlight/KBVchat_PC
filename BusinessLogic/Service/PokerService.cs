@@ -49,31 +49,45 @@ namespace BusinessLogic.Service
             var room = _roomRepository.GetRoomById(roomId);
             var game = Deserialize(room.State);
 
-            if (game.Players.Count >= 1)
+            if (game.Players.Count < game.MaxPlayersCount)
             {
-                var gameVM = _mapper.Map<PokerViewModel>(game);
-                gameVM.GameId = roomId;
-                return gameVM;
+                game.Players.Add(new Player
+                {
+                    Id = userId,
+                    Nickname = nickname,
+                    Bet = game.DefaultBet,
+                    Balance = balance - game.DefaultBet,
+                    Cards = new List<Card>(),
+                    IsPlaying = true
+                });
+
+                if (game.Players.Count == game.MaxPlayersCount)
+                {
+                    game.GameStart();
+                }
+
+                room.State = Serialize(game);
+                _roomRepository.UpdateRoom(room);
             }
-            game.Players.Add(new Player { Id = userId, Nickname = nickname, Bet = 100 });
-            game.GameStart();
 
             var gameViewModel = _mapper.Map<PokerViewModel>(game);
             gameViewModel.GameId = roomId;
-
-            room.State = Serialize(game);
-            _roomRepository.UpdateRoom(room);
             return gameViewModel;
         }
 
         public PokerViewModel GetRoomState(int id)
         {
             var room = _roomRepository.GetRoomById(id);
+            if (room == null)
+                return null;
             var game = Deserialize(room.State);
             var gameViewModel = _mapper.Map<PokerViewModel>(game);
             gameViewModel.GameId = id;
             if (game.IsEnd)
-                gameViewModel.Winners = "Winners: " + string.Join(", ", game.GetWinners().Names) + " won " + game.GetWinners().Money;
+            {
+                var winners = game.GetWinners();
+                gameViewModel.Winners = "Winners: " + string.Join(", ", winners.Names) + " won " + winners.Money;
+            }
             return gameViewModel;
         }
 

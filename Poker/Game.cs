@@ -20,6 +20,9 @@ namespace Poker
         public double CurrentBet { get; set; }
 
         [JsonProperty]
+        public bool IsfinishedCircle { get; set; } = false;
+
+        [JsonProperty]
         public List<Card> CardsOnTable { get; set; }
 
         [JsonProperty]
@@ -27,12 +30,24 @@ namespace Poker
         {
             get
             {
-                double max = Players.Max(player => player.Bet);
-                var maxPlayersCount = Players.Where(player => player.Bet == max).Count();
-                if (currentPlayerId == 1 &&
-                    maxPlayersCount == ActivePlayers)
-                    return true;
-                return false;
+                if (IsfinishedCircle)   // did everybody make turn?
+                {
+                    double max = Players.Max(player => player.Bet);
+                    var maxPlayersCount = Players.Where(player => player.Bet == max).Count();
+
+                    if (CardsOnTable.Count == 0 &&          // if it is first stage, did big blind make turn?
+                        currentPlayerId == 2 &&             // after all
+                        maxPlayersCount == ActivePlayers)
+                        return true;
+
+                    else if (currentPlayerId == 1 &&            // in others stage, did smal blind make turn? 
+                             maxPlayersCount == ActivePlayers)  // after all
+                        return true;
+                    else
+                        return false;
+                }
+                else
+                    return false;
             }
         }
 
@@ -51,7 +66,9 @@ namespace Poker
             }
             set
             {
-                currentPlayerId = value % Players.Count;
+                if (value == PlayersCount)
+                    IsfinishedCircle = true;
+                currentPlayerId = value % PlayersCount;
             }
         }
 

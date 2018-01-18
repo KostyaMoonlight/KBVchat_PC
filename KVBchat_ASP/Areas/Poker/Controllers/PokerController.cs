@@ -39,13 +39,51 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
                 room = _pokerService.AddUserToRoom(CurrentUser.Id, CurrentUser.Balance, CurrentUser.Nickname, id);
                 var roomWithUser = new PokerWithCurrentPlayerViewModel()
                 {
-                    BlackjackViewModel = room,
+                    PokerViewModel = room,
                     CurrentUserId = CurrentUser.Id
                 };
                 return View("Room", roomWithUser);
             }
             else
                 return View("RoomsList", _pokerService.GetPokerRooms());
+        }
+
+        public ActionResult StartNewGame(int id)
+        {
+            var room = _pokerService.GetRoomState(id);
+
+            _pokerService.RemoveUserFromRoom(CurrentUser.Id, id);
+
+            room = _pokerService.AddUserToRoom(CurrentUser.Id, CurrentUser.Balance,
+                CurrentUser.Nickname, id);
+
+            var roomWithUser = new PokerWithCurrentPlayerViewModel()
+            {
+                PokerViewModel = room,
+                CurrentUserId = CurrentUser.Id
+            };
+            return View("Room", roomWithUser);
+        }
+
+        public PartialViewResult Reload(int id)
+        {
+            var room = _pokerService.GetRoomState(id);
+            var roomWithUser = new PokerWithCurrentPlayerViewModel()
+            {
+                PokerViewModel = room,
+                CurrentUserId = CurrentUser.Id
+            };
+            var player = roomWithUser.PokerViewModel.Players.
+                FirstOrDefault(user => user.Id == CurrentUser.Id);
+            if (player != null)
+                CurrentUser.Balance = player.Balance;
+            _userService.EditBalance(_mapper.Map<User>(CurrentUser));
+
+            if (room.IsEnd)
+                ViewBag.IsPokerGameFinished = true;
+            else
+                ViewBag.IsPokerGameFinished = false;
+            return PartialView("_Table", roomWithUser);
         }
 
         public ActionResult RoomsList()
@@ -55,19 +93,43 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
 
         public ActionResult ExitGame(int id)
         {
-            var room = _pokerService.GetRoomState(id);
-            var roomWithUser = new PokerWithCurrentPlayerViewModel()
-            {
-                BlackjackViewModel = room,
-                CurrentUserId = CurrentUser.Id
-            };
-            var player = roomWithUser.BlackjackViewModel.Players.
-                FirstOrDefault(user => user.Id == CurrentUser.Id);
-            CurrentUser.Balance = player.Balance;
-
-            _userService.EditBalance(_mapper.Map<User>(CurrentUser));
             _pokerService.RemoveUserFromRoom(CurrentUser.Id, id);
             return View("RoomsList", _pokerService.GetPokerRooms());
+        }
+
+        [HttpPost]
+        public ActionResult Check(int id)
+        {
+            _pokerService.Check(id, CurrentUser.Id);
+            return new EmptyResult();
+        }
+
+        [HttpPost]
+        public ActionResult Raise(int id)
+        {
+            _pokerService.Raise(id, CurrentUser.Id, 20);
+            return new EmptyResult();
+        }
+
+        [HttpPost]
+        public ActionResult Bet(int id)
+        {
+            _pokerService.Bet(id, CurrentUser.Id, 10);
+            return new EmptyResult();
+        }
+
+        [HttpPost]
+        public ActionResult Fold(int id)
+        {
+            _pokerService.Fold(id, CurrentUser.Id);
+            return new EmptyResult();
+        }
+
+        [HttpPost]
+        public ActionResult Call(int id)
+        {
+            _pokerService.Call(id, CurrentUser.Id);
+            return new EmptyResult();
         }
     }
 }

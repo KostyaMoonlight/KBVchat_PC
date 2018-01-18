@@ -8,7 +8,7 @@ namespace KVBchat_ASP.Areas.Poker.Models
 {
     public class PokerWithCurrentPlayerViewModel
     {
-        public PokerViewModel BlackjackViewModel { get; set; }
+        public PokerViewModel PokerViewModel { get; set; }
         public int CurrentUserId { get; set; }
     }
 }
