@@ -11,7 +11,7 @@ using Utility;
 namespace DataAccess.Initializers
 {
     public class KVBchatDbInitializer
-        : CreateDatabaseIfNotExists<KVBchatDbContext>
+        : DropCreateDatabaseAlways<KVBchatDbContext>
     {
         protected override void Seed(KVBchatDbContext context)
         {
