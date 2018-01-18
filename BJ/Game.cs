@@ -41,6 +41,14 @@ namespace Blackjack
             CurrentPlayer = 0;
         }
 
+        public Game(Random random)
+        {
+            Players = new List<Player>();
+            Cards = new Deck().Cards.ToList();
+            Random = random;
+            CurrentPlayer = 0;
+        }
+
         public void GameStart()
         {
             foreach (var player in Players)

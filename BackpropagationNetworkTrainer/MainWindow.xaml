@@ -1,0 +1,53 @@
+﻿<Window x:Class="BackpropagationNetworkTrainer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BackpropagationNetworkTrainer"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="520" Width="900">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <StackPanel>
+                <TextBlock>Hidden layers count:</TextBlock>
+                <TextBox Text="{Binding HiddenLayersCount}"/>
+                <TextBlock/>
+                <TextBlock>Neuron count:</TextBlock>
+                <TextBox Text="{Binding NeuronCount}"/>
+                <TextBlock/>
+                <TextBlock>Learning rate:</TextBlock>
+                <TextBox Text="{Binding LearningRate}"/>
+                <TextBlock/>
+                <TextBlock>Momentum:</TextBlock>
+                <TextBox Text="{Binding Momentum}"/>
+                <TextBlock/>
+                <TextBlock>Epoch count:</TextBlock>
+                <TextBox Text="{Binding EpochCount}"/>
+                <TextBlock/>
+                <TextBlock>Input count:</TextBlock>
+                <TextBox Text="{Binding InputCount}"/>
+                <TextBlock/>
+                <TextBlock>Output count:</TextBlock>
+                <TextBox Text="{Binding OutputCount}"/>
+                <TextBlock/>
+
+                <Button Command="{Binding OpenSet}">Open set</Button>
+                <TextBlock/>
+                <Button Command="{Binding AddSet}">Add set</Button>
+                <TextBlock/>
+                <Button Command="{Binding Train}">Train</Button>
+                <TextBlock/>
+                <Button Command="{Binding AddToDb}">Add to Db</Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+            <ScrollViewer>
+                <TextBlock Text="{Binding ErrorStatistic}" TextWrapping="Wrap"/>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</Window>

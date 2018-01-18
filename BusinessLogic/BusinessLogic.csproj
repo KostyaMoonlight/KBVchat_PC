@@ -82,6 +82,10 @@
     <Compile Include="Service\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BackpropagationNetwork\BackpropagationNetwork.csproj">
+      <Project>{d1909de0-5a03-4468-8cc1-b7a3bd662f83}</Project>
+      <Name>BackpropagationNetwork</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BJ\BJ.csproj">
       <Project>{ee3d05f5-3ae5-4b5d-b29d-acd53542bca4}</Project>
       <Name>BJ</Name>

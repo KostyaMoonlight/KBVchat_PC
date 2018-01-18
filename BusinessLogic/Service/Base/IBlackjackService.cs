@@ -17,5 +17,6 @@ namespace BusinessLogic.Service.Base
         void Double(int roomId, int userId);
         void Hit(int roomId, int userId);
         void Stand(int roomId, int userId);
+        IEnumerable<string> GetHintFromNN(double casino, double player);
     }
 }

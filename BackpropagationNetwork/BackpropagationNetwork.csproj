@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EE3D05F5-3AE5-4B5D-B29D-ACD53542BCA4}</ProjectGuid>
+    <ProjectGuid>{D1909DE0-5A03-4468-8CC1-B7A3BD662F83}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BJ</RootNamespace>
-    <AssemblyName>BJ</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <RootNamespace>BackpropagationNetwork</RootNamespace>
+    <AssemblyName>BackpropagationNetwork</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,15 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Deck.cs" />
-    <Compile Include="DTO\Card.cs" />
-    <Compile Include="DTO\GameResultDTO.cs" />
-    <Compile Include="DTO\Player.cs" />
-    <Compile Include="DTO\PlayerScore.cs" />
-    <Compile Include="DTO\Winners.cs" />
-    <Compile Include="Enum\PlayerAction.cs" />
-    <Compile Include="Enum\Suit.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="BackpropagationNetwork.cs" />
+    <Compile Include="Base\ActivationFunctions.cs" />
+    <Compile Include="Base\CalculatingError.cs" />
+    <Compile Include="Base\Layer.cs" />
+    <Compile Include="Base\Neuron.cs" />
+    <Compile Include="Base\Weight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

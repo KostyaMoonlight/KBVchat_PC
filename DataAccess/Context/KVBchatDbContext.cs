@@ -86,6 +86,7 @@ namespace DataAccess.Context
         public virtual DbSet<UsersGroup> UsersGroups { get; set; }
         public virtual DbSet<User> Users{ get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<NN> NNs { get; set; }
 
     }
 }
