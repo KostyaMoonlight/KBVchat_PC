@@ -17,12 +17,13 @@ namespace BusinessLogic.Service
     public class BlackjackService
         : IBlackjackService
     {
-
+        INNRepository _nnRepository = null;
         IRoomRepository _roomRepository = null;
         IMapper _mapper = null;
 
-        public BlackjackService(IRoomRepository roomRepository, IMapper mapper)
+        public BlackjackService(INNRepository nnRepository, IRoomRepository roomRepository, IMapper mapper)
         {
+            _nnRepository = nnRepository;
             _roomRepository = roomRepository;
             _mapper = mapper;
         }
@@ -42,7 +43,7 @@ namespace BusinessLogic.Service
         {
             var room = _roomRepository.GetRoomById(roomId);
             var game = Deserialize(room.State);
-            if (game.Players.Count>=1)
+            if (game.Players.Count >= 1)
             {
                 var gameVM = _mapper.Map<BlackjackViewModel>(game);
                 gameVM.RoomId = roomId;
@@ -119,6 +120,28 @@ namespace BusinessLogic.Service
         public Game Deserialize(string obj)
         {
             return JsonConvert.DeserializeObject<Game>(obj);
+        }
+
+        public IEnumerable<string> GetHintFromNN(double casino, double player)
+        {
+            var nnName = "BPNNBJ1To1";
+            var nnJson = _nnRepository.GetNN(nnName).JsonNN;
+            var nn = JsonConvert.DeserializeObject<BackpropagationNetwork.BackpropagationNetwork>(nnJson);
+
+            nn.CalculateOutput(new double[] { 0.0,
+                double.Parse("0." + player.ToString()),
+                double.Parse("0." + casino.ToString())
+                });
+            var resultH = $"Hit: {nn.OutputLayer.Neurons.FirstOrDefault().Output}%";
+            nn.CalculateOutput(new double[] { 1.0,
+                double.Parse("0." + player.ToString()),
+                double.Parse("0." + casino.ToString())
+                });
+            var resultS = $"Stand: {nn.OutputLayer.Neurons.FirstOrDefault().Output}%";
+
+            var results = new string[] { resultH, resultS };
+
+            return results;
         }
     }
 }
