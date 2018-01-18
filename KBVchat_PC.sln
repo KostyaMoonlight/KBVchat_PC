@@ -19,6 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLo
 		{C88BA215-EF5F-4D41-BB0A-015D07651AAB} = {C88BA215-EF5F-4D41-BB0A-015D07651AAB}
 		{822E7921-1CBD-4D01-94FC-F30FBFC704B7} = {822E7921-1CBD-4D01-94FC-F30FBFC704B7}
 		{3444A42E-B46E-479D-A30A-E235B5EB5191} = {3444A42E-B46E-479D-A30A-E235B5EB5191}
+		{D1909DE0-5A03-4468-8CC1-B7A3BD662F83} = {D1909DE0-5A03-4468-8CC1-B7A3BD662F83}
 		{C15653E1-31C5-44FE-85E0-7BFF53F4341F} = {C15653E1-31C5-44FE-85E0-7BFF53F4341F}
 	EndProjectSection
 EndProject
@@ -46,6 +47,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BJ", "BJ\BJ.csproj", "{EE3D05F5-3AE5-4B5D-B29D-ACD53542BCA4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Poker", "Poker\Poker.csproj", "{E6FB0830-63FB-40AD-9F46-365A6241A808}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackpropagationNetwork", "C:\Users\Vladislav\Downloads\Telegram Desktop\BackpropagationNetwork\BackpropagationNetwork.csproj", "{D1909DE0-5A03-4468-8CC1-B7A3BD662F83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackpropagationNetworkTrainer", "C:\Users\Vladislav\Downloads\Telegram Desktop\BackpropagationNetworkTrainer\BackpropagationNetworkTrainer.csproj", "{80147F5E-59A5-43D4-8B37-19CA29792114}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackjackGamesGenerator", "C:\Users\Vladislav\Downloads\Telegram Desktop\BlackjackGamesGenerator\BlackjackGamesGenerator.csproj", "{A517F5E9-1046-44B7-8461-5AF37C923FEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +96,18 @@ Global
 		{E6FB0830-63FB-40AD-9F46-365A6241A808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6FB0830-63FB-40AD-9F46-365A6241A808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6FB0830-63FB-40AD-9F46-365A6241A808}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1909DE0-5A03-4468-8CC1-B7A3BD662F83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1909DE0-5A03-4468-8CC1-B7A3BD662F83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1909DE0-5A03-4468-8CC1-B7A3BD662F83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1909DE0-5A03-4468-8CC1-B7A3BD662F83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80147F5E-59A5-43D4-8B37-19CA29792114}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80147F5E-59A5-43D4-8B37-19CA29792114}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80147F5E-59A5-43D4-8B37-19CA29792114}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80147F5E-59A5-43D4-8B37-19CA29792114}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A517F5E9-1046-44B7-8461-5AF37C923FEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A517F5E9-1046-44B7-8461-5AF37C923FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A517F5E9-1046-44B7-8461-5AF37C923FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A517F5E9-1046-44B7-8461-5AF37C923FEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

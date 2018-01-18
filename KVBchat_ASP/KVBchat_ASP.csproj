@@ -252,6 +252,7 @@
     <Content Include="Areas\Poker\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Poker\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Poker\Views\Shared\_Table.cshtml" />
+    <Content Include="Areas\Blackjack\Views\Blackjack\Help.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />

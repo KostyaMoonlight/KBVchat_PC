@@ -100,43 +100,56 @@
 @if ((Model.BlackjackViewModel.CurrentPlayer != -1) &&
     (Model.BlackjackViewModel.CurrentPlayerId == Model.CurrentUserId))
 {
-    <div>
-        <span>
-            <br />
-            @using (@Ajax.BeginForm("Double", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
-            {
-                HttpMethod = "POST",
-                OnSuccess = "Updater"
-            }, null))
-            {
-                <input type="submit" value="Double" class="btn btn-success" />
-            }
-        </span>
+<div>
+    <span>
+        <br />
+        @using (@Ajax.BeginForm("Double", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "Updater"
+        }, null))
+        {
+            <input type="submit" value="Double" class="btn btn-success" />
+        }
+    </span>
 
-        <span>
-            <br />
-            @using (@Ajax.BeginForm("Hit", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
-            {
-                HttpMethod = "POST",
-                OnSuccess = "Updater"
-            }, null))
-            {
-                <input type="submit" value="Hit" class="btn btn-primary" />
-            }
-        </span>
+    <span>
+        <br />
+        @using (@Ajax.BeginForm("Hit", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "Updater"
+        }, null))
+        {
+            <input type="submit" value="Hit" class="btn btn-primary" />
+        }
+    </span>
 
-        <span>
-            <br />
-            @using (@Ajax.BeginForm("Stand", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
-            {
-                HttpMethod = "POST",
-                OnSuccess = "Updater"
-            }, null))
-            {
-                <input type="submit" value="Stand" class="btn btn-warning" />
-            }
-        </span>
-    </div>
+    <span>
+        <br />
+        @using (@Ajax.BeginForm("Stand", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "Updater"
+        }, null))
+        {
+            <input type="submit" value="Stand" class="btn btn-warning" />
+        }
+    </span>
+
+    <span>
+        <br />
+        @using (@Ajax.BeginForm("Help", "Blackjack", new { area = "Blackjack", id = Model.BlackjackViewModel.GameId }, new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "Updater",
+            UpdateTargetId= "HelpId"
+        }, null))
+        {
+            <input type="submit" value="Ask nasha help" class="btn btn-warning" />
+        }
+    </span>
+</div>
 }
 else
 {

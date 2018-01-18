@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Deck.cs" />
     <Compile Include="DTO\Card.cs" />
+    <Compile Include="DTO\GameResultDTO.cs" />
     <Compile Include="DTO\Player.cs" />
     <Compile Include="DTO\PlayerScore.cs" />
     <Compile Include="DTO\Winners.cs" />

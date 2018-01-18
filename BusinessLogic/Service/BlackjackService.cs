@@ -19,11 +19,13 @@ namespace BusinessLogic.Service
     {
 
         IRoomRepository _roomRepository = null;
+        INNRepository _nnRepository = null;
         IMapper _mapper = null;
 
-        public BlackjackService(IRoomRepository roomRepository, IMapper mapper)
+        public BlackjackService(IRoomRepository roomRepository, INNRepository nNRepository, IMapper mapper)
         {
             _roomRepository = roomRepository;
+            _nnRepository = nNRepository;
             _mapper = mapper;
         }
 
@@ -165,6 +167,28 @@ namespace BusinessLogic.Service
             _roomRepository.UpdateRoom(room);
 
             return gameViewModel;
+        }
+
+        public IEnumerable<string> GetHintFromNN(double casino, double player)
+        {
+            var nnName = "BPNNBJ1To1";
+            var nnJson = _nnRepository.GetNN(nnName).JsonNN;
+            var nn = JsonConvert.DeserializeObject<BackpropagationNetwork.BackpropagationNetwork>(nnJson);
+
+            nn.CalculateOutput(new double[] { 0.0,
+                double.Parse("0." + player.ToString()),
+                double.Parse("0." + casino.ToString())
+                });
+            var resultH = $"Hit: {nn.OutputLayer.Neurons.FirstOrDefault().Output}%";
+            nn.CalculateOutput(new double[] { 1.0,
+                double.Parse("0." + player.ToString()),
+                double.Parse("0." + casino.ToString())
+                });
+            var resultS = $"Stand: {nn.OutputLayer.Neurons.FirstOrDefault().Output}%";
+
+            var results = new string[] { resultH, resultS };
+
+            return results;
         }
     }
 }

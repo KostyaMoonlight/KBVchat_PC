@@ -112,6 +112,10 @@
       <Project>{822e7921-1cbd-4d01-94fc-f30fbfc704b7}</Project>
       <Name>Utility</Name>
     </ProjectReference>
+    <ProjectReference Include="C:\Users\Vladislav\Downloads\Telegram Desktop\BackpropagationNetwork\BackpropagationNetwork.csproj">
+      <Project>{d1909de0-5a03-4468-8cc1-b7a3bd662f83}</Project>
+      <Name>BackpropagationNetwork</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

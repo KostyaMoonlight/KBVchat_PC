@@ -117,5 +117,19 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
             return new EmptyResult();
         }
 
+        
+        public PartialViewResult Help(int id)
+        {
+            var room = _blackjackService.GetRoomState(id);
+            var roomWithUser = new BlackjackWithCurrentPlayerViewModel()
+            {
+                BlackjackViewModel = room,
+                CurrentUserId = CurrentUser.Id
+            };
+           var res =  _blackjackService.GetHintFromNN(room.Casino.Cards[0].Value,
+                room.Players.FirstOrDefault(player => player.Id == roomWithUser.CurrentUserId).Cards.Sum(card => card.Value));
+            return PartialView(res.ToArray());
+        }
+
     }
 }

@@ -79,6 +79,7 @@ namespace DataAccess.Context
         }
 
         public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<NN> NNs { get; set; }
         public virtual DbSet<Friend> Friends { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<MessageFile> MessageFiles { get; set; }

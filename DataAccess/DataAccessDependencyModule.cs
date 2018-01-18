@@ -50,6 +50,11 @@ namespace DataAccess
     .WithParameter((pi, c) => pi.Name == "context",
        (pi, c) => (KVBchatDbContext)c.ResolveNamed<DbContext>("DataContext"))
     .InstancePerRequest();
+
+            builder.RegisterType(typeof(NNRepository)).As(typeof(INNRepository))
+                .WithParameter((pi, c) => pi.Name == "context",
+                   (pi, c) => (KVBchatDbContext)c.ResolveNamed<DbContext>("DataContext"))
+                .InstancePerRequest();
         }
     }
 }
