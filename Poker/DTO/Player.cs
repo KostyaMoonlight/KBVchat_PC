@@ -15,7 +15,7 @@ namespace Poker.DTO
         [JsonProperty]
         public double Bet { get; set; }
         [JsonProperty]
-        public double Money { get; set; }
+        public double Balance { get; set; }
         [JsonProperty]
         public List<Card> Cards { get; set; }
         [JsonProperty]

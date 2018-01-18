@@ -11,8 +11,9 @@ namespace BusinessLogic.Service.Base
    public interface IPokerService : IGameService<Game>
     {
         int AddRoom(int bet,int maxPlayersCount);
-        PokerViewModel AddUserToRoom(int userId, string nickname, int roomId);
+        PokerViewModel AddUserToRoom(int userId, double balance, string nickname, int roomId);
         PokerViewModel GetRoomState(int id);
         IEnumerable<PokerRoomSearchViewModel> GetPokerRooms();
+        PokerViewModel RemoveUserFromRoom(int userId, int roomId);
     }
 }

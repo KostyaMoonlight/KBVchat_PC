@@ -104,9 +104,11 @@ namespace Poker
                 return null;
         }
 
-        public void GetWinners()
+        // do something here 
+        public Winners GetWinners()
         {
-            
+            Winners winner = new Winners();
+            return winner;
         }
     }
 }

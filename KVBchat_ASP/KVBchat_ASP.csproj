@@ -176,6 +176,7 @@
     <Compile Include="Areas\Cabinet\Models\UserWithdrawViewModel.cs" />
     <Compile Include="Areas\Poker\Controllers\PokerController.cs" />
     <Compile Include="Areas\Poker\Controllers\PokerInitializeController.cs" />
+    <Compile Include="Areas\Poker\Models\PokerWithCurrentPlayerViewModel.cs" />
     <Compile Include="Areas\Poker\PokerAreaRegistration.cs" />
     <Compile Include="Areas\UserSearchEngine\Controllers\UserSearchController.cs" />
     <Compile Include="Areas\UserSearchEngine\Models\User\UserSearchViewModel.cs" />
@@ -316,7 +317,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Poker\Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -337,6 +337,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{c88ba215-ef5f-4d41-bb0a-015d07651aab}</Project>
       <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Poker\Poker.csproj">
+      <Project>{E6FB0830-63FB-40AD-9F46-365A6241A808}</Project>
+      <Name>Poker</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utility\Utility.csproj">
       <Project>{822e7921-1cbd-4d01-94fc-f30fbfc704b7}</Project>
