@@ -11,7 +11,7 @@ namespace BusinessLogic.DTO.Poker
     {
         public int GameId { get; set; }
 
-        public double Bet { get; set; }
+        public double DefaultBet { get; set; }
 
         public List<Card> Deck { get; set; }
 

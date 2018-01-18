@@ -34,7 +34,7 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
         {
             var room = _pokerService.GetRoomState(id);
             if ((room.Players.Count < room.MaxPlayersCount) &&
-                (CurrentUser.Balance > room.Bet * 2))
+                (CurrentUser.Balance > room.DefaultBet * 3))
             {
                 room = _pokerService.AddUserToRoom(CurrentUser.Id, CurrentUser.Balance, CurrentUser.Nickname, id);
                 var roomWithUser = new PokerWithCurrentPlayerViewModel()
@@ -50,8 +50,7 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
 
         public ActionResult RoomsList()
         {
-            var rooms = _pokerService.GetPokerRooms();
-            return View(rooms);
+            return View(_pokerService.GetPokerRooms());
         }
 
         public ActionResult ExitGame(int id)

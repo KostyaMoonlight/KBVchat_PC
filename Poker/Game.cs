@@ -14,16 +14,46 @@ namespace Poker
         public List<Card> Deck { get; set; }
 
         [JsonProperty]
-        public double Bet { get; set; }
+        public double DefaultBet { get; set; }
+
+        [JsonProperty]
+        public double CurrentBet { get; set; }
 
         [JsonProperty]
         public List<Card> CardsOnTable { get; set; }
 
         [JsonProperty]
+        public bool IsFinishedStage
+        {
+            get
+            {
+                double max = Players.Max(player => player.Bet);
+                var maxPlayersCount = Players.Where(player => player.Bet == max).Count();
+                if (currentPlayerId == 1 &&
+                    maxPlayersCount == ActivePlayers)
+                    return true;
+                return false;
+            }
+        }
+
+        [JsonProperty]
         public List<Player> Players { get; set; }
 
         [JsonProperty]
-        public int CurrentPlayerId { get; set; } = 0;
+        private int currentPlayerId = 0;
+
+        [JsonProperty]
+        public int CurrentPlayerId
+        {
+            get
+            {
+                return currentPlayerId;
+            }
+            set
+            {
+                currentPlayerId = value % Players.Count;
+            }
+        }
 
         [JsonProperty]
         public int GiveCardsCounter { get; set; } = 0;
@@ -38,7 +68,7 @@ namespace Poker
         }
 
         [JsonIgnore]
-        public bool IsEnd { get => PlayersCount == CurrentPlayerId; }
+        public bool IsEnd { get => ActivePlayers > 0; }
 
         [JsonIgnore]
         private int PlayersCount { get => Players.Count; }
@@ -65,43 +95,78 @@ namespace Poker
                 player.Cards.Add(Deck[1]);
                 Deck.RemoveRange(0, 2);
             }
+            PlayerTurn(DTO.Action.Bet, DefaultBet);
+            PlayerTurn(DTO.Action.Raise, DefaultBet * 2);
         }
 
-        public void PlayerTurn(PlayerAction playerAction)
+        public void PlayerTurn(DTO.Action playerAction, double bet = 0)
         {
-            
+            if (playerAction == DTO.Action.Bet)
+            {
+                Players[CurrentPlayerId].Balance -= bet;
+                Players[CurrentPlayerId].Bet += bet;
+                CurrentBet += bet;
+                CurrentPlayerId++;
+            }
+            if (playerAction == DTO.Action.Call)
+            {
+                double maxBet = Players.Max(player => player.Bet);
+                double difference = maxBet - Players[CurrentPlayerId].Bet;
+                Players[CurrentPlayerId].Balance -= difference;
+                Players[CurrentPlayerId].Bet += difference;
+                CurrentBet += difference;
+                CurrentPlayerId++;
+            }
+            if (playerAction == DTO.Action.Check)
+            {
+                CurrentPlayerId++;
+            }
+            if (playerAction == DTO.Action.Fold)
+            {
+                Players[CurrentPlayerId].IsPlaying = false;
+                CurrentPlayerId++;
+            }
+            if (playerAction == DTO.Action.Raise)
+            {
+                double maxBet = Players.Max(player => player.Bet);
+                double difference = maxBet - Players[CurrentPlayerId].Bet;
+                if (bet > difference)
+                {
+                    Players[CurrentPlayerId].Balance -= bet;
+                    Players[CurrentPlayerId].Bet += bet;
+                    CurrentBet += bet;
+                    CurrentPlayerId++;
+                }
+                else
+                    throw new ArgumentException("small bet for raise");
+            }
         }
 
-        private List<Card> GetNextCardsToTable()
+        private void GetNextCardsToTable()
         {
             if (GiveCardsCounter == 0)
             {
-                var list = new List<Card>();
-                list.Add(Deck[0]);
-                list.Add(Deck[1]);
-                list.Add(Deck[2]);
+                CardsOnTable.Add(Deck[0]);
+                CardsOnTable.Add(Deck[1]);
+                CardsOnTable.Add(Deck[2]);
                 Deck.RemoveRange(0, 3);
                 GiveCardsCounter++;
-                return list;
+                return;
             }
             if (GiveCardsCounter == 1)
             {
-                var list = new List<Card>();
-                list.Add(Deck[0]);
+                CardsOnTable.Add(Deck[0]);
                 Deck.RemoveAt(0);
                 GiveCardsCounter++;
-                return list;
+                return;
             }
             if (GiveCardsCounter == 2)
             {
-                var list = new List<Card>();
-                list.Add(Deck[0]);
+                CardsOnTable.Add(Deck[0]);
                 Deck.RemoveAt(0);
                 GiveCardsCounter++;
-                return list;
+                return;
             }
-            else
-                return null;
         }
 
         // do something here 

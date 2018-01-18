@@ -38,7 +38,7 @@ namespace BusinessLogic.Service
         {
             Game game = new Game();
             game.MaxPlayersCount = maxPlayersCount;
-            game.Bet = bet;
+            game.DefaultBet = bet;
             var serGame = Serialize(game);
             var room = _roomRepository.AddRoom("Poker", serGame);
             return room.Id;
@@ -102,6 +102,56 @@ namespace BusinessLogic.Service
             _roomRepository.UpdateRoom(room);
 
             return gameViewModel;
+        }
+
+        public void Check(int roomId, int userId)
+        {
+            var room = _roomRepository.GetRoomById(roomId);
+            var game = Deserialize(room.State);
+            game.PlayerTurn(Poker.DTO.Action.Check);
+            var state = Serialize(game);
+            room.State = state;
+            _roomRepository.UpdateRoom(room);
+        }
+
+        public void Call(int roomId, int userId)
+        {
+            var room = _roomRepository.GetRoomById(roomId);
+            var game = Deserialize(room.State);
+            game.PlayerTurn(Poker.DTO.Action.Call);
+            var state = Serialize(game);
+            room.State = state;
+            _roomRepository.UpdateRoom(room);
+        }
+
+        public void Raise(int roomId, int userId, double bet)
+        {
+            var room = _roomRepository.GetRoomById(roomId);
+            var game = Deserialize(room.State);
+            game.PlayerTurn(Poker.DTO.Action.Raise, bet);
+            var state = Serialize(game);
+            room.State = state;
+            _roomRepository.UpdateRoom(room);
+        }
+
+        public void Fold(int roomId, int userId)
+        {
+            var room = _roomRepository.GetRoomById(roomId);
+            var game = Deserialize(room.State);
+            game.PlayerTurn(Poker.DTO.Action.Fold);
+            var state = Serialize(game);
+            room.State = state;
+            _roomRepository.UpdateRoom(room);
+        }
+
+        public void Bet(int roomId, int userId, double bet)
+        {
+            var room = _roomRepository.GetRoomById(roomId);
+            var game = Deserialize(room.State);
+            game.PlayerTurn(Poker.DTO.Action.Bet, bet);
+            var state = Serialize(game);
+            room.State = state;
+            _roomRepository.UpdateRoom(room);
         }
     }
 }

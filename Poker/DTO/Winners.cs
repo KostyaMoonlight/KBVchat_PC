@@ -11,7 +11,6 @@ namespace Poker.DTO
         public double Money { get; set; }
         public Winners()
         {
-            Money = 40000;
         }
     }
 }

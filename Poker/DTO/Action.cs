@@ -11,6 +11,7 @@ namespace Poker.DTO
         Check,
         Raise,
         Call,
-        Fold
+        Fold,
+        Bet
     }
 }
