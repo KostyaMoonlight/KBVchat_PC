@@ -53,6 +53,7 @@
     <Compile Include="Enums\Suit.cs" />
     <Compile Include="Enums\Value.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="HandEvaluator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

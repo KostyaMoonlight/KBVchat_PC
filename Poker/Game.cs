@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Poker.DTO;
+using Poker.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,29 +20,28 @@ namespace Poker
         [JsonProperty]
         public double CurrentBet { get; set; }
 
+        [JsonIgnore]
+        public bool IsfinishedCircle { get => TurnsPerStage >= ActivePlayers; }
+
         [JsonProperty]
-        public bool IsfinishedCircle { get; set; } = false;
+        public int TurnsPerStage { get; set; }
 
         [JsonProperty]
         public List<Card> CardsOnTable { get; set; }
 
-        [JsonProperty]
+        [JsonIgnore]
         public bool IsFinishedStage
         {
             get
             {
+                if (PlayersCount == 0)
+                    return false;
                 if (IsfinishedCircle)   // did everybody make turn?
                 {
                     double max = Players.Max(player => player.Bet);
                     var maxPlayersCount = Players.Where(player => player.Bet == max).Count();
 
-                    if (CardsOnTable.Count == 0 &&          // if it is first stage, did big blind make turn?
-                        CurrentPlayer == 2 &&             // after all
-                        maxPlayersCount == ActivePlayers)
-                        return true;
-
-                    else if (CurrentPlayer == 1 &&            // in others stage, did smal blind make turn? 
-                             maxPlayersCount == ActivePlayers)  // after all
+                    if (maxPlayersCount == ActivePlayers)
                         return true;
                     else
                         return false;
@@ -71,8 +71,6 @@ namespace Poker
                     currentPlayer = 0;
                     return;
                 }
-                if (value == PlayersCount)
-                    IsfinishedCircle = true;
                 currentPlayer = value % PlayersCount;
             }
         }
@@ -96,6 +94,8 @@ namespace Poker
             {
                 if (PlayersCount == 0)
                     return false;
+                else if (GiveCardsCounter >= 3 && IsFinishedStage)
+                    return true;
                 else
                     return ActivePlayers == 0;
             }
@@ -117,6 +117,7 @@ namespace Poker
         {
             CurrentBet = 0;
             GiveCardsCounter = 0;
+            TurnsPerStage = 0;
             Deck = new DeckOfCards().Deck;
             CardsOnTable.Clear();
             CurrentPlayer = 0;
@@ -130,6 +131,7 @@ namespace Poker
             }
             PlayerTurn(DTO.Action.Bet, DefaultBet);
             PlayerTurn(DTO.Action.Raise, DefaultBet * 2);
+            TurnsPerStage = 0;
         }
 
         public void PlayerTurn(DTO.Action playerAction, double bet = 0)
@@ -139,7 +141,6 @@ namespace Poker
                 Players[CurrentPlayer].Balance -= bet;
                 Players[CurrentPlayer].Bet += bet;
                 CurrentBet += bet;
-                CurrentPlayer++;
             }
             if (playerAction == DTO.Action.Call)
             {
@@ -148,16 +149,14 @@ namespace Poker
                 Players[CurrentPlayer].Balance -= difference;
                 Players[CurrentPlayer].Bet += difference;
                 CurrentBet += difference;
-                CurrentPlayer++;
             }
             if (playerAction == DTO.Action.Check)
             {
-                CurrentPlayer++;
+
             }
             if (playerAction == DTO.Action.Fold)
             {
                 Players[CurrentPlayer].IsPlaying = false;
-                CurrentPlayer++;
             }
             if (playerAction == DTO.Action.Raise)
             {
@@ -168,11 +167,12 @@ namespace Poker
                     Players[CurrentPlayer].Balance -= bet;
                     Players[CurrentPlayer].Bet += bet;
                     CurrentBet += bet;
-                    CurrentPlayer++;
                 }
                 else
-                    throw new ArgumentException("small bet for raise");
+                    throw new ArgumentException("small bet for raise");                
             }
+            CurrentPlayer++;
+            TurnsPerStage++;
         }
 
         public void GetNextCardsToTable()
@@ -184,6 +184,7 @@ namespace Poker
                 CardsOnTable.Add(Deck[2]);
                 Deck.RemoveRange(0, 3);
                 GiveCardsCounter++;
+                TurnsPerStage = 0;
                 return;
             }
             if (GiveCardsCounter == 1)
@@ -191,6 +192,7 @@ namespace Poker
                 CardsOnTable.Add(Deck[0]);
                 Deck.RemoveAt(0);
                 GiveCardsCounter++;
+                TurnsPerStage = 0;
                 return;
             }
             if (GiveCardsCounter == 2)
@@ -198,15 +200,131 @@ namespace Poker
                 CardsOnTable.Add(Deck[0]);
                 Deck.RemoveAt(0);
                 GiveCardsCounter++;
+                TurnsPerStage = 0;
                 return;
             }
         }
 
-        // do something here 
         public Winners GetWinners()
         {
-            Winners winner = new Winners();
-            return winner;
+            List<Tuple<Hand, HandValue, Player>> evaluators = new List<Tuple<Hand, HandValue, Player>>();
+
+            foreach (var player in Players)
+            {
+                List<HandEvaluator> tempEvaluatore = new List<HandEvaluator>()
+                {
+                    new HandEvaluator( new List<Card>
+                    {
+                        player.Cards[0],
+                        player.Cards[1],
+                        CardsOnTable[0],
+                        CardsOnTable[1],
+                        CardsOnTable[2]
+                    }),
+                    new HandEvaluator( new List<Card>
+                    {
+                        player.Cards[0],
+                        player.Cards[1],
+                        CardsOnTable[1],
+                        CardsOnTable[2],
+                        CardsOnTable[3]
+                    }),
+                    new HandEvaluator( new List<Card>
+                    {
+                        player.Cards[0],
+                        player.Cards[1],
+                        CardsOnTable[2],
+                        CardsOnTable[3],
+                        CardsOnTable[4]
+                    }),
+                    new HandEvaluator( new List<Card>
+                    {
+                        player.Cards[0],
+                        player.Cards[1],
+                        CardsOnTable[0],
+                        CardsOnTable[1],
+                        CardsOnTable[3]
+                    }),
+                    new HandEvaluator( new List<Card>
+                    {
+                        player.Cards[0],
+                        player.Cards[1],
+                        CardsOnTable[0],
+                        CardsOnTable[1],
+                        CardsOnTable[4]
+                    }),
+                    new HandEvaluator( new List<Card>
+                    {
+                        player.Cards[0],
+                        player.Cards[1],
+                        CardsOnTable[1],
+                        CardsOnTable[3],
+                        CardsOnTable[4]
+                    }),
+                    new HandEvaluator( new List<Card>
+                    {
+                        player.Cards[0],
+                        player.Cards[1],
+                        CardsOnTable[0],
+                        CardsOnTable[2],
+                        CardsOnTable[4]
+                    }),
+                    new HandEvaluator( new List<Card>
+                    {
+                        player.Cards[0],
+                        player.Cards[1],
+                        CardsOnTable[0],
+                        CardsOnTable[2],
+                        CardsOnTable[3]
+                    }),
+                    new HandEvaluator( new List<Card>
+                    {
+                        player.Cards[0],
+                        player.Cards[1],
+                        CardsOnTable[0],
+                        CardsOnTable[3],
+                        CardsOnTable[4]
+                    }),
+                    new HandEvaluator( new List<Card>
+                    {
+                        player.Cards[0],
+                        player.Cards[1],
+                        CardsOnTable[1],
+                        CardsOnTable[2],
+                        CardsOnTable[4]
+                    }),
+                };
+
+                var tempHands = tempEvaluatore.Select(evaluator => evaluator.EvaluateHand());
+                var maxHand = tempHands.
+                    OrderBy(hand => hand.Item2.HighCard).
+                    OrderBy(hand => hand.Item2.Total).
+                    OrderBy(hand => hand.Item1).
+                    FirstOrDefault();
+                if (maxHand != null)
+                    evaluators.Add(new Tuple<Hand, HandValue, Player>(maxHand.Item1, maxHand.Item2, player));
+            }
+
+            var winnerHand = evaluators.Max(hand => hand.Item1);
+            var winners = evaluators.Where(hand => hand.Item1 == winnerHand);
+            if (winners.Count() > 1)
+            {
+                var winnerTotal = evaluators.Max(hand => hand.Item2.Total);
+                winners = winners.Where(hand => hand.Item2.Total == winnerTotal);
+                if (winners.Count() > 1)
+                {
+                    var winnerKicker = evaluators.Max(hand => hand.Item2.HighCard);
+                    winners = winners.Where(hand => hand.Item2.HighCard == winnerKicker);
+                }
+            }
+            Winners winnerWinnerChickenDinner = new Winners();
+            winnerWinnerChickenDinner.Ids = winners.Select(win => win.Item3.Id);
+            winnerWinnerChickenDinner.Names = winners.Select(win => win.Item3.Nickname);
+            winnerWinnerChickenDinner.Money = CurrentBet / winners.Count();
+
+            foreach (var player in Players.Where(x => winnerWinnerChickenDinner.Ids.Contains(x.Id)))
+                player.Balance += winnerWinnerChickenDinner.Money;
+            return winnerWinnerChickenDinner;
         }
     }
 }

@@ -13,24 +13,22 @@ namespace BusinessLogic.DTO.Poker
 
         public double DefaultBet { get; set; }
 
-        public bool IsfinishedCircle { get; set; }
+        public bool IsfinishedCircle { get => TurnsPerStage >= ActivePlayers; }
+
+        public int TurnsPerStage { get; set; }
 
         public bool IsFinishedStage
         {
             get
             {
+                if (PlayersCount == 0)
+                    return false;
                 if (IsfinishedCircle)   // did everybody make turn?
                 {
                     double max = Players.Max(player => player.Bet);
                     var maxPlayersCount = Players.Where(player => player.Bet == max).Count();
 
-                    if (CardsOnTable.Count == 0 &&          // if it is first stage, did big blind make turn?
-                        CurrentPlayer == 2 &&             // after all
-                        maxPlayersCount == ActivePlayers)
-                        return true;
-
-                    else if (CurrentPlayer == 1 &&            // in others stage, did smal blind make turn? 
-                             maxPlayersCount == ActivePlayers)  // after all
+                    if (maxPlayersCount == ActivePlayers)
                         return true;
                     else
                         return false;
@@ -54,7 +52,18 @@ namespace BusinessLogic.DTO.Poker
 
         public int ActivePlayers { get => Players.Where(player => player.IsPlaying).Count(); }
 
-        public bool IsEnd { get => PlayersCount == CurrentPlayer; }
+        public bool IsEnd
+        {
+            get
+            {
+                if (PlayersCount == 0)
+                    return false;
+                else if (GiveCardsCounter >= 3 && IsFinishedStage)
+                    return true;
+                else
+                    return ActivePlayers == 1 || ActivePlayers == 0;
+            }
+        }
 
         private int PlayersCount { get => Players.Count; }
 

@@ -70,7 +70,7 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
             var room = _pokerService.GetRoomState(id);
             if (room.IsFinishedStage)
                 _pokerService.GiveNewCards(id);
-
+            
             var roomWithUser = new PokerWithCurrentPlayerViewModel()
             {
                 PokerViewModel = room,
@@ -81,6 +81,17 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
             if (player != null)
                 CurrentUser.Balance = player.Balance;
             _userService.EditBalance(_mapper.Map<User>(CurrentUser));
+
+            if (room.Players.FirstOrDefault(plyr => plyr.Id == CurrentUser.Id).Bet <
+                room.Players.Max(plyr => plyr.Bet))
+                ViewBag.IsWaitForCall = true;
+            else
+                ViewBag.IsWaitForCall = false;
+
+            if (room.Players.Count > 1)
+                ViewBag.IsAlone = false;
+            else
+                ViewBag.IsAlone = true;
 
             if (room.IsEnd)
                 ViewBag.IsPokerGameFinished = true;

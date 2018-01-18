@@ -56,10 +56,10 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
         {
             var room = _blackjackService.GetRoomState(id);
 
-                _blackjackService.RemoveUserFromRoom(CurrentUser.Id, id);
+            _blackjackService.RemoveUserFromRoom(CurrentUser.Id, id);
 
-                room = _blackjackService.AddUserToRoom(CurrentUser.Id, CurrentUser.Balance, 
-                    CurrentUser.Nickname, id);
+            room = _blackjackService.AddUserToRoom(CurrentUser.Id, CurrentUser.Balance,
+                CurrentUser.Nickname, id);
 
             var roomWithUser = new BlackjackWithCurrentPlayerViewModel()
             {
@@ -81,7 +81,7 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
                 FirstOrDefault(user => user.Id == CurrentUser.Id);
             if (player != null)
                 CurrentUser.Balance = player.Balance;
-            _userService.EditBalance(_mapper.Map<User>(CurrentUser));
+            _userService.EditBalance(_mapper.Map<User>(CurrentUser));            
 
             if (room.IsEnd)
                 ViewBag.IsBlackjackGameFinished = true;
@@ -117,7 +117,7 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
             return new EmptyResult();
         }
 
-        
+
         public PartialViewResult Help(int id)
         {
             var room = _blackjackService.GetRoomState(id);
@@ -126,8 +126,8 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
                 BlackjackViewModel = room,
                 CurrentUserId = CurrentUser.Id
             };
-           var res =  _blackjackService.GetHintFromNN(room.Casino.Cards[0].Value,
-                room.Players.FirstOrDefault(player => player.Id == roomWithUser.CurrentUserId).Cards.Sum(card => card.Value));
+            var res = _blackjackService.GetHintFromNN(room.Casino.Cards[0].Value,
+                 room.Players.FirstOrDefault(player => player.Id == roomWithUser.CurrentUserId).Cards.Sum(card => card.Value));
             return PartialView(res.ToArray());
         }
 

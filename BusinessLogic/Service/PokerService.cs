@@ -175,7 +175,6 @@ namespace BusinessLogic.Service
 
             game.GetNextCardsToTable();
             game.CurrentPlayer = 0;
-            game.IsfinishedCircle = false;
 
             var state = Serialize(game);
             room.State = state;
