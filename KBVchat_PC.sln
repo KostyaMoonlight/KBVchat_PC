@@ -48,11 +48,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BJ", "BJ\BJ.csproj", "{EE3D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Poker", "Poker\Poker.csproj", "{E6FB0830-63FB-40AD-9F46-365A6241A808}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackpropagationNetwork", "C:\Users\Vladislav\Downloads\Telegram Desktop\BackpropagationNetwork\BackpropagationNetwork.csproj", "{D1909DE0-5A03-4468-8CC1-B7A3BD662F83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackpropagationNetwork", "BackpropagationNetwork\BackpropagationNetwork.csproj", "{D1909DE0-5A03-4468-8CC1-B7A3BD662F83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackpropagationNetworkTrainer", "C:\Users\Vladislav\Downloads\Telegram Desktop\BackpropagationNetworkTrainer\BackpropagationNetworkTrainer.csproj", "{80147F5E-59A5-43D4-8B37-19CA29792114}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackpropagationNetworkTrainer", "BackpropagationNetworkTrainer\BackpropagationNetworkTrainer.csproj", "{80147F5E-59A5-43D4-8B37-19CA29792114}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackjackGamesGenerator", "C:\Users\Vladislav\Downloads\Telegram Desktop\BlackjackGamesGenerator\BlackjackGamesGenerator.csproj", "{A517F5E9-1046-44B7-8461-5AF37C923FEB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlackjackGamesGenerator", "BlackjackGamesGenerator\BlackjackGamesGenerator.csproj", "{A517F5E9-1046-44B7-8461-5AF37C923FEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

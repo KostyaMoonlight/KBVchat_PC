@@ -83,7 +83,7 @@ namespace BusinessLogic.Service
             var game = Deserialize(room.State);
             var gameViewModel = _mapper.Map<PokerViewModel>(game);
             gameViewModel.GameId = id;
-            if (game.IsEnd)
+            if (game.IsEnd && game.ActivePlayers > 0)
             {
                 var winners = game.GetWinners();
                 gameViewModel.Winners = "Winners: " + string.Join(", ", winners.Names) + " won " + winners.Money;

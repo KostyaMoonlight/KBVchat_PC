@@ -22,50 +22,67 @@
     <div>
         @foreach (var player in Model.PokerViewModel.Players)
         {
-            <br />
-            @player.Nickname
-            <div>
-                Bet: @player.Bet
-            </div>
-            <div>
+            string bgColor = "";
+            if (player.Id == Model.PokerViewModel.CurrentPlayerId &&
+                Model.PokerViewModel.CurrentPlayerId == Model.CurrentUserId)
+            {
+                bgColor = "lightgoldenrodyellow";
+            }
+            else if (player.Id == Model.PokerViewModel.CurrentPlayerId &&
+                Model.PokerViewModel.CurrentPlayerId != Model.CurrentUserId)
+            {
+                bgColor = "lightblue";
+            }
+            else
+            {
+                bgColor = "";
+            }
+            <div style="background-color: @bgColor">
                 <br />
-                @{
-                    if (player.Id == Model.CurrentUserId)
-                    {
-                        @:Balance: @player.Balance
-                        <br />
-                        foreach (var card in player.Cards)
+                @player.Nickname
+                <div>
+                    Bet: @player.Bet
+                </div>
+                <div>
+                    @{
+                        if (player.Id == Model.CurrentUserId)
                         {
-                            <span>
-                                @{
-                                    string url = "/Content/PNG/" + card.Name + ".png";
-                                }
-                                <img src=@url width="65" height="100" />
-                            </span>
+                            @:Balance: @player.Balance
+                            <br />
+                            foreach (var card in player.Cards)
+                            {
+                                <span>
+                                    @{
+                                        string url = "/Content/PNG/" + card.Name + ".png";
+                                    }
+                                    <img src=@url width="65" height="100" />
+                                </span>
+                            }
+                        }
+                        else
+                        {
+                            foreach (var card in player.Cards)
+                            {
+                                <span>
+                                    @{
+                                        string url;
+                                        if (ViewBag.IsPokerGameFinished)
+                                        {
+                                            url = "/Content/PNG/" + card.Name + ".png";
+                                        }
+                                        else
+                                        {
+                                            url = "/Content/PNG/blue_back.png";
+                                        }
+                                    }
+                                    <img src=@url width="65" height="100" />
+                                </span>
+                            }
                         }
                     }
-                    else
-                    {
-                        foreach (var card in player.Cards)
-                        {
-                            <span>
-                                @{
-                                    string url;
-                                    if (ViewBag.IsPokerGameFinished)
-                                    {
-                                        url = "/Content/PNG/" + card.Name + ".png";
-                                    }
-                                    else
-                                    {
-                                        url = "/Content/PNG/blue_back.png";
-                                    }
-                                }
-                                <img src=@url width="65" height="100" />
-                            </span>
-                        }
-                    }
-                }
+                </div>
             </div>
+
         }
     </div>
 </div>
@@ -76,8 +93,8 @@
     !ViewBag.IsPokerGameFinished)
 {
     <div>
-        <span>
-            <br />
+        <br />
+        <span style="float:left; margin: 0 10px 0 0">
             @using (@Ajax.BeginForm("Fold", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
             {
                 HttpMethod = "POST",
@@ -91,8 +108,7 @@
             if (!ViewBag.IsWaitForCall)
             {
 
-                <span>
-                    <br />
+                <span style="float:left; margin: 0 10px 0 0">
                     @using (@Ajax.BeginForm("Check", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
                     {
                         HttpMethod = "POST",
@@ -104,33 +120,22 @@
                 </span>
 
                 <span>
-                    <br />
                     @using (@Ajax.BeginForm("Bet", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
                     {
                         HttpMethod = "POST",
                         OnSuccess = "Updater"
                     }, null))
                     {
-                        <input type="submit" value="Bet" class="btn btn-warning" />
+                        <input type="submit" value="Bet" class="btn btn-warning" style="margin:0 0 10px 0" />
+                        <br />
+                        @Html.Label("Bet: ")
+                        @Html.TextBox("bet")
                     }
                 </span>
             }
             else
             {
-                <span>
-                    <br />
-                    @using (@Ajax.BeginForm("Raise", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
-                    {
-                        HttpMethod = "POST",
-                        OnSuccess = "Updater"
-                    }, null))
-                    {
-                        <input type="submit" value="Raise" class="btn btn-primary" />
-                    }
-                </span>
-
-                <span>
-                    <br />
+                <span style="float:left; margin: 0 10px 0 0">
                     @using (@Ajax.BeginForm("Call", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
                     {
                         HttpMethod = "POST",
@@ -140,13 +145,27 @@
                         <input type="submit" value="Call" class="btn btn-warning" />
                     }
                 </span>
+
+                <span>
+                    @using (@Ajax.BeginForm("Raise", "Poker", new { area = "Poker", id = Model.PokerViewModel.GameId }, new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        OnSuccess = "Updater"
+                    }, null))
+                    {
+                        <input type="submit" value="Raise" class="btn btn-primary" style="margin:0 0 10px 0" />
+                        <br />
+                        @Html.Label("Raise: ")
+                        @Html.TextBox("raise")
+                    }
+                </span>
             }
         }
     </div>
 }
 else
 {
-    <div> W8 u turn!</div>
+    <div> Wait for your turn!</div>
 }
 @if (!string.IsNullOrEmpty(Model.PokerViewModel.Winners))
 {

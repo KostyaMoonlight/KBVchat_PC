@@ -94,6 +94,8 @@ namespace Poker
             {
                 if (PlayersCount == 0)
                     return false;
+                else if (ActivePlayers == 1)
+                    return true;
                 else if (GiveCardsCounter >= 3 && IsFinishedStage)
                     return true;
                 else
@@ -128,9 +130,10 @@ namespace Poker
                 player.Cards.Add(Deck[1]);
                 Deck.RemoveRange(0, 2);
                 player.Bet = 0;
+                player.IsPlaying = true;
             }
             PlayerTurn(DTO.Action.Bet, DefaultBet);
-            PlayerTurn(DTO.Action.Raise, DefaultBet * 2);
+            PlayerTurn(DTO.Action.Raise, DefaultBet);
             TurnsPerStage = 0;
         }
 
@@ -162,14 +165,10 @@ namespace Poker
             {
                 double maxBet = Players.Max(player => player.Bet);
                 double difference = maxBet - Players[CurrentPlayer].Bet;
-                if (bet > difference)
-                {
-                    Players[CurrentPlayer].Balance -= bet;
-                    Players[CurrentPlayer].Bet += bet;
-                    CurrentBet += bet;
-                }
-                else
-                    throw new ArgumentException("small bet for raise");                
+
+                Players[CurrentPlayer].Balance -= (bet + difference);
+                Players[CurrentPlayer].Bet += (bet + difference);
+                CurrentBet += (bet + difference);
             }
             CurrentPlayer++;
             TurnsPerStage++;
@@ -207,9 +206,19 @@ namespace Poker
 
         public Winners GetWinners()
         {
+            if (ActivePlayers == 1)
+            {
+                var lastPlayer = Players.FirstOrDefault(ply => ply.IsPlaying);
+                Winners winner = new Winners();
+                winner.Ids = new List<int> { lastPlayer.Id };
+                winner.Names = new List<string> { lastPlayer.Nickname };
+                winner.Money = CurrentBet;
+                return winner;
+            }
+
             List<Tuple<Hand, HandValue, Player>> evaluators = new List<Tuple<Hand, HandValue, Player>>();
 
-            foreach (var player in Players)
+            foreach (var player in Players.Where(ply => ply.IsPlaying))
             {
                 List<HandEvaluator> tempEvaluatore = new List<HandEvaluator>()
                 {
@@ -297,9 +306,9 @@ namespace Poker
 
                 var tempHands = tempEvaluatore.Select(evaluator => evaluator.EvaluateHand());
                 var maxHand = tempHands.
-                    OrderBy(hand => hand.Item2.HighCard).
-                    OrderBy(hand => hand.Item2.Total).
-                    OrderBy(hand => hand.Item1).
+                    OrderByDescending(hand => hand.Item2.HighCard).
+                    OrderByDescending(hand => hand.Item2.Total).
+                    OrderByDescending(hand => hand.Item1).
                     FirstOrDefault();
                 if (maxHand != null)
                     evaluators.Add(new Tuple<Hand, HandValue, Player>(maxHand.Item1, maxHand.Item2, player));

@@ -32,7 +32,7 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
 
         public ActionResult JoinRoom(int id)
         {
-           var room = _pokerService.GetRoomState(id);
+            var room = _pokerService.GetRoomState(id);
             if ((room.Players.Count < room.MaxPlayersCount) &&
                 (CurrentUser.Balance > room.DefaultBet * 10))
             {
@@ -65,12 +65,16 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
             return View("Room", roomWithUser);
         }
 
-        public PartialViewResult Reload(int id)
+        public ActionResult Reload(int id)
         {
             var room = _pokerService.GetRoomState(id);
+
+            if (room.Players.FirstOrDefault(plyr => plyr.Id == CurrentUser.Id) == null)
+                return new EmptyResult();
+
             if (room.IsFinishedStage)
                 _pokerService.GiveNewCards(id);
-            
+
             var roomWithUser = new PokerWithCurrentPlayerViewModel()
             {
                 PokerViewModel = room,
@@ -121,16 +125,28 @@ namespace KVBchat_ASP.Areas.Poker.Controllers
         }
 
         [HttpPost]
-        public ActionResult Raise(int id)
+        public ActionResult Raise(int id, string raise)
         {
-            _pokerService.Raise(id, CurrentUser.Id, 20);
+            if (Double.TryParse(raise, out double result))
+            {
+                var room = _pokerService.GetRoomState(id);
+                var player = room.Players.FirstOrDefault(plyr => plyr.Id == CurrentUser.Id);
+                if (player.Balance >= (result + player.Bet))
+                    _pokerService.Raise(id, CurrentUser.Id, result);
+            }
             return new EmptyResult();
         }
 
         [HttpPost]
-        public ActionResult Bet(int id)
+        public ActionResult Bet(int id, string bet)
         {
-            _pokerService.Bet(id, CurrentUser.Id, 10);
+            if (Double.TryParse(bet, out double result))
+            {
+                var room = _pokerService.GetRoomState(id);
+                var player = room.Players.FirstOrDefault(plyr => plyr.Id == CurrentUser.Id);
+                if (player.Balance >= result)
+                    _pokerService.Bet(id, CurrentUser.Id, result);
+            }
             return new EmptyResult();
         }
 
