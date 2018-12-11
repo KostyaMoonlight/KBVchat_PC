@@ -19,6 +19,6 @@ namespace BusinessLogic.Service.Base
         void Hit(int roomId, int userId);
         void Stand(int roomId, int userId);
         IEnumerable<BlackJackSearchViewModel> GetBlackJackRooms();
-        IEnumerable<string> GetHintFromNN(double casino, double player);
+        Task<IEnumerable<string>> GetHintFromNN(double casino, double player);
     }
 }

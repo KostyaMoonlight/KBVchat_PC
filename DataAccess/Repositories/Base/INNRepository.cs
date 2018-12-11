@@ -11,7 +11,7 @@ namespace DataAccess.Repositories.Base
         : ISaveChanges
     {
         void AddNN(string name, string nn);
-        NN GetNN(string name);
-        void RemoveNN(string name);
+        Task<NN> GetNN(string name);
+        Task RemoveNN(string name);
     }
 }

@@ -169,10 +169,10 @@ namespace BusinessLogic.Service
             return gameViewModel;
         }
 
-        public IEnumerable<string> GetHintFromNN(double casino, double player)
+        public async Task<IEnumerable<string>> GetHintFromNN(double casino, double player)
         {
             var nnName = "BPNNBJ1To1";
-            var nnJson = _nnRepository.GetNN(nnName).JsonNN;
+            var nnJson = (await _nnRepository.GetNN(nnName)).JsonNN;
             var nn = JsonConvert.DeserializeObject<BackpropagationNetwork.BackpropagationNetwork>(nnJson);
 
             nn.CalculateOutput(new double[] { 0.0,

@@ -131,23 +131,17 @@ namespace BackpropagationNetworkTrainer.ViewModel
         {
             get
             {
-
-                return addToDb ?? (addToDb = new RelayCommand((obj) =>
+                return addToDb ?? (addToDb = new RelayCommand(async (obj) =>
                 {
-                    //Task.Factory.StartNew(() =>
-                    //{
-
                     var nnName = "BPNNBJ1To1";
                     INNRepository repository = new NNRepository(new KVBchatDbContext());
-                    repository.RemoveNN(nnName);
+                    await repository.RemoveNN(nnName);
                     string nn = "";
                     nn = JsonConvert.SerializeObject(backpropagationNetwork/*, Formatting.None, settings*/);
                     ErrorStatistic += "Json before send: " + nn.Count();
                     repository.AddNN(nnName, nn);
-                    var nnf = repository.GetNN(nnName)?.JsonNN;
+                    var nnf = (await repository.GetNN(nnName))?.JsonNN;
                     ErrorStatistic += "Json get: " + nnf.Count();
-
-                    //});
                 }));
             }
         }

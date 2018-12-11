@@ -3,6 +3,7 @@ using DataAccess.Repositories.Base;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,14 +26,14 @@ namespace DataAccess.Repositories
             SaveChanges();
         }
 
-        public NN GetNN(string name)
+        public async Task<NN> GetNN(string name)
         {
-            return _context.NNs.FirstOrDefault(x => x.Name == name);
+            return await _context.NNs.FirstOrDefaultAsync(x => x.Name == name);
         }
 
-        public void RemoveNN(string name)
+        public async Task RemoveNN(string name)
         {
-            var nn = GetNN(name);
+            var nn = await GetNN(name);
             if (nn != null)
             {
                 _context.NNs.Remove(nn);
@@ -44,6 +45,5 @@ namespace DataAccess.Repositories
         {
             _context.SaveChanges();
         }
-
     }
 }

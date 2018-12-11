@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -118,7 +119,7 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
         }
 
 
-        public PartialViewResult Help(int id)
+        public async Task<PartialViewResult> Help(int id)
         {
             var room = _blackjackService.GetRoomState(id);
             var roomWithUser = new BlackjackWithCurrentPlayerViewModel()
@@ -126,7 +127,7 @@ namespace KVBchat_ASP.Areas.Blackjack.Controllers
                 BlackjackViewModel = room,
                 CurrentUserId = CurrentUser.Id
             };
-            var res = _blackjackService.GetHintFromNN(room.Casino.Cards[0].Value,
+            var res = await _blackjackService.GetHintFromNN(room.Casino.Cards[0].Value,
                  room.Players.FirstOrDefault(player => player.Id == roomWithUser.CurrentUserId).Cards.Sum(card => card.Value));
             return PartialView(res.ToArray());
         }
